@@ -17,6 +17,8 @@ class Post extends Model
         'slug',
         'thumbnail',
         'status',
+        'keywords',
+        'short_description',
         'created_at',
         'created_by',
         'updated_at',

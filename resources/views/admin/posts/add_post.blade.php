@@ -53,6 +53,19 @@
                             </div>
                         </div>
                         <div class="form-group row offset-lg-1">
+                            <strong class="col-sm-1 col-form-label">SEO Keywords</strong>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="keywords" id="keywords" placeholder="SEO Keywords">
+                                <code>Write multiple SEO keywords seperated by comma like: (keyword1, keyword2, keyword3).</code>
+                            </div>
+                        </div>
+                        <div class="form-group row offset-lg-1">
+                            <strong class="col-sm-1 col-form-label">Short Description</strong>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" name="short_description" placeholder="Short Description" rows="6"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row offset-lg-1">
                             <strong class="col-sm-1 col-form-label">Description</strong>
                             <div class="col-sm-10">
                                 <textarea class="form-control summernote" name="description" placeholder="Description"></textarea>

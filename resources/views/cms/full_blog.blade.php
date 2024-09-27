@@ -1,5 +1,11 @@
 @extends('app')
-@section('title', 'Blog')
+@section('title', $blog->title)
+
+@section('meta_description', $blog->short_description)
+@section('meta_keywords', $blog->keywords)
+@section('meta_canonical_url', url('blog-detail').'/'.$blog->slug)
+@section('meta_image', asset('assets/posts_img').'/'.$blog->thumbnail)
+
 @section('content')
 <section class="breadcrumb-area profile-bc-area">
     <div class="container">

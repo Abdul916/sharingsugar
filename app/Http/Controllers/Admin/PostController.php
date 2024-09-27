@@ -21,6 +21,8 @@ class PostController extends Controller
 		$data = $request->all();
 		$validator = Validator::make($request->all(), [
 			'title' => 'required',
+			'keywords' => 'required',
+			'short_description' => 'required',
 			'description' => 'required',
 		]);
 		if ($validator->fails()) {
@@ -37,6 +39,8 @@ class PostController extends Controller
 		$slug = create_slug('posts', $data['title'], '');
 		$query = Post::create([
 			'title' => $data['title'],
+			'keywords'=> $data['keywords'],
+			'short_description'=> $data['short_description'],
 			'description'=> $data['description'],
 			'slug' => $slug,
 			'thumbnail' => $thumbnail,
@@ -60,6 +64,8 @@ class PostController extends Controller
 		$data = $request->all();
 		$validator = Validator::make($request->all(), [
 			'title' => 'required',
+			'keywords' => 'required',
+			'short_description' => 'required',
 			'description' => 'required',
 		]);
 		if ($validator->fails()) {
@@ -84,6 +90,8 @@ class PostController extends Controller
 		$slug = create_slug('posts', $data['title'], $data['id']);
 		$post_status = Post::where('id', $data['id'])->update([
 			'title' => $data['title'],
+			'keywords'=> $data['keywords'],
+			'short_description'=> $data['short_description'],
 			'description'=> $data['description'],
 			'slug' => $slug,
 			'status' => $status,
