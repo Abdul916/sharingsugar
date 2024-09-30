@@ -13,6 +13,7 @@ class Post extends Model
     protected $guard = 'admin';
     protected $fillable = [
         'title',
+        'category_id',
         'description',
         'slug',
         'thumbnail',
@@ -24,6 +25,12 @@ class Post extends Model
         'updated_at',
         'updated_by',
     ];
+
+
+    public function PostCategory()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
 
     public function getNextAttribute(){
         return static::where('id', '>', $this->id)->orderBy('id','asc')->first();

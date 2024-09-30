@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\UsersController;
 // use App\Http\Controllers\Admin\ReportedUserController;
 use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\MembershipsController;
 use App\Http\Controllers\Admin\ContactUsController;
 
@@ -38,6 +39,14 @@ Route::group(['prefix'  =>  'admin'], function () {
 			Route::get('edit/{id}', [PostController::class, 'edit']);
 			Route::post('update', [PostController::class, 'update']);
 			Route::post('delete', [PostController::class, 'destroy']);
+		});
+		Route::group(['prefix' => 'categories'], function() {
+			Route::get('/', [CategoryController::class, 'index']);
+			Route::get('create', [CategoryController::class, 'create']);
+			Route::post('store', [CategoryController::class, 'store']);
+			Route::get('edit/{id}', [CategoryController::class, 'edit']);
+			Route::post('update', [CategoryController::class, 'update']);
+			Route::post('delete', [CategoryController::class, 'destroy']);
 		});
 
 		Route::group(['prefix' => 'memberships'], function() {

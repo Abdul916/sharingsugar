@@ -55,6 +55,17 @@
                             </div>
                         </div>
                         <div class="form-group row offset-lg-1">
+                            <strong class="col-sm-1 col-form-label">Category</strong>
+                            <div class="col-sm-10">
+                                <select class="form-control" name="category" id="category">
+                                    <option value="">Select category</option>
+                                    <?php foreach (get_complete_table('categories', '', '', '', '1', '', '') as $category) { ?>
+                                        <option value="<?php echo $category->id; ?>" <?php if ($category->id == $post['category_id']) { ?> selected <?php } ?> ><?php echo $category->name; ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row offset-lg-1">
                             <strong class="col-sm-1 col-form-label">Title</strong>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="title" id="title" placeholder="title" value="{{$post->title}}">

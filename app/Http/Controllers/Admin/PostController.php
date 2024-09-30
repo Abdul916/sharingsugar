@@ -20,6 +20,7 @@ class PostController extends Controller
 	{
 		$data = $request->all();
 		$validator = Validator::make($request->all(), [
+			'category' => 'required',
 			'title' => 'required',
 			'keywords' => 'required',
 			'short_description' => 'required',
@@ -39,6 +40,7 @@ class PostController extends Controller
 		$slug = create_slug('posts', $data['title'], '');
 		$query = Post::create([
 			'title' => $data['title'],
+			'category_id' => $data['category'],
 			'keywords'=> $data['keywords'],
 			'short_description'=> $data['short_description'],
 			'description'=> $data['description'],
@@ -64,6 +66,7 @@ class PostController extends Controller
 		$data = $request->all();
 		$validator = Validator::make($request->all(), [
 			'title' => 'required',
+			'category' => 'required',
 			'keywords' => 'required',
 			'short_description' => 'required',
 			'description' => 'required',
@@ -90,6 +93,7 @@ class PostController extends Controller
 		$slug = create_slug('posts', $data['title'], $data['id']);
 		$post_status = Post::where('id', $data['id'])->update([
 			'title' => $data['title'],
+			'category_id' => $data['category'],
 			'keywords'=> $data['keywords'],
 			'short_description'=> $data['short_description'],
 			'description'=> $data['description'],

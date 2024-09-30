@@ -31,6 +31,9 @@
                 <a href="{{ url('admin/users/reported_users') }}"><i class="fa-solid fa-user-slash"></i><span class="nav-label">Reported Users</span></a>
             </li>
 
+            <li class="{{ Request::is('admin/categories*') ? 'active' : '' }}">
+                <a href="{{ url('admin/categories') }}"><i class="fa-solid fa-layer-group"></i><span class="nav-label">Categories</span></a>
+            </li>
             <li class="{{ Request::is('admin/posts*') ? 'active' : '' }}">
                 <a href="{{ url('admin/posts') }}"><i class="fa-sharp fa-solid fa-blog"></i><span class="nav-label">Posts</span></a>
             </li>
