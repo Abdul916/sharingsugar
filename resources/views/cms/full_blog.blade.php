@@ -34,7 +34,13 @@
                     </div>
                     <div class="content">
                         <div class="right">
-                            <h4 class="date">By: {{ get_single_value('admin_users', 'username', $blog->created_by) }} {{ date_with_month($blog->created_at)}}</h4><br>
+                            <h4 class="date">By: {{ get_single_value('admin_users', 'username', $blog->created_by) }} {{ date_with_month($blog->created_at)}}</h4>
+                            <p class="category"> Category:
+                                <a href="{{url('category')}}/{{ optional($blog->PostCategory)->slug }}">
+                                    {{ optional($blog->PostCategory)->name }}
+                                </a>
+                            </p>
+                            <br>
                             <div class="post-header">
                                 <h4 class="m-title">{{$blog->title}}</h4>
                                 <?php echo $blog->description; ?>

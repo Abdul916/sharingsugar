@@ -4,6 +4,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Session, Validator, DB;
 use App\Models\Admin\Post;
+use App\Models\Admin\Category;
 class CmsController extends Controller
 {
     public function index()
@@ -60,7 +61,7 @@ class CmsController extends Controller
     }
     public function blog(Request $request)
     {
-        $data['blogs'] = DB::table('posts')->where('status', 1)->get();
+        $data['blogs'] = Post::where('status', 1)->orderBy('id', 'DESC')->get();
         return view('cms/blog', $data);
     }
     public function blog_detail($slug='')
@@ -69,6 +70,24 @@ class CmsController extends Controller
             $data['blog'] = Post::where('status', 1)->where('slug', $slug)->first();
             if(!empty($data['blog'])){
                 return view('cms/full_blog', $data);
+            }else{
+                return redirect('blog');
+            }
+        }else{
+            return redirect('blog');
+        }
+    }
+    public function blog_category($slug='')
+    {
+        if(!empty($slug)){
+            $data['category'] = Category::where('status', 1)->where('slug', $slug)->first();
+            if(!empty($data['category'])){
+                $data['blogs'] = Post::where('status', 1)->where('category_id', $data['category']['id'])->orderBy('id', 'DESC')->get();
+                if(!empty($data['blogs'])){
+                    return view('cms/blog', $data);
+                }else{
+                    return redirect('blog');
+                }
             }else{
                 return redirect('blog');
             }

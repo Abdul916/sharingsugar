@@ -38,6 +38,7 @@ Route::get('privacy_policy', [CmsController::class, 'privacy_policy']);
 Route::get('terms_of_conditions', [CmsController::class, 'terms_of_conditions']);
 Route::get('blog', [CmsController::class, 'blog']);
 Route::get('blog-detail/{slug}', [CmsController::class, 'blog_detail']);
+Route::get('category/{slug}', [CmsController::class, 'blog_category']);
 
 Route::group(['middleware' => ['auth']], function () {
 	Route::get('membership', [CmsController::class, 'membership']);
