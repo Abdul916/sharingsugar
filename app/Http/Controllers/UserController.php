@@ -87,6 +87,8 @@ class UserController extends Controller
             'city' => $data['city'],
             'address' => $data['address'],
             'about_me' => $data['about_me'],
+            'latitude' => $data['latitude'] ?? null,
+            'longitude' => $data['longitude'] ?? null,
             'profile_status' => '2',
         ]);
 
