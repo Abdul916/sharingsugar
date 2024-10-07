@@ -44,15 +44,10 @@
         </div>
         <div class="row">
             @foreach($users as $user)
-
             @php
             $liked = check_record_existing('user_configs', 'user_id', Auth::user()->id, 'config_user_id', $user->id, 'type', '2', '', '');
             $blocked = check_record_existing('user_configs', 'user_id', Auth::user()->id, 'config_user_id', $user->id, 'type', '3', '', '');
             @endphp
-            <?php
-            if ($blocked) {
-                continue;
-            } ?>
 
             <div class="col-lg-4 col-md-6">
                 <div class="single-community-box">
@@ -93,162 +88,103 @@
             </div>
             @endforeach
         </div>
-        {{-- <div class="row">
-            <div class="col-lg-12">
-                <div class="pagination-area text-center">
-                    <a href="#"><i class="fas fa-angle-double-left"></i><span></span></a>
-                    <a href="#">1</a>
-                    <a href="#">2</a>
-                    <a href="#" class="active">3</a>
-                    <a href="#">4</a>
-                    <a href="#">5</a>
-                    <a href="#"><i class="fas fa-angle-double-right"></i></a>
-                </div>
+        <div class="row">
+            <div class="col-md-9">
+                <p>Showing {{ $users->firstItem() }} to {{ $users->lastItem() }} of {{ $users->total() }} entries</p>
             </div>
-        </div> --}}
+            <div class="col-md-3 text-right">
+                {{ $users->links('pagination::bootstrap-4') }}
+            </div>
+        </div>
     </div>
 </section>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+<div class="modal fade filter-p" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Filter your search</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-header justify-content-between">
+                <h6 class="modal-title" id="exampleModalTitle">Filter your search</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <form id="search-form" action="members" method="GET">
-                    <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Interested in: </label>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="interestedin" id="Sugar Daddy" value="Sugar Daddy">
-                                    <label class="form-check-label" for="Sugar Daddy">
-                                        Sugar Daddy
-                                    </label>
+                    <div class="join-now-box">
+                        <div class="ml-3 interested-in">
+                            <p class="title">
+                                Interested in:
+                            </p>
+                        </div>
+                        <div class="single-option interested-in">
+                            <div class="option">
+                                <div class="s-input ml-1">
+                                    <input type="radio" name="interestedin" id="Sugar Daddy" {{isset($parameters['interestedin']) && $parameters['interestedin'] === 'Sugar Daddy' ? 'checked' : ''}} value="Sugar Daddy"><label for="Sugar Daddy">Sugar Daddy</label>
                                 </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="interestedin" id="Sugar Mommy" value="Sugar Mommy">
-                                    <label class="form-check-label" for="Sugar Mommy">
-                                        Sugar Mommy
-                                    </label>
+                                <div class="s-input ml-5">
+                                    <input type="radio" name="interestedin" id="Sugar Mommy" {{isset($parameters['interestedin']) && $parameters['interestedin'] === 'Sugar Mommy' ? 'checked' : ''}} value="Sugar Mommy"><label for="Sugar Mommy">Sugar Mommy</label>
                                 </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="interestedin" id="Sugar Daddy Mommy" value="Sugar Daddy Mommy">
-                                    <label class="form-check-label" for="Sugar Daddy Mommy">
-                                        Sugar Daddy Mommy
-                                    </label>
+                                <div class="s-input ml-1">
+                                    <input type="radio" name="interestedin" id="Sugar Daddy Mommy" {{isset($parameters['interestedin']) && $parameters['interestedin'] === 'Sugar Daddy Mommy' ? 'checked' : ''}} value="Sugar Daddy Mommy"><label for="Sugar Daddy Mommy">Sugar Daddy Mommy</label>
                                 </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="interestedin" id="Sugar Baby (Hombre/Man)" value="Sugar Baby (Hombre/Man)">
-                                    <label class="form-check-label" for="Sugar Baby (Hombre/Man)">
-                                        Sugar Baby (Man)
-                                    </label>
+                                <div class="s-input ml-1">
+                                    <input type="radio" name="interestedin" id="Sugar Baby Man" {{isset($parameters['interestedin']) && $parameters['interestedin'] === 'Sugar Baby Man' ? 'checked' : ''}} value="Sugar Baby Man"><label for="Sugar Baby Man">Sugar Baby (Man)</label>
                                 </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="interestedin" id="Sugar Baby (Mujer/Women)" value="Sugar Baby (Mujer/Women)">
-                                    <label class="form-check-label" for="Sugar Baby (Mujer/Women)">
-                                        Sugar Baby (Women)
-                                    </label>
+                                <div class="s-input ml-1">
+                                    <input type="radio" name="interestedin" id="Sugar Baby Women" {{isset($parameters['interestedin']) && $parameters['interestedin'] === 'Sugar Baby Women' ? 'checked' : ''}} value="Sugar Baby Women"><label for="Sugar Baby Women">Sugar Baby (Women)</label>
                                 </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="interestedin" id="Sugar Baby (Trans)" value="Sugar Baby (Trans)">
-                                    <label class="form-check-label" for="Sugar Baby (Trans)">
-                                        Sugar Baby (Trans)
-                                    </label>
+                                <div class="s-input ml-1">
+                                    <input type="radio" name="interestedin" id="Sugar Baby Trans" {{isset($parameters['interestedin']) && $parameters['interestedin'] === 'Sugar Baby Trans' ? 'checked' : ''}} value="Sugar Baby Trans"><label for="Sugar Baby Trans">Sugar Baby (Trans)</label>
                                 </div>
                             </div>
                         </div>
-
-                    </div>
-                    <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Body Type: </label>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="0" name="Skinny" {{isset($parameters['Skinny']) ? 'checked' : ''}} id="Skinny">
-                                    <label class="form-check-label" for="Skinny">
-                                        Skinny
-                                    </label>
+                        <div class="ml-3 body-type">
+                            <p class="title">
+                                Body Type:
+                            </p>
+                        </div>
+                        <div class="single-option body-type">
+                            <div class="option">
+                                <div class="s-input ml-1">
+                                    <input type="checkbox" name="Skinny" id="Skinny" value="Skinny" {{isset($parameters['Skinny']) ? 'checked' : ''}}><label for="Skinny">Skinny</label>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="1" name="Tiny" {{isset($parameters['Tiny']) ? 'checked' : ''}} id="Tiny">
-                                    <label class="form-check-label" for="Tiny">
-                                        Tiny
-                                    </label>
+                                <div class="s-input ml-1">
+                                    <input type="checkbox" name="Tiny" id="Tiny" value="Tiny" {{isset($parameters['Tiny']) ? 'checked' : ''}}><label for="Tiny">Tiny</label>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="2" name="Median" {{isset($parameters['Median']) ? 'checked' : ''}} id="Median">
-                                    <label class="form-check-label" for="Median">
-                                        Median
-                                    </label>
+                                <div class="s-input ml-1">
+                                    <input type="checkbox" name="Median" id="Median" value="Median" {{isset($parameters['Median']) ? 'checked' : ''}}><label for="Median">Median</label>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="3" name="Mascular" {{isset($parameters['Mascular']) ? 'checked' : ''}} id="Mascular">
-                                    <label class="form-check-label" for="Mascular">
-                                        Mascular
-                                    </label>
+                                <div class="s-input ml-1">
+                                    <input type="checkbox" name="Mascular" id="Mascular" value="Mascular" {{isset($parameters['Mascular']) ? 'checked' : ''}}><label for="Mascular">Mascular</label>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="4" name="Athletic" {{isset($parameters['Athletic']) ? 'checked' : ''}} id="Athletic">
-                                    <label class="form-check-label" for="Athletic">
-                                        Athletic
-                                    </label>
+                                <div class="s-input ml-1">
+                                    <input type="checkbox" name="Athletic" id="Athletic" value="Athletic" {{isset($parameters['Athletic']) ? 'checked' : ''}}><label for="Athletic">Athletic</label>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="5" name="Curvilinear" {{isset($parameters['Curvilinear']) ? 'checked' : ''}} id="Curvilinear">
-                                    <label class="form-check-label" for="Curvilinear">
-                                        Curvilinear
-                                    </label>
+                                <div class="s-input ml-1">
+                                    <input type="checkbox" name="Curvilinear" id="Curvilinear" value="Curvilinear" {{isset($parameters['Curvilinear']) ? 'checked' : ''}}><label for="Curvilinear">Curvilinear</label>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="6" name="Full_Height" {{isset($parameters['Full_Height']) ? 'checked' : ''}} id="Full Height">
-                                    <label class="form-check-label" for="Full Height">
-                                        Full Height
-                                    </label>
+                                <div class="s-input ml-1">
+                                    <input type="checkbox" name="Full_Height" id="Full Height" value="Full Height" {{isset($parameters['Full_Height']) ? 'checked' : ''}}><label for="Full Height">Full Height</label>
                                 </div>
                             </div>
                         </div>
-
-                    </div>
-                    <div class="mb-3">
-                        <input class="form-check-input mt-3" onchange="showAgeSlider(this)" type="checkbox" value="1" name="age" {{isset($parameters['age']) ? 'checked' : ''}} id="age">
-
-                        <label for="age" class="col-form-label">Search by Age: </label>
-
-                        <div class="row d-none" id="ageSlider">
+                        <div class="single-option age">
+                            <div class="option title">
+                                <div class="s-input mr-1">
+                                    <input type="checkbox" name="Age" id="Age" value="Age" onchange="showAgeSlider(this)" {{isset($parameters['Age']) ? 'checked' : ''}}><label for="Age">Age</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="{{isset($parameters['Age']) ? 'd-block' : 'd-none'}} age" id="ageSlider">
                             <div class="wrapper">
                                 <div class="values">
                                     <span id="range1">
-                                        <span id="minAgeSpan">{{isset($parameters['age']) ? $parameters['minAge'] : '22'}}</span>
+                                        <span id="minAgeSpan">{{isset($parameters['Age']) ? $parameters['minAge'] : '22'}}</span>
 
                                     </span>
                                     <span> &dash; </span>
                                     <span id="range2">
-                                        <span id="maxAgeSpan">{{isset($parameters['age']) ? $parameters['maxAge'] : '40'}}</span>
+                                        <span id="maxAgeSpan">{{isset($parameters['Age']) ? $parameters['maxAge'] : '40'}}</span>
 
                                     </span>
                                 </div>
@@ -259,123 +195,131 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="mb-3">
-                        <input class="form-check-input mt-3" onchange="showHeightSlider(this)" type="checkbox" value="1" {{isset($parameters['height']) ? 'checked' : ''}} name="height" id="height">
-
-                        <label for="height" class="col-form-label">Search by Height: </label>
-
-                        <div class="row d-none" id="heightSlider">
+                        <div class="single-option height">
+                            <div class="option title">
+                                <div class="s-input mr-1">
+                                    <input type="checkbox" name="Height" id="Height" onchange="showHeightSlider(this)" value="Height" {{isset($parameters['Height']) ? 'checked' : ''}}><label for="Height">Height</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="height {{isset($parameters['Height']) ? 'd-block' : 'd-none'}}" id="heightSlider">
                             <div class="wrapper">
                                 <div class="values">
                                     <span id="heightRange1">
-                                        <span id="minHeightSpan">{{isset($parameters['height']) ? $parameters['minHeight'] : '120'}}</span>
+                                        <span id="minHeightSpan">{{isset($parameters['Height']) ? $parameters['minHeight'] : '120'}}</span>
+
                                     </span>
                                     <span> &dash; </span>
                                     <span id="heightRange2">
-                                        <span id="maxHeightSpan">{{isset($parameters['height']) ? $parameters['maxHeight'] : '150'}}</span>
+                                        <span id="maxHeightSpan">{{isset($parameters['Height']) ? $parameters['maxHeight'] : '150'}}</span>
 
                                     </span>
                                 </div>
                                 <div class="container1">
                                     <div class="slider-track height-slider-track"></div>
-                                    <input type="range" min="100" max="200" value="{{isset($parameters['height']) ? $parameters['minHeight'] : '120'}}" id="heightSlider1" name="minHeight" oninput="slideHeightOne()">
-                                    <input type="range" min="100" max="200" value="{{isset($parameters['height']) ? $parameters['maxHeight'] : '150'}}" id="heightSlider2" name="maxHeight" oninput="slideHeightTwo()">
+                                    <input type="range" min="100" max="200" value="{{isset($parameters['Height']) ? $parameters['minHeight'] : '120'}}" id="heightSlider1" name="minHeight" oninput="slideHeightOne()">
+                                    <input type="range" min="100" max="200" value="{{isset($parameters['Height']) ? $parameters['maxHeight'] : '150'}}" id="heightSlider2" name="maxHeight" oninput="slideHeightTwo()">
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="mb-3">
-                        <input class="form-check-input mt-3" onchange="showWeightSlider(this)" type="checkbox" value="1" name="weight" {{isset($parameters['weight']) ? 'checked' : ''}} id="weight">
-
-                        <label for="weight" class="col-form-label">Search by Weight: </label>
-
-                        <div class="row d-none" id="weightSlider">
+                        <div class="single-option weight">
+                            <div class="option title">
+                                <div class="s-input mr-1">
+                                    <input type="checkbox" name="Weight" id="Weight" value="Weight" onchange="showWeightSlider(this)" {{isset($parameters['Weight']) ? 'checked' : ''}}><label for="Weight">Weight</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="{{isset($parameters['Weight']) ? 'd-block' : 'd-none'}} weight" id="weightSlider">
                             <div class="wrapper">
                                 <div class="values">
                                     <span id="weightRange1">
-                                        <span id="minWeightSpan">{{isset($parameters['weight']) ? $parameters['minWeight'] : '55'}}</span>
+                                        <span id="minWeightSpan">{{isset($parameters['Weight']) ? $parameters['minWeight'] : '55'}}</span>
+
                                     </span>
                                     <span> &dash; </span>
                                     <span id="weightRange2">
-                                        <span id="maxWeightSpan">{{isset($parameters['weight']) ? $parameters['maxWeight'] : '85'}}</span>
+                                        <span id="maxWeightSpan">{{isset($parameters['Weight']) ? $parameters['maxWeight'] : '85'}}</span>
+
                                     </span>
                                 </div>
                                 <div class="container1">
                                     <div class="slider-track weight-slider-track"></div>
-                                    <input type="range" min="40" max="120" value="{{isset($parameters['weight']) ? $parameters['minWeight'] : '55'}}" id="weightSlider1" name="minWeight" oninput="slideWeightOne()">
-                                    <input type="range" min="40" max="120" value="{{isset($parameters['weight']) ? $parameters['maxWeight'] : '85'}}" id="weightSlider2" name="maxWeight" oninput="slideWeightTwo()">
+                                    <input type="range" min="40" max="150" value="{{isset($parameters['Weight']) ? $parameters['minWeight'] : '120'}}" id="weightSlider1" name="minWeight" oninput="slideWeightOne()">
+                                    <input type="range" min="40" max="150" value="{{isset($parameters['Weight']) ? $parameters['maxWeight'] : '150'}}" id="weightSlider2" name="maxWeight" oninput="slideWeightTwo()">
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="mb-3">
-                        <input class="form-check-input mt-3" onchange="showChildSlider(this)" type="checkbox" value="1" name="children" {{isset($parameters['children']) ? 'checked' : ''}} id="children">
-
-                        <label for="children" class="col-form-label">Search by Number of Children: </label>
-
-                        <div class="row d-none" id="childSlider">
+                        <div class="single-option children">
+                            <div class="option title">
+                                <div class="s-input mr-1">
+                                    <input type="checkbox" name="Children" id="Children" value="Children" onchange="showChildSlider(this)" {{isset($parameters['Children']) ? 'checked' : ''}}><label for="Children">Children</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="children {{isset($parameters['Children']) ? 'd-block' : 'd-none'}}" id="childSlider">
                             <div class="wrapper">
                                 <div class="values">
                                     <span id="childrenRange1">
-                                        <span id="minChildrenSpan">{{isset($parameters['children']) ? $parameters['minChildren'] : '1'}}</span>
+                                        <span id="minChildrenSpan">{{isset($parameters['Children']) ? $parameters['minChildren'] : '0'}}</span>
+
                                     </span>
                                     <span> &dash; </span>
                                     <span id="childrenRange2">
-                                        <span id="maxChildrenSpan">{{isset($parameters['children']) ? $parameters['maxChildren'] : '9'}}</span>
+                                        <span id="maxChildrenSpan">{{isset($parameters['Children']) ? $parameters['maxChildren'] : '9'}}</span>
+
                                     </span>
                                 </div>
                                 <div class="container1">
                                     <div class="slider-track children-slider-track"></div>
-                                    <input type="range" min="0" max="8" value="{{isset($parameters['children']) ? $parameters['minChildren'] : '1'}}" id="childrenSlider1" name="minChildren" oninput="slideChildrenOne()">
-                                    <input type="range" min="0" max="8" value="{{isset($parameters['children']) ? $parameters['maxChildren'] : '9'}}" id="childrenSlider2" name="maxChildren" oninput="slideChildrenTwo()">
+                                    <input type="range" min="0" max="9" value="{{isset($parameters['Children']) ? $parameters['minChildren'] : '1'}}" id="childrenSlider1" name="minChildren" oninput="slideChildrenOne()">
+                                    <input type="range" min="0" max="9" value="{{isset($parameters['Children']) ? $parameters['maxChildren'] : '9'}}" id="childrenSlider2" name="maxChildren" oninput="slideChildrenTwo()">
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="mb-3">
-                        <input class="form-check-input" onchange="showLocationSection(this)" type="checkbox" value="1" name="locationsec" {{isset($parameters['loc']) ? 'checked' : ''}} id="locationsec">
-                        <label for="searchByLocation" class="col-form-label">Search by My Location</label>
-                        <input type="checkbox" name="loc" value="1" id="loc-check" {{isset($parameters['loc']) ? 'checked' : ''}} hidden>
-                        <div class="row d-none" id="locationSection">
-                            <div class="col-12 mt-2">
-                                <label for="form-label">Distance (KM)</label>
-                                <input type="number" class="form-control" onchange="checkLocation()" min="10" value="{{isset($parameters['loc']) ? $parameters['distance'] : '10'}}" name="distance" id="distance">
+                        <div class="single-option location">
+                            <div class="option">
+                                <input type="checkbox" onchange="showLocationSection(this)" name="locationsec" {{isset($parameters['locationsec']) ? 'checked' : ''}} id="locationsec" value="1"><label for="locationsec">Location</label>
                             </div>
-                            <div class="col-12 mt-2">
-                                <label for="form-label">Address</label>
-                                <textarea class="form-control" id="address" rows="1" name="address" onchange="checkLocation()">{{isset($parameters['loc']) ? $parameters['address'] : (Auth()->user()->address ?? '')}}</textarea>
+                        </div>
+                        <div class="location">
+                            <div class="wrapper">
+                                <div class="row {{isset($parameters['locationsec']) ? 'd-block' : 'd-none'}}" id="locationSection">
+                                    <div class="col-12 mt-2">
+                                        <label for="form-label">Distance (KM)</label>
+                                        <input type="number" class="form-control" onchange="checkLocation()" min="10" value="{{isset($parameters['locationsec']) ? $parameters['distance'] : '10'}}" name="distance" id="distance">
+                                    </div>
+                                    <div class="col-12 mt-2">
+                                        <label for="form-label">Address</label>
+                                        <textarea class="form-control" id="address" rows="1" name="address" onchange="checkLocation()">{{isset($parameters['locationsec']) ? $parameters['address'] : (Auth()->user()->address ?? '')}}</textarea>
 
+                                    </div>
+                                    <div class="col-12 mt-2">
+                                        <label for="form-label">City</label>
+                                        <input type="text" class="form-control" value="{{isset($parameters['locationsec']) ? $parameters['city'] : (Auth()->user()->city ?? '')}}" name="city" id="city">
+                                    </div>
+                                    <div class="col-12 mt-2">
+                                        <label for="form-label">State</label>
+                                        <input type="text" class="form-control" value="{{isset($parameters['locationsec']) ? $parameters['state'] : (Auth()->user()->state ?? '')}}" name="state" id="state">
+                                    </div>
+                                    <div class="col-12 mt-2">
+                                        <label for="form-label">Country</label>
+                                        <input type="text" class="form-control" value="{{isset($parameters['locationsec']) ? $parameters['country'] : (Auth()->user()->country ?? '')}}" name="country" id="country">
+                                    </div>
+                                    <div class="col-12 mt-2 d-none">
+                                        <label for="form-label">Latitude</label>
+                                        <input type="text" class="form-control" value="{{isset($parameters['locationsec']) ? $parameters['latitude'] : (Auth()->user()->latitude ?? '')}}" readonly name="latitude" id="latitude">
+                                    </div>
+                                    <div class="col-12 mt-2 d-none">
+                                        <label for="form-label">Longitude</label>
+                                        <input type="text" class="form-control" value="{{isset($parameters['locationsec']) ? $parameters['longitude'] : (Auth()->user()->longitude ?? '')}}" readonly name="longitude" id="longitude">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-12 mt-2">
-                                <label for="form-label">City</label>
-                                <input type="text" class="form-control" value="{{isset($parameters['loc']) ? $parameters['city'] : (Auth()->user()->city ?? '')}}" readonly name="city" id="city">
-                            </div>
-                            <div class="col-12 mt-2">
-                                <label for="form-label">State</label>
-                                <input type="text" class="form-control" value="{{isset($parameters['loc']) ? $parameters['state'] : (Auth()->user()->state ?? '')}}" readonly name="state" id="state">
-                            </div>
-                            <div class="col-12 mt-2">
-                                <label for="form-label">Country</label>
-                                <input type="text" class="form-control" value="{{isset($parameters['loc']) ? $parameters['country'] : (Auth()->user()->country ?? '')}}" readonly name="country" id="country">
-                            </div>
-                            <div class="col-12 mt-2 d-none">
-                                <label for="form-label">Latitude</label>
-                                <input type="text" class="form-control" value="{{isset($parameters['loc']) ? $parameters['latitude'] : (Auth()->user()->latitude ?? '')}}" readonly name="latitude" id="latitude">
-                            </div>
-                            <div class="col-12 mt-2 d-none">
-                                <label for="form-label">Longitude</label>
-                                <input type="text" class="form-control" value="{{isset($parameters['loc']) ? $parameters['longitude'] : (Auth()->user()->longitude ?? '')}}" readonly name="longitude" id="longitude">
-                            </div>
-
+                        </div>
+                        <div class="joun-button">
+                            <button type="submit" class="custom-button">Search</button>
                         </div>
                     </div>
-
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="custom-button3" id="resetBtn">Clear Form</button>
-                <button type="button" id="formSubmitBtn" class="custom-button">Search</button>
                 </form>
             </div>
         </div>
@@ -494,8 +438,9 @@
     let heightSliderTrack = document.querySelector(".height-slider-track");
 
     // Function to update height slider values
+
     function slideHeightOne() {
-        document.getElementById("height").checked = true;
+        // document.getElementById("height").checked = true;
         if (parseInt(heightSlider2.value) - parseInt(heightSlider1.value) <= minGap) {
             heightSlider1.value = parseInt(heightSlider2.value) - minGap;
         }
@@ -504,7 +449,7 @@
     }
 
     function slideHeightTwo() {
-        document.getElementById("height").checked = true;
+        // document.getElementById("height").checked = true;
         if (parseInt(heightSlider2.value) - parseInt(heightSlider1.value) <= minGap) {
             heightSlider2.value = parseInt(heightSlider1.value) + minGap;
         }
@@ -529,7 +474,7 @@
 
     // Function to update weight slider values
     function slideWeightOne() {
-        document.getElementById("weight").checked = true;
+        // document.getElementById("weight").checked = true;
         if (parseInt(weightSlider2.value) - parseInt(weightSlider1.value) <= minGap) {
             weightSlider1.value = parseInt(weightSlider2.value) - minGap;
         }
@@ -538,7 +483,7 @@
     }
 
     function slideWeightTwo() {
-        document.getElementById("weight").checked = true;
+        // document.getElementById("weight").checked = true;
         if (parseInt(weightSlider2.value) - parseInt(weightSlider1.value) <= minGap) {
             weightSlider2.value = parseInt(weightSlider1.value) + minGap;
         }
@@ -564,7 +509,7 @@
 
     // Function to update children slider values
     function slideChildrenOne() {
-        document.getElementById("children").checked = true;
+        // document.getElementById("children").checked = true;
         if (parseInt(childrenSlider2.value) - parseInt(childrenSlider1.value) <= minGap) {
             childrenSlider1.value = parseInt(childrenSlider2.value) - minGap;
         }
@@ -573,7 +518,7 @@
     }
 
     function slideChildrenTwo() {
-        document.getElementById("children").checked = true;
+        // document.getElementById("children").checked = true;
         if (parseInt(childrenSlider2.value) - parseInt(childrenSlider1.value) <= minGap) {
             childrenSlider2.value = parseInt(childrenSlider1.value) + minGap;
         }
@@ -593,37 +538,36 @@
 </script>
 <!-- Google places scripts -->
 <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-      
+
 <script>
-    const latlongs = {!! $cordinates !!};
+    const latlongs = {!!$cordinates!!};
     console.log(latlongs);
 
     function initMap() {
         // 1. Initialize the map
-        const myLatlng = { lat: 33.0, lng: 78.0 }; 
+        const myLatlng = {
+            lat: 33.0,
+            lng: 78.0
+        };
         const map = new google.maps.Map(document.getElementById('map'), {
             zoom: 4,
             center: myLatlng,
         });
-
         // 2. Set up autocomplete for address input
         const input = document.getElementById('address');
         const autocomplete = new google.maps.places.Autocomplete(input);
         autocomplete.setFields(['geometry', 'formatted_address', 'address_components']);
-
         autocomplete.addListener('place_changed', () => {
             const place = autocomplete.getPlace();
             if (!place.geometry) {
                 return;
             }
-
             const address = place.formatted_address;
             const city = getAddressComponent(place, 'locality');
             const state = getAddressComponent(place, 'administrative_area_level_1');
             const country = getAddressComponent(place, 'country');
             const latitude = place.geometry.location.lat();
             const longitude = place.geometry.location.lng();
-
             // Update the input fields
             document.getElementById('address').value = address;
             document.getElementById('city').value = city;
@@ -631,11 +575,12 @@
             document.getElementById('country').value = country;
             document.getElementById('latitude').value = latitude;
             document.getElementById('longitude').value = longitude;
-
             // Center the map on the selected location
-            map.setCenter({ lat: latitude, lng: longitude });
+            map.setCenter({
+                lat: latitude,
+                lng: longitude
+            });
         });
-
         // 3. Add markers for users
         latlongs.forEach((location, index) => {
             const marker = new google.maps.Marker({
@@ -650,7 +595,6 @@
                     scale: 5
                 }
             });
-
             const infoWindowContent = `
                 <div>
                     <strong>${location.name}</strong> <br>
@@ -660,11 +604,9 @@
             const infoWindow = new google.maps.InfoWindow({
                 content: infoWindowContent
             });
-
             marker.addListener('click', () => {
                 infoWindow.open(map, marker);
             });
-
             google.maps.event.addListener(infoWindow, 'domready', function() {
                 const closeButton = this.getContent().querySelector('.close-info-window');
                 closeButton.addEventListener('click', () => {
@@ -684,10 +626,6 @@
     }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBy2l4KGGTm4cTqoSl6h8UAOAob87sHBsA&libraries=places&callback=initMap" async defer></script>
-
-    
-
-
 
 <script>
     $(document).ready(function() {

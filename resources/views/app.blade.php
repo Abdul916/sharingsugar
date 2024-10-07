@@ -17,7 +17,9 @@
     <meta name="twitter:title" content="@yield('title')">
     <meta name="twitter:description" content="@yield('meta_description')">
     <style>
-       
+        .active .page-link {
+            background: #5650ce;
+        }
 
         .pac-container {
             z-index: 10000 !important;

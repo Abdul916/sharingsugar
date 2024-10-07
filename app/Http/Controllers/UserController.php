@@ -290,6 +290,7 @@ class UserController extends Controller
     {
         $query = User::query();
         $query->where('id', '<>', Auth::user()->id);
+
         if ($request->has('interestedin')) {
             if ($request->interestedin == 'Sugar Daddy') {
                 $query->where('iam', 'Sugar Daddy');
@@ -297,29 +298,29 @@ class UserController extends Controller
                 $query->where('iam', 'Sugar Mommy');
             } else if ($request->interestedin == 'Sugar Daddy Mommy') {
                 $query->where('iam', 'Sugar Daddy Mommy');
-            } else if ($request->interestedin == 'Sugar Baby (Hombre/Man)') {
+            } else if ($request->interestedin == 'Sugar Baby Man') {
                 $query->where('iam', 'Sugar Baby (Hombre / Man)');
-            } else if ($request->interestedin == 'Sugar Baby (Mujer/Woman)') {
+            } else if ($request->interestedin == 'Sugar Baby Women') {
                 $query->where('iam', 'Sugar Baby (Mujer / Woman)');
-            } else if ($request->interestedin == 'Sugar Baby (Trans)') {
+            } else if ($request->interestedin == 'Sugar Baby Trans') {
                 $query->where('iam', 'Sugar Baby (Trans)');
             }
         }
-        if ($request->has('age')) {
+        if ($request->has('Age')) {
             $query->where('age', '>=', $request->minAge);
             $query->where('age', '<=', $request->maxAge);
         }
-        if ($request->has('height')) {
+        if ($request->has('Height')) {
             $query->where('height', '>=', $request->minHeight);
             $query->where('height', '<=', $request->maxHeight);
         }
-        if ($request->has('weight')) {
+        if ($request->has('Weight')) {
             $query->where('weight', '>=', $request->minWeight);
             $query->where('weight', '<=', $request->maxWeight);
         }
-        if ($request->has('children')) {
-            $query->where('weight', '>=', $request->minChildren);
-            $query->where('weight', '<=', $request->maxChildren);
+        if ($request->has('Children')) {
+            $query->where('child', '>=', $request->minChildren);
+            $query->where('child', '<=', $request->maxChildren);
         }
         $body_types = [];
         if ($request->has('Skinny')) {
@@ -345,45 +346,69 @@ class UserController extends Controller
             $query->whereIn('body_type', $body_types);
         }
 
-        if ($request->has('loc')) {
-            $distance = $request->distance;
-            $latitude = $request->latitude;
-            $longitude = $request->longitude;
-            $radius = 6371;
-
-            $latRadians = deg2rad($latitude);
-            $lngRadians = deg2rad($longitude);
-
-            $angularDistance = $distance / $radius;
-
-            $lngMinRadians = $lngRadians - $angularDistance / cos($latRadians);
-            $lngMaxRadians = $lngRadians + $angularDistance / cos($latRadians);
-
-            $latMin = rad2deg($latRadians - $angularDistance);
-            $latMax = rad2deg($latRadians + $angularDistance);
-            $lngMin = rad2deg($lngMinRadians);
-            $lngMax = rad2deg($lngMaxRadians);
-
-            $query->whereBetween('latitude', [$latMin, $latMax]);
-            $query->whereBetween('longitude', [$lngMin, $lngMax]);
-        }
-        $data['users'] = $query->paginate(10);
-        $data['parameters'] = [];
-        $data['parameters'] = $request->all();
-            $data['cordinates'] = [];
-            foreach ($data['users'] as $user) {
-                if ($user->latitude != null && $user->longitude != null) {
-                    $data['cordinates'][] = [
-                        'lat' => (float)$user->latitude,  // Cast to float
-                        'lng' => (float)$user->longitude,  // Cast to float
-                        'name' => $user->first_name . ' ' . $user->last_name,
-                        'profile_link' => url('public_profile/' . $user->unique_id),
-                    ];
-                }
+        if ($request->has('locationsec')) {
+            if ($request->has('city') && $request->city != '') {
+                $query->where('city', 'like', '%' . $request->city . '%');
             }
+            if ($request->has('state') && $request->state != '') {
+                $query->where('state', 'like', '%' . $request->state . '%');
+            }
+            if ($request->has('country') && $request->country != '') {
+                $query->where('country', 'like', '%' . $request->country . '%');
+            }
+            if ($request->has('address') && $request->address != '') {
+                $distance = $request->distance;
+                $latitude = $request->latitude;
+                $longitude = $request->longitude;
+                $radius = 6371;
 
-            // Encode the coordinates array to JSON
-            $data['cordinates'] = json_encode($data['cordinates']);
+                $latRadians = deg2rad($latitude);
+                $lngRadians = deg2rad($longitude);
+
+                $angularDistance = $distance / $radius;
+
+                $lngMinRadians = $lngRadians - $angularDistance / cos($latRadians);
+                $lngMaxRadians = $lngRadians + $angularDistance / cos($latRadians);
+
+                $latMin = rad2deg($latRadians - $angularDistance);
+                $latMax = rad2deg($latRadians + $angularDistance);
+                $lngMin = rad2deg($lngMinRadians);
+                $lngMax = rad2deg($lngMaxRadians);
+
+                $query->whereBetween('latitude', [$latMin, $latMax]);
+                $query->whereBetween('longitude', [$lngMin, $lngMax]);
+            }
+        }
+        // those blocked should not be in query
+        $blocked = DB::table('user_configs')
+            ->where('user_id', Auth::user()->id)
+            ->where('type', 3)
+            ->get();
+        $blocked_ids = [];
+        foreach ($blocked as $block) {
+            $blocked_ids[] = $block->config_user_id;
+        }
+        $query->whereNotIn('id', $blocked_ids);
+
+        $data['users'] = $query->paginate(3);
+        $data['parameters'] = $request->all();
+        $data['cordinates'] = [];
+        
+        foreach ($data['users'] as $user) {
+
+            // dd("auth: " . Auth::user()->id . " user: " . $user->id, "type: 3", $blocked );
+            if ($user->latitude != null && $user->longitude != null) {
+                $data['cordinates'][] = [
+                    'lat' => (float)$user->latitude,  // Cast to float
+                    'lng' => (float)$user->longitude,  // Cast to float
+                    'name' => $user->first_name . ' ' . $user->last_name,
+                    'profile_link' => url('public_profile/' . $user->unique_id),
+                ];
+            }
+        }
+
+        // Encode the coordinates array to JSON
+        $data['cordinates'] = json_encode($data['cordinates']);
 
 
         return view('user/members', $data);
