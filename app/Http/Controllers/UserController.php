@@ -262,33 +262,33 @@ class UserController extends Controller
         $data['user'] = User::find(Auth::user()->id);
 
         $data['blocked'] = DB::table('user_configs')
-            ->where('user_id', Auth::user()->id)
-            ->where('type', 3)
-            ->get();
+        ->where('user_id', Auth::user()->id)
+        ->where('type', 3)
+        ->get();
 
         $data['today_visitor_count'] = DB::table('visitors')
-            ->where('user_id', Auth::user()->id)
-            ->whereDate('created_at', date('Y-m-d'))
-            ->distinct()->count('visitor_user_id');
+        ->where('user_id', Auth::user()->id)
+        ->whereDate('created_at', date('Y-m-d'))
+        ->distinct()->count('visitor_user_id');
 
 
         $data['today_visitors'] = DB::table('visitors')
-            ->where('user_id', Auth::user()->id)
-            ->whereDate('created_at', date('Y-m-d'))
-            ->distinct()
-            ->get('visitor_user_id');
+        ->where('user_id', Auth::user()->id)
+        ->whereDate('created_at', date('Y-m-d'))
+        ->distinct()
+        ->get('visitor_user_id');
 
         $data['visitors'] = DB::table('visitors')
-            ->where('user_id', Auth::user()->id)
-            ->distinct()
-            ->get('visitor_user_id');
+        ->where('user_id', Auth::user()->id)
+        ->distinct()
+        ->get('visitor_user_id');
 
         return view('user/privacy_settings', $data);
     }
 
     public function members(Request $request)
     {
-        dd($request->all()); 
+        // dd($request->all());
         $query = User::query();
         $query->where('id', '<>', Auth::user()->id);
         if ($request->has('interestedin')) {
@@ -394,36 +394,31 @@ class UserController extends Controller
         }
         // those blocked should not be in query
         $blocked = DB::table('user_configs')
-            ->where('user_id', Auth::user()->id)
-            ->where('type', 3)
-            ->get();
+        ->where('user_id', Auth::user()->id)
+        ->where('type', 3)
+        ->get();
         $blocked_ids = [];
         foreach ($blocked as $block) {
             $blocked_ids[] = $block->config_user_id;
         }
         $query->whereNotIn('id', $blocked_ids);
-
-        $data['users'] = $query->paginate(3);
+        // $data['users'] = $query->paginate(3);
+        $users = $query->paginate(3);
+        $users->appends($request->except('page'));
+        $data['users'] = $users;
         $data['parameters'] = $request->all();
         $data['cordinates'] = [];
-        
         foreach ($data['users'] as $user) {
-
-            // dd("auth: " . Auth::user()->id . " user: " . $user->id, "type: 3", $blocked );
             if ($user->latitude != null && $user->longitude != null) {
                 $data['cordinates'][] = [
-                    'lat' => (float)$user->latitude,  // Cast to float
-                    'lng' => (float)$user->longitude,  // Cast to float
+                    'lat' => (float)$user->latitude,
+                    'lng' => (float)$user->longitude,
                     'name' => $user->first_name . ' ' . $user->last_name,
                     'profile_link' => url('public_profile/' . $user->unique_id),
                 ];
             }
         }
-
-        // Encode the coordinates array to JSON
         $data['cordinates'] = json_encode($data['cordinates']);
-
-
         return view('user/members', $data);
     }
 
@@ -519,29 +514,29 @@ class UserController extends Controller
     {
         $data['user'] = User::find(Auth::user()->id);
         $data['pending'] = DB::table('user_configs')
-            ->where('user_id', Auth::user()->id)
-            ->where('type', 5)
-            ->where('status', 1)
-            ->get();
+        ->where('user_id', Auth::user()->id)
+        ->where('type', 5)
+        ->where('status', 1)
+        ->get();
 
         $data['approved'] = DB::table('user_configs')
-            ->where('user_id', Auth::user()->id)
-            ->where('type', 5)
-            ->where('status', 2)
-            ->get();
+        ->where('user_id', Auth::user()->id)
+        ->where('type', 5)
+        ->where('status', 2)
+        ->get();
 
 
         $data['my_pending'] = DB::table('user_configs')
-            ->where('config_user_id', Auth::user()->id)
-            ->where('type', 5)
-            ->where('status', 1)
-            ->get();
+        ->where('config_user_id', Auth::user()->id)
+        ->where('type', 5)
+        ->where('status', 1)
+        ->get();
 
         $data['my_approved'] = DB::table('user_configs')
-            ->where('config_user_id', Auth::user()->id)
-            ->where('type', 5)
-            ->where('status', 2)
-            ->get();
+        ->where('config_user_id', Auth::user()->id)
+        ->where('type', 5)
+        ->where('status', 2)
+        ->get();
 
         return view('user/requests', $data);
     }
@@ -636,14 +631,14 @@ class UserController extends Controller
             $user_id = $user->id;
 
             $chatted = DB::table('chatted_users')
-                ->where(function ($query1) use ($user_id) {
-                    $query1->where('sender_id', '=', Auth::user()->id)
-                        ->where('receiver_id', '=', $user_id);
-                })
-                ->orWhere(function ($query2) use ($user_id) {
-                    $query2->where('sender_id', $user_id)
-                        ->where('receiver_id', Auth::user()->id);
-                })->first();
+            ->where(function ($query1) use ($user_id) {
+                $query1->where('sender_id', '=', Auth::user()->id)
+                ->where('receiver_id', '=', $user_id);
+            })
+            ->orWhere(function ($query2) use ($user_id) {
+                $query2->where('sender_id', $user_id)
+                ->where('receiver_id', Auth::user()->id);
+            })->first();
 
             if (empty($chatted->id)) {
                 $chatted_id = DB::table('chatted_users')->insertGetId([
@@ -661,23 +656,23 @@ class UserController extends Controller
             $user_id = $user->id;
 
             $chatted = DB::table('chatted_users')
-                ->where(function ($query1) use ($user_id) {
-                    $query1->where('sender_id', '=', Auth::user()->id)
-                        ->where('receiver_id', '=', $user_id);
-                })
-                ->orWhere(function ($query2) use ($user_id) {
-                    $query2->where('sender_id', $user_id)
-                        ->where('receiver_id', Auth::user()->id);
-                })->first();
+            ->where(function ($query1) use ($user_id) {
+                $query1->where('sender_id', '=', Auth::user()->id)
+                ->where('receiver_id', '=', $user_id);
+            })
+            ->orWhere(function ($query2) use ($user_id) {
+                $query2->where('sender_id', $user_id)
+                ->where('receiver_id', Auth::user()->id);
+            })->first();
             $data['chat_id'] = $chatted->id;
             $data['receiver_id'] = $user_id;
         }
 
         $data['chatted_users'] = DB::table('chatted_users')
-            ->where(function ($query) {
-                $query->where('sender_id', Auth::user()->id)
-                    ->orWhere('receiver_id', Auth::user()->id);
-            })->orderBy('id', 'ASC')->get();
+        ->where(function ($query) {
+            $query->where('sender_id', Auth::user()->id)
+            ->orWhere('receiver_id', Auth::user()->id);
+        })->orderBy('id', 'ASC')->get();
 
         $data['user'] = User::find(Auth::user()->id);
         return view('user/chat', $data);
@@ -687,8 +682,8 @@ class UserController extends Controller
     {
         $data = $request->all();
         $data['chats'] = DB::table('chat')
-            ->where('chatted_id', $data['chat_id'])
-            ->orderBy('id', 'ASC')->get();
+        ->where('chatted_id', $data['chat_id'])
+        ->orderBy('id', 'ASC')->get();
 
         $data['chatted_id'] = $data['chat_id'];
         $row = get_single_row('chatted_users', 'id', $data['chat_id'], '', '', '', '');
