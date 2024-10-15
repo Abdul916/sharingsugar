@@ -288,9 +288,9 @@ class UserController extends Controller
 
     public function members(Request $request)
     {
+        dd($request->all()); 
         $query = User::query();
         $query->where('id', '<>', Auth::user()->id);
-
         if ($request->has('interestedin')) {
             if ($request->interestedin == 'Sugar Daddy') {
                 $query->where('iam', 'Sugar Daddy');
@@ -305,6 +305,19 @@ class UserController extends Controller
             } else if ($request->interestedin == 'Sugar Baby Trans') {
                 $query->where('iam', 'Sugar Baby (Trans)');
             }
+        }
+        if($request->sorting == 'last_login'){
+            $query->orderBy('last_login', 'DESC');
+        } else if ($request->sorting == 'distance'){
+            $query->orderByRaw('latitude IS NULL, longitude IS NULL, ( 3959 * acos( cos( radians('.$request->latitude.') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians('.$request->longitude.') ) + sin( radians('.$request->latitude.') ) * sin( radians( latitude ) ) ) )');
+        }
+
+        if($request->only_photos == 'on'){
+            $query->where('profile_image', '!=', NULL);
+        }
+        if($request->name != ''){
+            $query->where('first_name', 'like', '%' . $request->name . '%')
+            ->orWhere('last_name', 'like', '%' . $request->name . '%');
         }
         if ($request->has('Age')) {
             $query->where('age', '>=', $request->minAge);

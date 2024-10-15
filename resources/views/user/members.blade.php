@@ -1,6 +1,23 @@
 @extends('app')
 @section('title', 'Members')
 @section('content')
+<script>
+    function OnlyPhotosGet(e) {
+        if (e.checked) {
+            $('#check_only_photos').prop('checked', true);
+        } else {
+            $('#check_only_photos').prop('checked', false);
+        }
+        $('#search-form').submit();
+    }
+
+    function NameSearchGet(e){
+        
+        $('#search_name').val($('#name_search').val());
+        $('#search-form').submit();
+    }
+
+</script>
 <section class="breadcrumb-area profile-bc-area">
     <div class="container">
         <div class="content">
@@ -27,15 +44,25 @@
                             <i class="fas fa-map-marker"></i> Map
                         </a>
                     </div>
+                    <div>
+                        <div class="form-group">
+                            <label for="only_photos" class="form-label"><input type="checkbox" class="form-control" {{isset($parameters['only_photos']) ? 'checked' : ''}} onchange="OnlyPhotosGet(this)" name="only_photos" id="only_photos" value="1" style="display: inline-block; width: 14px; height: 14px; color: #5650ce; z-index: -9; text-align: center;"> Only Photos</label>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-group">
+                            <input type="text" name="name_search" class="form-control" id="name_search" value="{{isset($parameters['name']) ? $parameters['name'] : ''}}" placeholder="Search by name">
+                            <button onclick="NameSearchGet(this)"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
                     <div class="right">
                         <span class="span">
-                            Order By :
+                            Sort By :
                         </span>
                         <div class="filter-right">
-                            <select class="nice-select select-bar">
-                                <option value="">Sort By</option>
-                                <option value="">Sort By Last Login</option>
-                                <option value="">Sort By Distance</option>
+                            <select name="sorting" onchange="$('#sorter').val(this.value); " class="nice-select select-bar">
+                                <option value="last_login" {{isset($parameters['sorting']) ? ($parameters['sorting'] == 'last_login' ? 'selected' : '') : 'selected'}}>Last Login</option>
+                                <option value="distance" {{isset($parameters['sorting']) ? ($parameters['sorting'] == 'distance' ? 'selected' : '') : ''}}>Distance</option>
                             </select>
                         </div>
                     </div>
@@ -48,7 +75,6 @@
             $liked = check_record_existing('user_configs', 'user_id', Auth::user()->id, 'config_user_id', $user->id, 'type', '2', '', '');
             $blocked = check_record_existing('user_configs', 'user_id', Auth::user()->id, 'config_user_id', $user->id, 'type', '3', '', '');
             @endphp
-
             <div class="col-lg-4 col-md-6">
                 <div class="single-community-box">
                     <a href="{{ url('public_profile') }}/{{ $user->unique_id }}" class="title">
@@ -277,9 +303,16 @@
                             </div>
                         </div>
                         <div class="single-option location">
-                            <div class="option">
-                                <input type="checkbox" onchange="showLocationSection(this)" name="locationsec" {{isset($parameters['locationsec']) ? 'checked' : ''}} id="locationsec" value="1"><label for="locationsec">Location</label>
+                            <div class="option title">
+                                <div class="s-input mr-1">
+                                    <input type="checkbox" onchange="showLocationSection(this)" name="locationsec" {{isset($parameters['locationsec']) ? 'checked' : ''}} id="locationsec" value="1"><label for="locationsec">Location</label>
+                                </div>
                             </div>
+                        </div>
+                        <div class="d-block">
+                            <input type="text" name="name" id="search_name" value="{{isset($parameters['name']) ? $parameters['name'] : ''}}">
+                            <input type="text" name="sorting" id="sorter" value="{{isset($parameters['sorting']) ? $parameters['sorting'] : 'last_login'}}">
+                            <input type="checkbox" name="only_photos" {{isset($parameters['only_photos']) ? 'checked' : ''}} id="check_only_photos">
                         </div>
                         <div class="location">
                             <div class="wrapper">
@@ -343,7 +376,6 @@
 
 @endsection
 @push('scripts')
-
 
 <script>
     function showHeightSlider(elm) {
@@ -540,7 +572,9 @@
 <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 
 <script>
-    const latlongs = {!!$cordinates!!};
+    const latlongs = {
+        !!$cordinates!!
+    };
     console.log(latlongs);
 
     function initMap() {
