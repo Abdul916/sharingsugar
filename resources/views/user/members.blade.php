@@ -11,12 +11,11 @@
         $('#search-form').submit();
     }
 
-    function NameSearchGet(e){
-        
+    function NameSearchGet(e) {
+
         $('#search_name').val($('#name_search').val());
         $('#search-form').submit();
     }
-
 </script>
 <section class="breadcrumb-area profile-bc-area">
     <div class="container">
@@ -50,9 +49,9 @@
                         </div>
                     </div>
                     <div>
-                        <div class="form-group">
-                            <input type="text" name="name_search" class="form-control" id="name_search" value="{{isset($parameters['name']) ? $parameters['name'] : ''}}" placeholder="Search by name">
-                            <button onclick="NameSearchGet(this)"><i class="fa fa-search"></i></button>
+                        <div class="form-group d-flex">
+                            <input type="text" name="name_search" class="form-control" id="name_search" value="{{isset($parameters['name']) ? $parameters['name'] : ''}}" placeholder="Search by name" onkeypress="if(event.key === 'Enter') { NameSearchGet(this); }">
+                            <button type="button" onclick="NameSearchGet(this)" class="namebtn"><i class="fa fa-search"></i></button>
                         </div>
                     </div>
                     <div class="right">
