@@ -53,7 +53,7 @@
                             <i class="far fa-comments"></i>
                             <textarea name="message" placeholder="Type Your Message"></textarea>
                         </div>
-                        <button type="button" data-sitekey="6Lcbh1cqAAAAABrvmZQHcxQOrnZhzeZVLktJVIn6"
+                        <button type="button" data-sitekey="6Lcb6GIqAAAAAK9r5LEIfhFcG0pEEVevVYZfwVYk"
                             data-callback='onSubmit'
                             data-action='submit' class="custom-button btn_save g-recaptcha" class="">Send Message</button>
                     </div>
