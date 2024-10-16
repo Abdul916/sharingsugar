@@ -53,7 +53,9 @@
                             <i class="far fa-comments"></i>
                             <textarea name="message" placeholder="Type Your Message"></textarea>
                         </div>
-                        <button type="button" class="custom-button btn_save">Send Message</button>
+                        <button type="button" data-sitekey="6Lcbh1cqAAAAABrvmZQHcxQOrnZhzeZVLktJVIn6"
+                            data-callback='onSubmit'
+                            data-action='submit' class="custom-button btn_save g-recaptcha" class="">Send Message</button>
                     </div>
                 </form>
             </div>
@@ -64,39 +66,43 @@
 
 @push('scripts')
 <script>
-    $(document).on("click" , ".btn_save" , function() {
+    function onSubmit(token) {
         $(".btn_save").text('Please wait...');
         $(".btn_save").prop('disabled', 'true');
-        var formData =  new FormData($("#add_form")[0]);
+        var formData = new FormData($("#add_form")[0]);
         $.ajax({
-            url:'{{ url('send_email') }}',
+            url: "{{ url('send_email') }}",
             type: 'POST',
             data: formData,
-            dataType:'json',
+            dataType: 'json',
             cache: false,
             contentType: false,
             processData: false,
-            success:function(status){
-                if(status.msg=='success') {
+            success: function(status) {
+                if (status.msg == 'success') {
                     $('.btn_save').prop("disabled", false);
                     $(".btn_save").text('Send Message');
                     $('#add_form')[0].reset();
-                    toastr.success(status.response,"Success");
-                } else if(status.msg == 'error') {
+                    toastr.success(status.response, "Success");
+                } else if (status.msg == 'error') {
                     $(".btn_save").prop('disabled', false);
                     $(".btn_save").text('Send Message');
-                    toastr.error(status.response,"Error");
-                } else if(status.msg == 'lvl_error') {
+                    toastr.error(status.response, "Error");
+                } else if (status.msg == 'lvl_error') {
                     $(".btn_save").prop('disabled', false);
                     $(".btn_save").text('Send Message');
                     var message = "";
-                    $.each(status.response, function (key, value) {
-                        message += value+"<br>";
+                    $.each(status.response, function(key, value) {
+                        message += value + "<br>";
                     });
                     toastr.error(message, "Error");
                 }
             }
         });
+    }
+
+    $(document).on("click", ".btn_save", function() {
+
     });
 </script>
 @endpush

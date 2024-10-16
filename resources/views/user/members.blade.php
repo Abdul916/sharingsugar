@@ -60,7 +60,7 @@
                             Sort By :
                         </span>
                         <div class="filter-right">
-                            <select name="sorting" onchange="$('#sorter').val(this.value); " class="nice-select select-bar">
+                            <select name="sorting" onchange="$('#sorter').val(this.value); $('#search-form').submit();" class="nice-select select-bar">
                                 <option value="last_login" {{isset($parameters['sorting']) ? ($parameters['sorting'] == 'last_login' ? 'selected' : '') : 'selected'}}>Last Login</option>
                                 <option value="distance" {{isset($parameters['sorting']) ? ($parameters['sorting'] == 'distance' ? 'selected' : '') : ''}}>Distance</option>
                             </select>
@@ -309,7 +309,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="d-block">
+                        <div class="d-none">
                             <input type="text" name="name" id="search_name" value="{{isset($parameters['name']) ? $parameters['name'] : ''}}">
                             <input type="text" name="sorting" id="sorter" value="{{isset($parameters['sorting']) ? $parameters['sorting'] : 'last_login'}}">
                             <input type="checkbox" name="only_photos" {{isset($parameters['only_photos']) ? 'checked' : ''}} id="check_only_photos">

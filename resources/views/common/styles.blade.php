@@ -18,5 +18,5 @@
 <link rel="stylesheet" href="{{ asset('assets/css/custom_style.css') }}">
 <link rel="stylesheet" href="{{ asset('admin_assets/css/plugins/sweetalert/sweetalert.css') }}">
 <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}" type="image/x-icon">
-
+<script src="https://www.google.com/recaptcha/api.js"></script>
 @yield('styles')
