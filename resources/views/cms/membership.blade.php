@@ -34,54 +34,20 @@
                     <img class="left-img" src="{{ asset('assets/images/membership/left-img.png') }}" alt="">
                     <img class="right-img" src="{{ asset('assets/images/membership/right-img.png') }}" alt="">
                     <div class="row">
+                        @foreach($plans as $plan)
                         <div class="col-lg-3 col-md-6">
                             <div class="single-plan">
-                                <p class="duration">Monthly</p>
-                                <h4 class="number">$ 4.95</h4>
+                                <p class="duration">{{$plan->name}}</p>
+                                <h4 class="number">$ {{$plan->price}}</h4>
                                 <p class="stamet mb-30 mt-30">
-                                    A premium membership will allow you to view messages from other members. Being a premium member allows you to communicate with others on the site
+                                {{$plan->description}}
                                 </p>
                                 <p class="duration">Basic<br>(Save 0%)</p>
                                 <button type="button" class="custom-button">Buy Now!</button>
                                 <img class="shape" src="{{ asset('assets/images/membership/plan-bg.png') }}" alt="">
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="single-plan">
-                                <p class="duration">Quarterly</p>
-                                <h4 class="number">$ 9.95</h4>
-                                <p class="stamet mb-30 mt-30">
-                                    A premium membership will allow you to view messages from other members. Being a premium member allows you to communicate with others on the site
-                                </p>
-                                <p class="duration">Regular<br>(Save 32%)</p>
-                                <button type="button" class="custom-button">Buy Now!</button>
-                                <img class="shape" src="{{ asset('assets/images/membership/plan-bg.png') }}" alt="">
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="single-plan">
-                                <p class="duration">Half Year</p>
-                                <h4 class="number">$ 19.95</h4>
-                                <p class="stamet mb-30 mt-30">
-                                    A premium membership will allow you to view messages from other members. Being a premium member allows you to communicate with others on the site
-                                </p>
-                                <p class="duration">Intermediate<br>(Save 32%)</p>
-                                <button type="button" class="custom-button">Buy Now!</button>
-                                <img class="shape" src="{{ asset('assets/images/membership/plan-bg.png') }}" alt="">
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="single-plan">
-                                <p class="duration">Yearly</p>
-                                <h4 class="number">$ 29.95</h4>
-                                <p class="stamet mb-30 mt-30">
-                                    A premium membership will allow you to view messages from other members. Being a premium member allows you to communicate with others on the site
-                                </p>
-                                <p class="duration">Advanced<br>(Save 50%)</p>
-                                <button type="button" class="custom-button">Buy Now!</button>
-                                <img class="shape" src="{{ asset('assets/images/membership/plan-bg.png') }}" alt="">
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

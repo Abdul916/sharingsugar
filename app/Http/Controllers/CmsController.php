@@ -5,6 +5,8 @@ use Illuminate\Http\Request;
 use Session, Validator, DB;
 use App\Models\Admin\Post;
 use App\Models\Admin\Category;
+use App\Models\Plans;
+
 class CmsController extends Controller
 {
     public function index()
@@ -98,7 +100,8 @@ class CmsController extends Controller
 
     public function membership()
     {
-        return view('cms/membership');
+        $plans = Plans::all();
+        return view('cms/membership', compact('plans'));
     }
     public function privacy_policy()
     {

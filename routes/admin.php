@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\Admin\AdminLoginController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\UsersController;
@@ -7,8 +8,8 @@ use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\MembershipsController;
 use App\Http\Controllers\Admin\ContactUsController;
-
-
+use App\Http\Controllers\Admin\PlansController;
+use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix'  =>  'admin'], function () {
 	Route::get('/', [AdminLoginController::class, 'index']);
@@ -22,7 +23,7 @@ Route::group(['prefix'  =>  'admin'], function () {
 		Route::get('change_password', [AdminController::class, 'change_password']);
 		Route::post('update_password', [AdminController::class, 'update_password']);
 
-		Route::group(['prefix' => 'users'], function() {
+		Route::group(['prefix' => 'users'], function () {
 			Route::get('/', [UsersController::class, 'index']);
 			Route::get('profile/{id}', [UsersController::class, 'view_profile']);
 			Route::post('change_status', [UsersController::class, 'change_status']);
@@ -32,7 +33,7 @@ Route::group(['prefix'  =>  'admin'], function () {
 			Route::post('delete_reports', [UsersController::class, 'destroy_reports']);
 		});
 
-		Route::group(['prefix' => 'posts'], function() {
+		Route::group(['prefix' => 'posts'], function () {
 			Route::get('/', [PostController::class, 'index']);
 			Route::get('create', [PostController::class, 'create']);
 			Route::post('store', [PostController::class, 'store']);
@@ -40,7 +41,7 @@ Route::group(['prefix'  =>  'admin'], function () {
 			Route::post('update', [PostController::class, 'update']);
 			Route::post('delete', [PostController::class, 'destroy']);
 		});
-		Route::group(['prefix' => 'categories'], function() {
+		Route::group(['prefix' => 'categories'], function () {
 			Route::get('/', [CategoryController::class, 'index']);
 			Route::get('create', [CategoryController::class, 'create']);
 			Route::post('store', [CategoryController::class, 'store']);
@@ -49,13 +50,20 @@ Route::group(['prefix'  =>  'admin'], function () {
 			Route::post('delete', [CategoryController::class, 'destroy']);
 		});
 
-		Route::group(['prefix' => 'memberships'], function() {
+		Route::group(['prefix' => 'memberships'], function () {
 			Route::get('/', [MembershipsController::class, 'index']);
 		});
 
-		Route::group(['prefix' => 'contacts_us'], function() {
+		Route::group(['prefix' => 'contacts_us'], function () {
 			Route::get('/', [ContactUsController::class, 'index']);
 			Route::post('delete', [ContactUsController::class, 'destroy']);
+		});
+		Route::group(['prefix' => 'plans'], function () {
+			Route::get('/', [PlansController::class, 'index']);
+			Route::post('store', [PlansController::class, 'store']);
+			Route::post('show', [PlansController::class, 'show']);
+			Route::post('update', [PlansController::class, 'update']);
+			Route::post('delete', [PlansController::class, 'destroy']);
 		});
 	});
 });

@@ -40,6 +40,9 @@
             <li class="{{ Request::is('admin/memberships*') ? 'active' : '' }}">
                 <a href="{{ url('admin/memberships') }}"><i class="fa-sharp fa-solid fa-address-card"></i><span class="nav-label">Membership List</span></a>
             </li>
+            <li class="{{ Request::is('admin/plans*') ? 'active' : '' }}">
+                <a href="{{ url('admin/plans') }}"><i class="fa-sharp fa-solid fa-star"></i><span class="nav-label">Membership Plans</span></a>
+            </li>
             <li class="{{ Request::is('admin/contacts_us*') ? 'active' : '' }}">
                 <a href="{{ url('admin/contacts_us') }}"><i class="fa-sharp fa-solid fa-message"></i><span class="nav-label">Contact us</span></a>
             </li>
