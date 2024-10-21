@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\MembershipsController;
 use App\Http\Controllers\Admin\ContactUsController;
+use App\Http\Controllers\Admin\EmailController;
 use App\Http\Controllers\Admin\PlansController;
 use Illuminate\Support\Facades\Route;
 
@@ -65,6 +66,12 @@ Route::group(['prefix'  =>  'admin'], function () {
 			Route::post('show', [PlansController::class, 'show']);
 			Route::post('update', [PlansController::class, 'update']);
 			Route::post('delete', [PlansController::class, 'destroy']);
+		});
+		Route::group(['prefix' => 'emails'], function () {
+			Route::get('/', [EmailController::class, 'index']);
+			Route::get('create', [EmailController::class, 'create']);
+			Route::post('dispatch', [EmailController::class, 'dispatch_email']);
+			Route::post('show', [EmailController::class, 'show']);
 		});
 	});
 });

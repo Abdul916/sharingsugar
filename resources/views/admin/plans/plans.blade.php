@@ -1,5 +1,5 @@
 @extends('admin.admin_app')
-@section('title', 'Categories')
+@section('title', 'Plans')
 @section('content')
 
 <div class="row wrapper border-bottom white-bg page-heading">

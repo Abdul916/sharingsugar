@@ -43,6 +43,9 @@
             <li class="{{ Request::is('admin/plans*') ? 'active' : '' }}">
                 <a href="{{ url('admin/plans') }}"><i class="fa-sharp fa-solid fa-star"></i><span class="nav-label">Membership Plans</span></a>
             </li>
+            <li class="{{ Request::is('admin/emails*') ? 'active' : '' }}">
+                <a href="{{ url('admin/emails') }}"><i class="fa-sharp fa-solid fa-envelope"></i><span class="nav-label">Send Emails</span></a>
+            </li>
             <li class="{{ Request::is('admin/contacts_us*') ? 'active' : '' }}">
                 <a href="{{ url('admin/contacts_us') }}"><i class="fa-sharp fa-solid fa-message"></i><span class="nav-label">Contact us</span></a>
             </li>
