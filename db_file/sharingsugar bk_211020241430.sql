@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 21, 2024 at 09:40 AM
+-- Generation Time: Oct 21, 2024 at 11:30 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -187,6 +187,29 @@ INSERT INTO `contactus_msgs` (`id`, `name`, `email`, `message`, `status`, `creat
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `emails`
+--
+
+CREATE TABLE `emails` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `body` longtext NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 0 COMMENT '0: dispatched, 1: sent, 2: failed',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `emails`
+--
+
+INSERT INTO `emails` (`id`, `title`, `body`, `status`, `created_at`, `updated_at`) VALUES
+(6, 'Sharing Sugar New Feature Beta Release Announcement', '<table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"body\" style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #f4f5f6; width: 100%;\" width=\"100%\" bgcolor=\"#f4f5f6\">\r\n      <tr>\r\n        <td style=\"font-family: Helvetica, sans-serif; font-size: 16px; vertical-align: top;\" valign=\"top\">&nbsp;</td>\r\n        <td class=\"container\" style=\"font-family: Helvetica, sans-serif; font-size: 16px; vertical-align: top; max-width: 600px; padding: 0; padding-top: 24px; width: 600px; margin: 0 auto;\" width=\"600\" valign=\"top\">\r\n          <div class=\"content\" style=\"box-sizing: border-box; display: block; margin: 0 auto; max-width: 600px; padding: 0;\">\r\n\r\n            <!-- START CENTERED WHITE CONTAINER -->\r\n            <span class=\"preheader\" style=\"color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;\">This is preheader text. Some clients will show this text as a preview.</span>\r\n            <table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"main\" style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background: #ffffff; border: 1px solid #eaebed; border-radius: 16px; width: 100%;\" width=\"100%\">\r\n\r\n              <!-- START MAIN CONTENT AREA -->\r\n              <tr>\r\n                <td class=\"wrapper\" style=\"font-family: Helvetica, sans-serif; font-size: 16px; vertical-align: top; box-sizing: border-box; padding: 24px;\" valign=\"top\">\r\n                  <p style=\"font-family: Helvetica, sans-serif; font-size: 16px; font-weight: normal; margin: 0; margin-bottom: 16px;\">Hi there</p>\r\n                  <p style=\"font-family: Helvetica, sans-serif; font-size: 16px; font-weight: normal; margin: 0; margin-bottom: 16px;\">Sometimes you just want to send a simple HTML email with a simple design and clear call to action. This is it.</p>\r\n                  <table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"btn btn-primary\" style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; box-sizing: border-box; width: 100%; min-width: 100%;\" width=\"100%\">\r\n                    <tbody>\r\n                      <tr>\r\n                        <td align=\"left\" style=\"font-family: Helvetica, sans-serif; font-size: 16px; vertical-align: top; padding-bottom: 16px;\" valign=\"top\">\r\n                          <table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: auto;\">\r\n                            <tbody>\r\n                              <tr>\r\n                                <td style=\"font-family: Helvetica, sans-serif; font-size: 16px; vertical-align: top; border-radius: 4px; text-align: center; background-color: #0867ec;\" valign=\"top\" align=\"center\" bgcolor=\"#0867ec\"> <a href=\"http://htmlemail.io\" target=\"_blank\" style=\"border: solid 2px #0867ec; border-radius: 4px; box-sizing: border-box; cursor: pointer; display: inline-block; font-size: 16px; font-weight: bold; margin: 0; padding: 12px 24px; text-decoration: none; text-transform: capitalize; background-color: #0867ec; border-color: #0867ec; color: #ffffff;\">Call To Action</a> </td>\r\n                              </tr>\r\n                            </tbody>\r\n                          </table>\r\n                        </td>\r\n                      </tr>\r\n                    </tbody>\r\n                  </table>\r\n                  <p style=\"font-family: Helvetica, sans-serif; font-size: 16px; font-weight: normal; margin: 0; margin-bottom: 16px;\">This is a really simple email template. It\'s sole purpose is to get the recipient to click the button with no distractions.</p>\r\n                  <p style=\"font-family: Helvetica, sans-serif; font-size: 16px; font-weight: normal; margin: 0; margin-bottom: 16px;\">Good luck! Hope it works.</p>\r\n                </td>\r\n              </tr>\r\n\r\n              <!-- END MAIN CONTENT AREA -->\r\n              </table>\r\n\r\n            <!-- START FOOTER -->\r\n            <div class=\"footer\" style=\"clear: both; padding-top: 24px; text-align: center; width: 100%;\">\r\n              <table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;\" width=\"100%\">\r\n                <tr>\r\n                  <td class=\"content-block\" style=\"font-family: Helvetica, sans-serif; vertical-align: top; color: #9a9ea6; font-size: 16px; text-align: center;\" valign=\"top\" align=\"center\">\r\n                    <span class=\"apple-link\" style=\"color: #9a9ea6; font-size: 16px; text-align: center;\">Company Inc, 7-11 Commercial Ct, Belfast BT1 2NB</span>\r\n                    <br> Don\'t like these emails? <a href=\"http://htmlemail.io/blog\" style=\"text-decoration: underline; color: #9a9ea6; font-size: 16px; text-align: center;\">Unsubscribe</a>.\r\n                  </td>\r\n                </tr>\r\n                <tr>\r\n                  <td class=\"content-block powered-by\" style=\"font-family: Helvetica, sans-serif; vertical-align: top; color: #9a9ea6; font-size: 16px; text-align: center;\" valign=\"top\" align=\"center\">\r\n                    Powered by <a href=\"http://htmlemail.io\" style=\"color: #9a9ea6; font-size: 16px; text-align: center; text-decoration: none;\">HTMLemail.io</a>\r\n                  </td>\r\n                </tr>\r\n              </table>\r\n            </div>\r\n\r\n            <!-- END FOOTER -->\r\n            \r\n<!-- END CENTERED WHITE CONTAINER --></div>\r\n        </td>\r\n        <td style=\"font-family: Helvetica, sans-serif; font-size: 16px; vertical-align: top;\" valign=\"top\">&nbsp;</td>\r\n      </tr>\r\n    </table>', 1, '2024-10-21 03:57:04', '2024-10-21 03:57:05'),
+(7, 'asdasdasd', 'asdsadasdad', 1, '2024-10-21 04:27:01', '2024-10-21 04:27:02');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `like_images`
 --
 
@@ -251,7 +274,8 @@ CREATE TABLE `migrations` (
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (1, '2019_12_14_000001_create_personal_access_tokens_table', 1),
-(2, '2024_10_18_075819_create_plans_table', 1);
+(2, '2024_10_18_075819_create_plans_table', 1),
+(3, '2024_10_21_081705_create_emails_table', 2);
 
 -- --------------------------------------------------------
 
@@ -336,7 +360,6 @@ CREATE TABLE `plans` (
   `price` decimal(8,2) NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '0=Inactive, 1=Active',
   `comments` varchar(255) DEFAULT NULL,
-  `stripe_product_id` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -345,11 +368,11 @@ CREATE TABLE `plans` (
 -- Dumping data for table `plans`
 --
 
-INSERT INTO `plans` (`id`, `name`, `subtitle`, `off_percent`, `description`, `price`, `status`, `comments`, `stripe_product_id`, `created_at`, `updated_at`) VALUES
-(1, 'Monthly', 'Basic', 0, 'A monthly premium membership will allow you to view messages from other members. Being a premium member allows you to communicate with others on the site.', 4.95, 1, NULL, 'prod_R2zNV3ccphkd81', '2024-10-18 07:33:17', '2024-10-21 00:29:49'),
-(2, 'Quarterly', 'Regular', 32, 'A quarterly premium membership will allow you to view messages from other members. Being a premium member allows you to communicate with others on the site.', 9.95, 1, NULL, 'prod_R2zNpZ78VDukBa', '2024-10-18 07:34:16', '2024-10-21 00:29:37'),
-(3, 'Half Year', 'Intermediate', 32, 'A half-yearly premium membership will allow you to view messages from other members. Being a premium member allows you to communicate with others on the site.', 19.95, 1, NULL, 'prod_R2zO2wxiA06ehL', '2024-10-18 07:35:39', '2024-10-21 00:29:27'),
-(4, 'Yearly', 'Advanced', 50, 'A yearly premium membership will allow you to view messages from other members. Being a premium member allows you to communicate with others on the site.', 29.95, 1, NULL, 'prod_R2zO5Lvz3YR3QJ', '2024-10-18 07:36:09', '2024-10-21 00:29:18');
+INSERT INTO `plans` (`id`, `name`, `subtitle`, `off_percent`, `description`, `price`, `status`, `comments`, `created_at`, `updated_at`) VALUES
+(1, 'Monthly', 'Basic', 0, 'A monthly premium membership will allow you to view messages from other members. Being a premium member allows you to communicate with others on the site.', 4.95, 1, NULL, '2024-10-18 07:33:17', '2024-10-21 00:29:49'),
+(2, 'Quarterly', 'Regular', 32, 'A quarterly premium membership will allow you to view messages from other members. Being a premium member allows you to communicate with others on the site.', 9.95, 1, NULL, '2024-10-18 07:34:16', '2024-10-21 00:29:37'),
+(3, 'Half Year', 'Intermediate', 32, 'A half-yearly premium membership will allow you to view messages from other members. Being a premium member allows you to communicate with others on the site.', 19.95, 1, NULL, '2024-10-18 07:35:39', '2024-10-21 00:29:27'),
+(4, 'Yearly', 'Advanced', 50, 'A yearly premium membership will allow you to view messages from other members. Being a premium member allows you to communicate with others on the site.', 29.95, 1, NULL, '2024-10-18 07:36:09', '2024-10-21 00:29:18');
 
 -- --------------------------------------------------------
 
@@ -512,7 +535,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `unique_id`, `first_name`, `last_name`, `username`, `email`, `password`, `iam`, `interestedin`, `financial_support`, `dob`, `age`, `height`, `weight`, `body_type`, `child`, `city`, `state`, `zipcode`, `country`, `address`, `timezone`, `gender`, `about_me`, `latitude`, `longitude`, `profile_image`, `last_login`, `membership_type`, `membership_price`, `membership_start`, `membership_end`, `membership_status`, `marital_status`, `privacy_status`, `verify_status`, `profile_status`, `status`, `show_last_login`, `block_male_msg`, `block_female_msg`, `block_trans_msg`, `block_all_email`, `block_money_making_opp_email`, `block_local_event_meet_up_email`, `block_like_favorite_email`, `created_at`, `updated_at`) VALUES
 (1, 'testing54564654', 'Test', 'User', 'testing', 'testing@gmail.com', '$2y$10$GEDrB4abkRZeA3zyKAcf0emffhOjKnCEzoOKT6zr.Vg8VW.pvV7Ue', 'Sugar Mommy', 'Sugar Baby (Hombre / Man)', 1, '1991-03-07', 31.00, 185.00, 65.00, 1, 0, 'lahore', 'punjab', '54000', 'pakistan', 'lahore, pakistan', NULL, 1, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '31', '74.11', 'Screenshot_4_1669131694.png', '2022-11-25 13:28:36', 1, NULL, NULL, NULL, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2022-10-18 12:14:23', '2022-11-24 16:27:53'),
-(2, 'test545646546', 'Test', 'User', 'sharelahore', 'test@gmail.com', '$2y$10$GEDrB4abkRZeA3zyKAcf0emffhOjKnCEzoOKT6zr.Vg8VW.pvV7Ue', 'Sugar Daddy', 'Sugar Baby (Mujer / Woman)', 1, '1999-09-24', 25.00, 173.00, 70.00, 1, 2, 'Lahore', 'Punjab', '54000', 'Pakistan', 'Main Bazar, Muft pura Gul Colony, Lahore, Punjab, Pakistan', NULL, 1, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '31.4514756', '74.355674', 'team_member_1_1670930613.jpg', '2024-10-21 05:17:27', 1, NULL, NULL, NULL, 1, 2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 0, '2022-10-18 12:16:35', '2024-10-02 11:59:29'),
+(2, 'test545646546', 'Test', 'User', 'sharelahore', 'test@gmail.com', '$2y$10$GEDrB4abkRZeA3zyKAcf0emffhOjKnCEzoOKT6zr.Vg8VW.pvV7Ue', 'Sugar Daddy', 'Sugar Baby (Mujer / Woman)', 1, '1999-09-24', 25.00, 173.00, 70.00, 1, 2, 'Lahore', 'Punjab', '54000', 'Pakistan', 'Main Bazar, Muft pura Gul Colony, Lahore, Punjab, Pakistan', NULL, 1, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '31.4514756', '74.355674', 'team_member_1_1670930613.jpg', '2024-10-21 07:07:17', 1, NULL, NULL, NULL, 1, 2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 0, '2022-10-18 12:16:35', '2024-10-02 11:59:29'),
 (3, '34534dffghfgh', 'gapagyd', 'zacoloje', 'musygypupo', 'test2@gmail.com', '$2y$10$GEDrB4abkRZeA3zyKAcf0emffhOjKnCEzoOKT6zr.Vg8VW.pvV7Ue', 'Sugar Mommy', 'Sugar Baby (Hombre / Man)', 1, '2000-01-25', 22.00, 122.00, 120.00, 2, 1, 'lahore', 'pun', 'lhr', 'pakistan', 'lahore', NULL, 2, 'Magna sunt dolor ver', '31.29', '74', NULL, '2022-10-25 07:18:09', 1, NULL, NULL, NULL, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2022-10-18 12:20:43', '2022-10-25 07:19:41'),
 (4, '345345345', 'pynexi', 'jyzega', 'pegaguxeka', 'test3@gmail.com', '$2y$10$GEDrB4abkRZeA3zyKAcf0emffhOjKnCEzoOKT6zr.Vg8VW.pvV7Ue', 'Sugar Baby (Mujer / Woman)', 'Sugar Daddy', 2, '1992-04-22', 30.00, 125.00, 100.00, 4, 0, 'LHR', 'PUN', '54000', 'pk', 'LHR', NULL, 1, 'Explicabo Ipsum di', NULL, NULL, '1666345134.jpg', '2020-12-23 07:20:48', 1, NULL, NULL, NULL, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, '2022-10-18 12:26:34', '2022-10-27 13:36:41'),
 (5, '34345dfdgdfg', 'paluzusy', 'mevyc', 'jatejovyq', 'test4@gmail.com', '$2y$10$GEDrB4abkRZeA3zyKAcf0emffhOjKnCEzoOKT6zr.Vg8VW.pvV7Ue', 'Sugar Baby (Hombre / Man)', 'Sugar Mommy', 2, '1992-11-11', 29.00, 98912.00, 14594.00, 1, 0, 'lhr', 'pun', '5400', 'PK', 'PK', NULL, 3, 'PK', NULL, NULL, NULL, '2022-10-25 07:23:04', 1, NULL, NULL, NULL, 1, 4, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, '2022-10-18 12:27:34', '2022-10-27 13:36:28'),
@@ -722,7 +745,8 @@ INSERT INTO `user_login_logs` (`id`, `user_id`, `login_time`, `logout_time`, `st
 (124, 2, '2024-10-17 09:58:47', NULL, 1, '2024-10-17 09:58:47', NULL, '127.0.0.1'),
 (125, 2, '2024-10-17 12:50:56', NULL, 1, '2024-10-17 12:50:56', NULL, '127.0.0.1'),
 (126, 2, '2024-10-18 09:24:33', NULL, 1, '2024-10-18 09:24:33', NULL, '127.0.0.1'),
-(127, 2, '2024-10-21 05:17:27', NULL, 1, '2024-10-21 05:17:27', NULL, '127.0.0.1');
+(127, 2, '2024-10-21 05:17:27', NULL, 1, '2024-10-21 05:17:27', NULL, '127.0.0.1'),
+(128, 2, '2024-10-21 07:07:17', NULL, 1, '2024-10-21 07:07:17', NULL, '127.0.0.1');
 
 -- --------------------------------------------------------
 
@@ -985,6 +1009,12 @@ ALTER TABLE `contactus_msgs`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `emails`
+--
+ALTER TABLE `emails`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `like_images`
 --
 ALTER TABLE `like_images`
@@ -1097,6 +1127,12 @@ ALTER TABLE `contactus_msgs`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
+-- AUTO_INCREMENT for table `emails`
+--
+ALTER TABLE `emails`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT for table `like_images`
 --
 ALTER TABLE `like_images`
@@ -1112,7 +1148,7 @@ ALTER TABLE `membership_logs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `notifications`
@@ -1124,7 +1160,7 @@ ALTER TABLE `notifications`
 -- AUTO_INCREMENT for table `plans`
 --
 ALTER TABLE `plans`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `posts`
@@ -1160,7 +1196,7 @@ ALTER TABLE `user_configs`
 -- AUTO_INCREMENT for table `user_login_logs`
 --
 ALTER TABLE `user_login_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
 
 --
 -- AUTO_INCREMENT for table `user_photos`

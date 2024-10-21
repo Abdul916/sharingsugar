@@ -19,6 +19,5 @@ class Plans extends Model
         'price',
         'status',
         'comments',
-        'stripe_product_id'
     ];
 }

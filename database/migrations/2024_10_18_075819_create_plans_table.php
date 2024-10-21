@@ -16,11 +16,12 @@ class CreatePlansTable extends Migration
         Schema::create('plans', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('subtitle')->nullable();
+            $table->number('off_percent')->nullable();
             $table->mediumText('description');
             $table->decimal('price', 8, 2);
             $table->tinyInteger('status')->default(1)->comment('0=Inactive, 1=Active');
             $table->string('comments')->nullable();
-            $table->string('stripe_product_id')->nullable();  
             $table->timestamps();
         });
     }

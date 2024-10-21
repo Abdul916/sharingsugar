@@ -65,7 +65,7 @@
                                     </td>
                                     <td>{{ formated_date($item->created_at)}}</td>
                                     <td>
-                                        <button class="btn btn-primary btn-sm btn_plan_edit" data-id="{{$item->id}}" type="button"><i class="fa-solid fa-note"></i> View</button>
+                                        <a class="btn btn-primary btn-sm btn_plan_edit" href="{{url('admin/emails/show/' . $item->id)}}"><i class="fa-solid fa-note"></i> View</button>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -109,23 +109,6 @@
                 "targets": -1
             },
         ]
-    });
-    
-    $(document).on("click", ".btn_plan_edit", function() {
-        var id = $(this).attr('data-id');
-        $.ajax({
-            url: "{{ url('admin/emails/show') }}",
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                "_token": "{{ csrf_token() }}",
-                'id': id
-            },
-            success: function(status) {
-                $("#edit_modalbox_body").html(status.response);
-                $("#edit_modalbox").modal('show');
-            }
-        });
     });
 </script>
 @endpush

@@ -71,7 +71,7 @@ Route::group(['prefix'  =>  'admin'], function () {
 			Route::get('/', [EmailController::class, 'index']);
 			Route::get('create', [EmailController::class, 'create']);
 			Route::post('dispatch', [EmailController::class, 'dispatch_email']);
-			Route::post('show', [EmailController::class, 'show']);
+			Route::get('show/{id}', [EmailController::class, 'show']);
 		});
 	});
 });

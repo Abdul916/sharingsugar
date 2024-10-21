@@ -72,15 +72,13 @@ class EmailController extends Controller
         return response()->json(['msg' => 'success', 'response' => 'Email sent successfully']);
     }
 
-    public function show(Request $request)
+    public function show($id)
     {
-        $email = Email::where('id', $request->id)->first();
+        $email = Email::where('id', $id)->first();
         if (!empty($email)) {
-            $htmlresult = view('admin/emails/ajax_email', compact('email'))->render();
-            $finalResult = response()->json(['msg' => 'success', 'response' => $htmlresult]);
-            return $finalResult;
+            return view('admin.emails.show_email', compact('email'));
         } else {
-            return response()->json(['msg' => 'error', 'response' => 'Email not found.']);
+            return redirect()->route('admin.emails.emails')->with('error', 'Email not found');
         }
     }
 }
