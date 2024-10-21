@@ -83,7 +83,7 @@ Route::group(['prefix'  =>  'admin'], function () {
 			Route::post('decline', [ProfileApprovalController::class, 'decline']);
 		});
 		Route::group(['prefix' => 'photo_approvals'], function () {
-			Route::get('/', [PhotoChangeApprovalController::class, 'index']);
+			Route::get('/', [PhotoChangeApprovalController::class, 'index'])->name('photo_approvals');
 			Route::get('show/{id}', [PhotoChangeApprovalController::class, 'show']);
 			Route::post('approve', [PhotoChangeApprovalController::class, 'approve']);
 			Route::post('decline', [PhotoChangeApprovalController::class, 'decline']);

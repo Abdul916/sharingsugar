@@ -31,7 +31,7 @@ class PhotoChangeApprovalController extends Controller
     {
         $data['approval'] = PhotoChangeLog::find($id);
         if (!$data['approval']) {
-            return redirect()->route('admin.photo_approvals')->with('error', 'Approval not found');
+            return redirect()->route('photo_approvals');
         }
 
         $data['user'] = $data['approval']->user;

@@ -14,7 +14,7 @@
                 <a href="{{ url('admin/photo_approvals') }}" title="Emails">Photo Approvals</a>
             </li>
             <li class="breadcrumb-item active">
-                <a href="{{ url('admin/photo_approvals/show/' . $approval->id ) }}" title="View Photo Change Approval<l"><strong>View Photo Change Approval<< /strong></a>
+                <a href="{{ url('admin/photo_approvals/show/' . $approval->id ) }}" title="View Photo Change Approval<l"><strong>View Photo Change Approval</strong></a>
             </li>
         </ol>
     </div>
