@@ -79,50 +79,61 @@
 							</div>
 							<div class="row">
 								<strong class="col-sm-2">DOB</strong>
-								@if(!empty($user->dob))
-								<label class="col-sm-4">{{ date_with_month($user->dob)}}</label>
-								@endif
+								<label class="col-sm-4">
+									@if(!empty($user->dob))
+									{{ date_with_month($user->dob)}}
+									@endif
+								</label>
 								<strong class="col-sm-2">Age</strong>
-								@if(!empty($user->dob))
-								<label class="col-sm-4">{{age($user->dob)}} Year Old</label>
-								@endif
+								<label class="col-sm-4">
+									@if(!empty($user->dob))
+									{{age($user->dob)}} Year Old
+									@endif
+								</label>
 							</div>
 							<div class="row">
 								<strong class="col-sm-2">Marital Status</strong>
 								@if($user->marital_status == 1)
-								<label class="col-sm-4" >Single</label>
+								<label class="col-sm-4">Single</label>
 								@elseif($user->marital_status == 2)
 								<label class="col-sm-4">Married</label>
 								@elseif($user->marital_status == 3)
 								<label class="col-sm-4">Widowed</label>
 								@elseif($user->marital_status == 4)
 								<label class="col-sm-4">Divorced</label>
+								@else
+								<label class="col-sm-4">Single</label>
 								@endif
 								<strong class="col-sm-2">Child</strong>
-								@if(!empty($user->child))
-								<label class="col-sm-4">{{ $user->child }}</label>
-								@endif
+								<label class="col-sm-4">
+									@if(!empty($user->child))
+									{{ $user->child }}
+									@endif
+								</label>
 							</div>
 							<div class="row">
 								<strong class="col-sm-2">City</strong>
-								@if(!empty($user->city))
-								<label class="col-sm-4">{{ $user->city }}</label>
-								@endif
+								<label class="col-sm-4">
+									@if(!empty($user->city))
+									{{ $user->city }}
+									@endif
+								</label>
 								<strong class="col-sm-2">Country</strong>
-								@if(!empty($user->country))
-								<label class="col-sm-4">{{ $user->country }}</label>
-								@endif
+								<label class="col-sm-4">
+									@if(!empty($user->country))
+									{{ $user->country }}
+									@endif
+								</label>
 							</div>
 							<div class="row">
 								<strong class="col-sm-2">Status</strong>
 								@if($user->status == 1)
-								<label class="col-sm-4" ><label class="label label-primary">Active</label></label>
+								<label class="col-sm-4"><label class="label label-primary">Active</label></label>
 								@elseif($user->status == 2)
 								<label class="col-sm-4"><label class="label label-danger">Blocked</label></label>
 								@elseif($user->status == 3)
 								<label class="col-sm-4"><label class="label label-danger">Softly Deleted</label></label>
 								@endif
-
 								<strong class="col-sm-2">Profile Status</strong>
 								@if($user->profile_status == 1)
 								<label class="col-sm-4" ><label class="label label-danger">Unverified</label></label>
@@ -135,8 +146,8 @@
 							<h1><strong>Physical</strong></h1><hr>
 							<div class="row">
 								<strong class="col-sm-2">Height</strong>
-								@if(!empty($user->height))
 								<label class="col-sm-4">
+									@if(!empty($user->height))
 									@php
 									$inch = $user->height / 2.54;
 									$feet   = intval( $inch / 12 );
@@ -149,14 +160,14 @@
 									$meter      = $mmeter.'.'.$cmeter.'(m)';
 									@endphp
 									{{ $feet_inch }} {{ $meter }}
+									@endif
 								</label>
-								@endif
 								<strong class="col-sm-2">Weight</strong>
-								@if(!empty($user->weight))
 								<label class="col-sm-4">
+									@if(!empty($user->weight))
 									{{ $user->weight }} (kg) | {{ ($user->weight * 2.20462)}} (lbs)
+									@endif
 								</label>
-								@endif
 							</div>
 
 							<div class="row">

@@ -56,13 +56,15 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="{{ url('admin/users/profile')}}/{{$user->id}}" class="btn btn-success btn-sm" data-placement="top" title="View Profile">View Profile</a>
+                                        <a href="{{ url('admin/users/profile')}}/{{$user->id}}" class="btn btn-success btn-sm" data-placement="top" title="View Profile">View</a>
                                         @if($user->status == 1)
                                         <button class="btn btn-dark btn-sm btn_active_inactive" title="Block" data-id="{{ $user->id }}" data-action="2" type="button" data-placement="top">Block</button>
                                         @elseif(($user->status == 2) || ($user->status == 3))
                                         <button class="btn btn-primary btn-sm btn_active_inactive" title="Activate" data-id="{{ $user->id }}" data-action="1" type="button" data-placement="top">Activate</button>
                                         @endif
                                         <button class="btn btn-sm btn-danger btn_delete" title="Permanently Delete" data-id="{{ $user->id }}" data-placement="top" type="button">Delete</button>
+
+                                        <button class="btn btn-sm btn-info btn_generate_new_passwprd" title="Generate New Passowrd" data-id="{{ $user->id }}" data-placement="top" type="button">Generate New Passowrd</button>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -152,6 +154,45 @@
                 $(".confirm").prop("disabled", true);
                 $.ajax({
                     url:"{{ url('admin/users/delete') }}",
+                    type:'post',
+                    data:{"_token": "{{ csrf_token() }}", 'id': id},
+                    dataType:'json',
+                    success:function(status){
+                        $(".confirm").prop("disabled", false);
+                        if(status.msg == 'success'){
+                            swal({title: "Success!", text: status.response, type: "success"},
+                                function(data){
+                                    location.reload(true);
+                                });
+                        } else if(status.msg=='error'){
+                            swal("Error", status.response, "error");
+                        }
+                    }
+                });
+            } else {
+                swal("Cancelled", "", "error");
+            }
+        });
+    });
+
+    $(document).on("click" , ".btn_generate_new_passwprd" , function(){
+        var id = $(this).attr('data-id');
+        swal({
+            title: "Are you sure?",
+            text: "You want to generate new passwprd!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, please!",
+            cancelButtonText: "No, cancel please!",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+        function(isConfirm) {
+            if (isConfirm) {
+                $(".confirm").prop("disabled", true);
+                $.ajax({
+                    url:"{{ url('admin/users/generate_password') }}",
                     type:'post',
                     data:{"_token": "{{ csrf_token() }}", 'id': id},
                     dataType:'json',

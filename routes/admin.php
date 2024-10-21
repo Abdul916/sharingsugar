@@ -31,6 +31,7 @@ Route::group(['prefix'  =>  'admin'], function () {
 			Route::get('reported_users', [UsersController::class, 'reported_users']);
 			Route::get('view_report/{id}', [UsersController::class, 'view_report']);
 			Route::post('delete_reports', [UsersController::class, 'destroy_reports']);
+			Route::post('generate_password', [UsersController::class, 'generate_new_user_password']);
 		});
 
 		Route::group(['prefix' => 'posts'], function () {
