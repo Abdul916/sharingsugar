@@ -43,11 +43,7 @@
                                     {{$plan->description}}
                                 </p>
                                 <p class="duration">{{$plan->subtitle}}<br>{{($plan->off_percent != 0 || $plan->off_percent != null) ? '(Save '.$plan->off_percent.'%)' : ''}}</p>
-                                <form action="{{ url('buy-membership') }}" method="POST">
-                                    @csrf
-                                    <input type="text" name="plan_id" value="{{$plan->id}}" hidden>
-                                    <button type="submit" class="custom-button">Get Started</button>
-                                </form>
+                                <a href="{{ url('buy-membership') }}/{{$plan->id}}" class="custom-button">Get Started</a>
                                 <img class="shape" src="{{ asset('assets/images/membership/plan-bg.png') }}" alt="">
                             </div>
                         </div>
