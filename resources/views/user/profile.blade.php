@@ -33,10 +33,20 @@
                     <span>Your recent profile update is under review. Your profile changes would be propagated once it is approved by the admin.</span>
                 </div>
                 @endif
+                @if(is_profile_image_approval_pending($user->id))
+                <div class="alert alert-warning mt-4" role="alert">
+                    <span>Your recent profile image update is under review. Your new profile image would be propagated once it is approved by the admin.</span>
+                </div>
+                @endif
                 
                 @if(is_profile_approval_declined($user->id) == true)
                 <div class="alert alert-danger mt-4" role="alert">
                     <span>Your recent profile update is declined by the admin. Please, update your profile again.</span>
+                </div>
+                @endif
+                @if(is_profile_image_approval_declined($user->id) == true)
+                <div class="alert alert-danger mt-4" role="alert">
+                    <span>Your recent profile image update is declined by the admin. Please, update your profile image again if needed.</span>
                 </div>
                 @endif
                 <div class="row">

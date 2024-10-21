@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\MembershipsController;
 use App\Http\Controllers\Admin\ContactUsController;
 use App\Http\Controllers\Admin\EmailController;
+use App\Http\Controllers\Admin\PhotoChangeApprovalController;
 use App\Http\Controllers\Admin\PlansController;
 use App\Http\Controllers\Admin\ProfileApprovalController;
 use Illuminate\Support\Facades\Route;
@@ -80,6 +81,12 @@ Route::group(['prefix'  =>  'admin'], function () {
 			Route::get('show/{id}', [ProfileApprovalController::class, 'show']);
 			Route::post('approve', [ProfileApprovalController::class, 'approve']);
 			Route::post('decline', [ProfileApprovalController::class, 'decline']);
+		});
+		Route::group(['prefix' => 'photo_approvals'], function () {
+			Route::get('/', [PhotoChangeApprovalController::class, 'index']);
+			Route::get('show/{id}', [PhotoChangeApprovalController::class, 'show']);
+			Route::post('approve', [PhotoChangeApprovalController::class, 'approve']);
+			Route::post('decline', [PhotoChangeApprovalController::class, 'decline']);
 		});
 	});
 });

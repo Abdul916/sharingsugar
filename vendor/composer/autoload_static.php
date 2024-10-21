@@ -547,6 +547,7 @@ class ComposerStaticInitfabeb6972442a58dcc5fd29cdf860e7c
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Exports\\ExportUsers' => __DIR__ . '/../..' . '/app/Exports/ExportUsers.php',
         'App\\Http\\Controllers\\Admin\\AdminController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/AdminController.php',
         'App\\Http\\Controllers\\Admin\\AdminLoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/AdminLoginController.php',
         'App\\Http\\Controllers\\Admin\\CategoryController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/CategoryController.php',
@@ -582,6 +583,7 @@ class ComposerStaticInitfabeb6972442a58dcc5fd29cdf860e7c
         'App\\Models\\Admin\\Post' => __DIR__ . '/../..' . '/app/Models/Admin/Post.php',
         'App\\Models\\Admin\\Users' => __DIR__ . '/../..' . '/app/Models/Admin/Users.php',
         'App\\Models\\Email' => __DIR__ . '/../..' . '/app/Models/Email.php',
+        'App\\Models\\PhotoChangeLog' => __DIR__ . '/../..' . '/app/Models/PhotoChangeLog.php',
         'App\\Models\\Plans' => __DIR__ . '/../..' . '/app/Models/Plans.php',
         'App\\Models\\ProfileChangeLog' => __DIR__ . '/../..' . '/app/Models/ProfileChangeLog.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',

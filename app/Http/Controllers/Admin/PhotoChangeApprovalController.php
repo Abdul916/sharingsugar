@@ -3,33 +3,33 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\ProfileChangeLog;
+use App\Models\PhotoChangeLog;
 use Illuminate\Http\Request;
 
-class ProfileApprovalController extends Controller
+class PhotoChangeApprovalController extends Controller
 {
     public function index(Request $request)
     {
-        $query = ProfileChangeLog::query();
+        $query = PhotoChangeLog::query();
         $search_query = $request->input('search_query');
         if ($request->has('search_query') && !empty($search_query)) {
             $query->where(function ($query) use ($search_query) {
                 $query->whereHas('user', function ($query) use ($search_query) {
-                    $query->where('first_name', 'like', '%' . $search_query . '%')
+                    $query->where('email', 'like', '%' . $search_query . '%')
                         ->orWhere('last_name', 'like', '%' . $search_query . '%')
-                        ->orWhere('email', 'like', '%' . $search_query . '%');
+                        ->orWhere('first_name', 'like', '%' . $search_query . '%');
                 });
             });
         }
         $data['approvals'] = $query->orderBy('id', 'DESC')->paginate(50);
         $data['searchParams'] = $request->all();
-        return view('admin/profile_approvals/approvals', $data);
+        return view('admin/photo_approvals/approvals', $data);
     }
 
     public function show($id)
     {
-        $data['approval'] = ProfileChangeLog::find($id);
-        if(!$data['approval']) {
+        $data['approval'] = PhotoChangeLog::find($id);
+        if (!$data['approval']) {
             return redirect()->route('admin.profile_approvals')->with('error', 'Approval not found');
         }
 
@@ -41,8 +41,8 @@ class ProfileApprovalController extends Controller
 
     public function approve(Request $request)
     {
-        $approval = ProfileChangeLog::find($request->id);
-        if(!$approval) {
+        $approval = PhotoChangeLog::find($request->id);
+        if (!$approval) {
             return response()->json(['status' => 'error', 'message' => 'Approval not found']);
         }
         $user = $approval->user;
@@ -54,8 +54,8 @@ class ProfileApprovalController extends Controller
 
     public function decline(Request $request)
     {
-        $approval = ProfileChangeLog::find($request->id);
-        if(!$approval) {
+        $approval = PhotoChangeLog::find($request->id);
+        if (!$approval) {
             return response()->json(['status' => 'error', 'message' => 'Approval not found']);
         }
         $approval->status = 2;

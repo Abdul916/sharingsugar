@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\PhotoChangeLog;
 use App\Models\ProfileChangeLog;
 use Carbon\Carbon;
 
@@ -420,6 +421,17 @@ if (! function_exists('is_profile_approval_pending')) {
 		}
 	}
 }
+if (! function_exists('is_profile_image_approval_pending')) {
+	function is_profile_image_approval_pending($user_id)
+	{
+		$query = PhotoChangeLog::where('user_id', $user_id)->where('type', 0)->where('status', 0)->count();
+		if ($query > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+}
 
 
 if (! function_exists('is_profile_approval_declined')) {
@@ -427,6 +439,22 @@ if (! function_exists('is_profile_approval_declined')) {
 	{
 		// fetch last profile change log
 		$last_profile_change_log = ProfileChangeLog::where('user_id', $user_id)->orderBy('id', 'DESC')->first();
+		if ($last_profile_change_log) {
+			if ($last_profile_change_log->status == 2) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+}
+if (! function_exists('is_profile_image_approval_declined')) {
+	function is_profile_image_approval_declined($user_id)
+	{
+		// fetch last profile change log
+		$last_profile_change_log = PhotoChangeLog::where('user_id', $user_id)->where('type', 0)->orderBy('id', 'DESC')->first();
 		if ($last_profile_change_log) {
 			if ($last_profile_change_log->status == 2) {
 				return true;

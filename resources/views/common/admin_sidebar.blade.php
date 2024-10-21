@@ -31,6 +31,9 @@
             <li class="{{ Request::is('admin/profile_approvals*') ? 'active' : '' }}">
                 <a href="{{ url('admin/profile_approvals') }}"><i class="fa-solid fa-pencil-square"></i><span class="nav-label">Profile Approvals</span></a>
             </li>
+            <li class="{{ Request::is('admin/photo_approvals*') ? 'active' : '' }}">
+                <a href="{{ url('admin/photo_approvals') }}"><i class="fa-solid fa-file-image"></i><span class="nav-label">Photo Approvals</span></a>
+            </li>
             <li class="{{ Request::is('admin/users/reported_users') ? 'active' : '' }} {{ Request::is('admin/users/view_report*') ? 'active' : '' }}">
                 <a href="{{ url('admin/users/reported_users') }}"><i class="fa-solid fa-user-slash"></i><span class="nav-label">Reported Users</span></a>
             </li>

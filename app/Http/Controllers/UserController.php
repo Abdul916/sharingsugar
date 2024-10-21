@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\PhotoChangeLog;
 use App\Models\ProfileChangeLog;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -191,18 +192,35 @@ class UserController extends Controller
             $image->move($destinationPath, $data['profile_image']);
         }
 
-        $query = DB::table('profile_images_logs')->insertGetId([
-            'user_id' => $data['id'],
-            'profile_image' => $data['profile_image'],
-            'created_at' => date('Y-m-d H:i:s'),
-        ]);
+        // $query = DB::table('profile_images_logs')->insertGetId([
+        //     'user_id' => $data['id'],
+        //     'profile_image' => $data['profile_image'],
+        //     'created_at' => date('Y-m-d H:i:s'),
+        // ]);
 
-        $status = User::where('id', $data['id'])->update([
-            'profile_image' => $data['profile_image']
-        ]);
+        // $status = User::where('id', $data['id'])->update([
+        //     'profile_image' => $data['profile_image']
+        // ]);
 
-        if ($status > 0) {
-            $finalResult = response()->json(array('msg' => 'success', 'response' => 'Profile Image successfully upload.'));
+        // Photo ChangeLog
+        $last_change_approval = PhotoChangeLog::where('user_id', $data['id'])->where('type', 0)->orderBy('created_at', 'desc')->first();
+        if($last_change_approval != null && $last_change_approval->status == 0){
+            // delete image from folder
+            $file_path = public_path('/assets/app_images/'.$last_change_approval->photo);
+            if(file_exists($file_path)){
+                unlink($file_path);
+            }
+            $last_change_approval->delete();
+        }
+        $photo_change_log = new PhotoChangeLog();
+        $photo_change_log->user_id = $data['id'];
+        $photo_change_log->photo = $data['profile_image'];
+        $photo_change_log->type = 0;
+        $photo_change_log->status  = 0;
+        $query = $photo_change_log->save();
+
+        if ($query > 0) {
+            $finalResult = response()->json(array('msg' => 'success', 'response' => 'Profile Image update request has been sent to admin. Changes would be propagated shortly after approval.'));
             return $finalResult;
         } else {
             $finalResult = response()->json(array('msg' => 'error', 'response' => 'Something went wrong.'));

@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
+    'App\\Exports\\ExportUsers' => $baseDir . '/app/Exports/ExportUsers.php',
     'App\\Http\\Controllers\\Admin\\AdminController' => $baseDir . '/app/Http/Controllers/Admin/AdminController.php',
     'App\\Http\\Controllers\\Admin\\AdminLoginController' => $baseDir . '/app/Http/Controllers/Admin/AdminLoginController.php',
     'App\\Http\\Controllers\\Admin\\CategoryController' => $baseDir . '/app/Http/Controllers/Admin/CategoryController.php',
@@ -43,6 +44,7 @@ return array(
     'App\\Models\\Admin\\Post' => $baseDir . '/app/Models/Admin/Post.php',
     'App\\Models\\Admin\\Users' => $baseDir . '/app/Models/Admin/Users.php',
     'App\\Models\\Email' => $baseDir . '/app/Models/Email.php',
+    'App\\Models\\PhotoChangeLog' => $baseDir . '/app/Models/PhotoChangeLog.php',
     'App\\Models\\Plans' => $baseDir . '/app/Models/Plans.php',
     'App\\Models\\ProfileChangeLog' => $baseDir . '/app/Models/ProfileChangeLog.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
