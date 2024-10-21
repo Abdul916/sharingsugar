@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Admin\Users;
-use Session, Validator, DB;
+use Hash, Session, Validator, DB;
 
 class UsersController extends Controller
 {
@@ -102,6 +102,34 @@ class UsersController extends Controller
         } else {
             return response()->json(['msg' => 'error', 'response'=>'Something went wrong!']);
         }
+    }
+
+    public function generate_new_user_password(Request $request)
+    {
+        $data = $request->all();
+        $data['password'] = rand(10000000, 99999999);
+        $status = Users::where('id', $data['id'])->update([
+            'password' => Hash::make($data['password'])
+        ]);
+        if($status > 0) {
+            $this->send_user_notification_email($data);
+            return response()->json(['msg' => 'success', 'response'=>'New password generated successfully.']);
+        } else {
+            return response()->json(['msg' => 'error', 'response'=>'Something went wrong!']);
+        }
+    }
+
+    public function send_user_notification_email($data)
+    {
+        $data['user'] = Users::find($data['id']);
+        $to = $data['user']['email'];
+        $subject = 'Password Changed';
+        $email_body = view('emails/generated_new_password', compact("data"));
+        $body = $email_body;
+        $headers = "MIME-Version: 1.0" . "\r\n";
+        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+        $headers .= 'From: <'.get_section_content('project', 'noreply_email').'>' . "\r\n";
+        @mail($to, $subject, $body, $headers);
     }
 
 
