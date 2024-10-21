@@ -42,6 +42,8 @@ class PlansController extends Controller
 
         $plan = new Plans();
         $plan->name = $request->name;
+        $plan->subtitle = $request->subtitle ?? null;
+        $plan->off_percent = $request->off_percent ?? null;
         $plan->description = $request->description;
         $plan->price = $request->price;
         $plan->stripe_product_id = $request->stripe_product_id;
@@ -87,6 +89,8 @@ class PlansController extends Controller
         $plan = Plans::where('id', $request->id)->first();
         if (!empty($plan)) {
             $plan->name = $request->name;
+            $plan->subtitle = $request->subtitle ?? null;
+            $plan->off_percent = $request->off_percent ?? null;
             $plan->description = $request->description;
             $plan->price = $request->price;
             $plan->stripe_product_id = $request->stripe_product_id;
@@ -96,8 +100,9 @@ class PlansController extends Controller
             return response()->json(['msg' => 'error', 'response' => 'Plan not found.']);
         }
     }
-    public function delete(Request $request)
+    public function destroy(Request $request)
     {
+        // dd($request->all());
         $plan = Plans::find($request->id);
         if (!empty($plan)) {
             $plan->delete();

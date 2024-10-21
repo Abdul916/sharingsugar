@@ -98,6 +98,18 @@
                         </div>
                     </div>
                     <div class="form-group row">
+                        <label class="col-sm-4 col-form-label"><strong>Subtitle</strong></label>
+                        <div class="col-sm-8">
+                            <input type="text" name="subtitle" required class="form-control" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label"><strong>Percentage Off</strong></label>
+                        <div class="col-sm-8">
+                            <input type="number" min="0" max="99" name="off_percent" required class="form-control" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group row">
                         <label class="col-sm-4 col-form-label"><strong>Price</strong></label>
                         <div class="col-sm-8">
                             <input type="text" name="price" required class="form-control" placeholder="">

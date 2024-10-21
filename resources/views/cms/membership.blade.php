@@ -40,10 +40,14 @@
                                 <p class="duration">{{$plan->name}}</p>
                                 <h4 class="number">$ {{$plan->price}}</h4>
                                 <p class="stamet mb-30 mt-30">
-                                {{$plan->description}}
+                                    {{$plan->description}}
                                 </p>
-                                <p class="duration">Basic<br>(Save 0%)</p>
-                                <button type="button" class="custom-button">Buy Now!</button>
+                                <p class="duration">{{$plan->subtitle}}<br>{{($plan->off_percent != 0 || $plan->off_percent != null) ? '(Save '.$plan->off_percent.'%)' : ''}}</p>
+                                <form action="{{ url('buy-membership') }}" method="POST">
+                                    @csrf
+                                    <input type="text" name="plan_id" value="{{$plan->id}}" hidden>
+                                    <button type="submit" class="custom-button">Get Started</button>
+                                </form>
                                 <img class="shape" src="{{ asset('assets/images/membership/plan-bg.png') }}" alt="">
                             </div>
                         </div>

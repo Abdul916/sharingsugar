@@ -6,7 +6,9 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\CmsController;
+use App\Http\Controllers\PlanStripeController;
 use App\Http\Controllers\UserController;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,6 +71,9 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::post('update_delete_notifications', [UserController::class, 'update_delete_notifications']);
 	Route::post('delete_account', [UserController::class, 'delete_account']);
 	Route::post('delete_user_chats', [UserController::class, 'delete_user_chats']);
+	Route::post('buy-membership', [PlanStripeController::class, 'createCheckoutSession']);
+	Route::get('membership/success', [PlanStripeController::class, 'success']);
+	Route::get('membership/cancel', [PlanStripeController::class, 'cancel']);
 });
 
 require 'admin.php';
