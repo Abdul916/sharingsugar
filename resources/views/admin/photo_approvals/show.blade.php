@@ -33,6 +33,22 @@
                 </div>
                 <div class="ibox-content">
                     <div class="form-group row offset-lg-1">
+                        <div class="col-sm-6">
+                            <strong> Username:</strong> {{$approval->user->username}}
+                        </div>
+                        <div class="col-sm-6">
+                            <strong>I Am: </strong> {{$approval->user->iam}}
+                        </div>
+                    </div>
+                    <div class="form-group row offset-lg-1">
+                        <div class="col-sm-6">
+                            <strong>Email:</strong> {{$approval->user->email}}
+                        </div>
+                        <div class="col-sm-6">
+                            <strong>Interested In:</strong> {{$approval->user->interestedin}}
+                        </div>
+                    </div>
+                    <div class="form-group row offset-lg-1">
                         <strong class="col-sm-2 col-form-label">
                             @if($approval->type == 0)
                             Profile Photo
@@ -44,11 +60,11 @@
                         </strong>
                         <div class="col-sm-4">
                             <!-- Existing heading-->
-                            <h4>{{$approval->type == 0 ? 'Current ' : ''}}Profile Photo</h4>
+                            <h4>Current Photo</h4>
                             <img src="{{ asset('assets/app_images/' . $approval->user->profile_image) }}" class="img-thumbnail" alt="Profile Photo" style="width: 100px; height: 100px;">
                         </div>
                         <div class="col-sm-4">
-                            <h4>New Photo</h4>
+                            <h4>Need Approval</h4>
                             @if($approval->type != 0)
                             <img src="{{ asset('assets/app_images/user_photos/' . $approval->photo) }}" class="img-thumbnail" alt="New Photo" style="width: 100px; height: 100px;">
                             @else
