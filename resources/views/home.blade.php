@@ -19,7 +19,7 @@
                             </p>
                             <div class="option">
                                 <div class="s-input mr-4">
-                                    <input type="radio" name="interestedin" id="Sugar_Daddy" value="Sugar Daddy"><label for="Sugar_Daddy">Sugar Daddy</label>
+                                    <input type="radio" name="interestedin" id="Sugar_Daddy" value="Sugar Daddy" checked><label for="Sugar_Daddy">Sugar Daddy</label>
                                 </div>
                                 <div class="s-input">
                                     <input type="radio" name="interestedin" id="Sugar_Mommy" value="Sugar Mommy"><label for="Sugar_Mommy">Sugar Mommy</label>

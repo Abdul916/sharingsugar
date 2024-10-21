@@ -1,4 +1,4 @@
-$(function() {
+  $(function() {
    var $window     = $(window)
      , $top_link   = $('#toplink')
      , $body       = $('body, html')

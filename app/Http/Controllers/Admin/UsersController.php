@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Admin\Users;
 use Hash, Session, Validator, DB;
+use App\Exports\ExportUsers;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UsersController extends Controller
 {
@@ -158,5 +160,14 @@ class UsersController extends Controller
         @mail($to, $subject, $body, $headers);
     }
 
+    public function export_users(Request $request, $format)
+    {
+        if ($format === 'xlsx') {
+            return Excel::download(new ExportUsers, 'users.xlsx');
+        } elseif ($format === 'csv') {
+            return Excel::download(new ExportUsers, 'users.csv');
+        }
+        return redirect()->back()->with('error', 'Invalid format requested.');
+    }
 
 }
