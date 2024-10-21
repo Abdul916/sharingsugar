@@ -23,9 +23,22 @@
                     Profile
                     <div class="right">
                         {{-- <a href="{{ url('public_profile') }}/{{$user->unique_id}}" class="accept">View Profile</a> --}}
+                        @if(!is_profile_approval_pending($user->id))
                         <a href="{{ url('edit_profile') }}" class="accept">Edit Profile</a>
+                        @endif
                     </div>
                 </div>
+                @if(is_profile_approval_pending($user->id))
+                <div class="alert alert-warning mt-4" role="alert">
+                    <span>Your recent profile update is under review. Your profile changes would be propagated once it is approved by the admin.</span>
+                </div>
+                @endif
+                
+                @if(is_profile_approval_declined($user->id) == true)
+                <div class="alert alert-danger mt-4" role="alert">
+                    <span>Your recent profile update is declined by the admin. Please, update your profile again.</span>
+                </div>
+                @endif
                 <div class="row">
                     <div class="col-lg-6">
                         <form id="upload_profile_image" method="post" enctype="multipart/form-data">
@@ -212,7 +225,7 @@
     $(document).on("change" , "#upload_image" , function() {
         var formData =  new FormData($("#upload_profile_image")[0]);
         $.ajax({
-            url:'{{ url('upload_profile_image') }}',
+            url:"{{ url('upload_profile_image') }}",
             type: 'POST',
             data: formData,
             dataType:'json',

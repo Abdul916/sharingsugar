@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\ProfileChangeLog;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Hash, Session, Validator, DB, DateTime;
+use Illuminate\Support\Facades\Validator as FacadesValidator;
 
 class UserController extends Controller
 {
@@ -31,13 +33,16 @@ class UserController extends Controller
     public function edit()
     {
         $data['user'] = User::find(Auth::user()->id);
+        if(is_profile_approval_pending(Auth::user()->id)){
+            return redirect('profile');
+        }
         return view('user/edit_profile', $data);
     }
 
     public function update(Request $request)
     {
         $data = $request->all();
-        $validator = Validator::make(
+        $validator = FacadesValidator::make(
             $data,
             [
                 'first_name' => 'required',
@@ -71,7 +76,30 @@ class UserController extends Controller
         $diff = $today->diff($bday);
         $age = $diff->y;
 
-        $status = User::where('id', $data['id'])->update([
+        // $status = User::where('id', $data['id'])->update([
+        //     'first_name' => $data['first_name'],
+        //     'last_name' => $data['last_name'],
+        //     'username' => $data['username'],
+        //     'dob' => date('Y-m-d', strtotime(str_replace('/', '-', $data['dob']))),
+        //     'age' => $age,
+        //     'gender' => $data['gender'],
+        //     'height' => $data['height'],
+        //     'weight' => $data['weight'],
+        //     'marital_status' => $data['marital_status'],
+        //     'child' => $data['child'],
+        //     'body_type' => $data['body_type'],
+        //     'state' => $data['state'],
+        //     'zipcode' => $data['zip_code'],
+        //     'country' => $data['country'],
+        //     'city' => $data['city'],
+        //     'address' => $data['address'],
+        //     'about_me' => $data['about_me'],
+        //     'latitude' => $data['latitude'] ?? null,
+        //     'longitude' => $data['longitude'] ?? null,
+        //     'profile_status' => '2',
+        // ]);
+
+        $updated_data = [
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'username' => $data['username'],
@@ -92,10 +120,15 @@ class UserController extends Controller
             'latitude' => $data['latitude'] ?? null,
             'longitude' => $data['longitude'] ?? null,
             'profile_status' => '2',
-        ]);
+        ];
 
-        if ($status > 0) {
-            $finalResult = response()->json(array('msg' => 'success', 'response' => 'Your profile successfully updated.'));
+        $profile_change_log = new ProfileChangeLog();
+        $profile_change_log->user_id = $data['id'];
+        $profile_change_log->updated_data = json_encode($updated_data);
+        $profile_change_log->status  = 0;
+        $query = $profile_change_log->save();
+        if ($query > 0) {
+            $finalResult = response()->json(array('msg' => 'success', 'response' => 'Your updated profile will be reviewed by admin. Changes would be propagated shortly after approval.'));
             return $finalResult;
         } else {
             $finalResult = response()->json(array('msg' => 'error', 'response' => 'Something went wrong.'));
