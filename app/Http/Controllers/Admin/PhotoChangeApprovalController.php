@@ -58,6 +58,7 @@ class PhotoChangeApprovalController extends Controller
             $user = $approval->user;
             $user->profile_image = $approval->photo;
             $user->save();
+            $approval->delete();
         } else {
             $query = DB::table('user_photos')->insertGetId([
                 'user_id' => $approval->user->id,
@@ -66,9 +67,11 @@ class PhotoChangeApprovalController extends Controller
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
 
-            if($query){
-                $approval->delete();
-                return response()->json(['status' => 'success', 'message' => 'Approval approved successfully']);
+            if ($query) {
+                $query_two = $approval->delete();
+                if ($query_two) {
+                    return response()->json(['status' => 'success', 'message' => 'Approval approved successfully']);
+                }
             }
         }
         return response()->json(['status' => 'success', 'message' => 'Approval approved successfully']);

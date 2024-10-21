@@ -33,6 +33,15 @@
                 </div>
                 <div class="ibox-content">
                     <div class="form-group row offset-lg-1">
+                        <strong class="col-sm-2 col-form-label">Attribute</strong>
+                        <div class="col-sm-4">
+                            <h4>Previous</h4>
+                        </div>
+                        <div class="col-sm-4">
+                            <h4>New</h4>
+                        </div>
+                    </div>
+                    <div class="form-group row offset-lg-1">
                         <strong class="col-sm-2 col-form-label">First Name</strong>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" name="first_name" required id="first_name" value="{{$user->first_name}}" readonly placeholder="first_name">
