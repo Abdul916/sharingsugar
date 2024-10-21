@@ -35,7 +35,7 @@ class PhotoChangeApprovalController extends Controller
         }
 
         $data['user'] = $data['approval']->user;
-        // dd($data['approval_data']);
+        // print_r($data['user']); exit;
         return view('admin.photo_approvals.show', $data);
     }
 
