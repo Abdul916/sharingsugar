@@ -44,7 +44,6 @@
                                     <th>Sr #</th>
                                     <th>Title</th>
                                     <th>Price</th>
-                                    <th>Stripe ID</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -55,7 +54,6 @@
                                     <td>{{ $i++ }}</td>
                                     <td>{{ $item->name  }}</td>
                                     <td>{{$item->price}}</td>
-                                    <td>{{$item->stripe_product_id}}</td>
                                     <td>
                                         <button class="btn btn-primary btn-sm btn_plan_edit" data-id="{{$item->id}}" type="button"><i class="fa-solid fa-edit"></i> Edit</button>
                                         <button class="btn btn-danger btn-sm btn_delete" data-id="{{$item->id}}" data-text="you want to delete this plan?" type="button" data-placement="top" title="Delete">Delete</button>
@@ -113,12 +111,6 @@
                         <label class="col-sm-4 col-form-label"><strong>Price</strong></label>
                         <div class="col-sm-8">
                             <input type="text" name="price" required class="form-control" placeholder="">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label"><strong>Stripe Product ID</strong></label>
-                        <div class="col-sm-8">
-                            <input type="text" name="stripe_product_id" required class="form-control" placeholder="">
                         </div>
                     </div>
                     <div class="form-group row">

@@ -34,12 +34,6 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-4 col-form-label"><strong>Stripe Product ID</strong></label>
-                <div class="col-sm-8">
-                    <input type="text" name="stripe_product_id" class="form-control" placeholder="Strip Product ID" required value="{{ $plan['stripe_product_id'] }}">
-                </div>
-            </div>
-            <div class="form-group row">
                 <label class="col-sm-4 col-form-label"><strong>Description</strong></label>
                 <div class="col-sm-8">
                     <textarea name="description" class="form-control" required>{{ $plan['description'] }}</textarea>
