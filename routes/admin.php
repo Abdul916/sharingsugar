@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\MembershipsController;
 use App\Http\Controllers\Admin\ContactUsController;
 use App\Http\Controllers\Admin\EmailController;
 use App\Http\Controllers\Admin\PlansController;
+use App\Http\Controllers\Admin\ProfileApprovalController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix'  =>  'admin'], function () {
@@ -73,6 +74,12 @@ Route::group(['prefix'  =>  'admin'], function () {
 			Route::get('create', [EmailController::class, 'create']);
 			Route::post('dispatch', [EmailController::class, 'dispatch_email']);
 			Route::get('show/{id}', [EmailController::class, 'show']);
+		});
+		Route::group(['prefix' => 'profile_approvals'], function () {
+			Route::get('/', [ProfileApprovalController::class, 'index']);
+			Route::get('show/{id}', [ProfileApprovalController::class, 'show']);
+			Route::post('approve', [ProfileApprovalController::class, 'approve']);
+			Route::post('decline', [ProfileApprovalController::class, 'decline']);
 		});
 	});
 });

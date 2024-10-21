@@ -1,23 +1,18 @@
 @extends('admin.admin_app')
-@section('title', 'Emails')
+@section('title', 'Profile Change Approval')
 @section('content')
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-8 col-sm-8 col-xs-8">
-        <h2> Dispatched Emails </h2>
+        <h2> Profile Approvals </h2>
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <a href="{{ url('admin') }}">Dashboard</a>
             </li>
             <li class="breadcrumb-item active">
-                <strong> Dispatched Emails </strong>
+                <strong> Profile Approvals </strong>
             </li>
         </ol>
-    </div>
-    <div class="col-lg-4 col-sm-4 col-xs-4 text-right">
-        <a class="btn btn-primary text-white t_m_25" href="{{url('admin/emails/create')}}">
-            <i class="fa fa-plus" aria-hidden="true"></i> Send New Email
-        </a>
     </div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -25,11 +20,11 @@
         <div class="col-lg-12">
             <div class="ibox">
                 <div class="ibox-content">
-                    <form id="search_form" action="{{url('admin/emails')}}" method="GET" enctype="multipart/form-data">
+                    <form id="search_form" action="{{url('admin/profile_approvals')}}" method="GET" enctype="multipart/form-data">
                         <div class="form-group row justify-content-end">
                             <div class="col-sm-6">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="search_query" placeholder="Search by Title" value="{{ old('search_query', $searchParams['search_query'] ?? '') }}">
+                                    <input type="text" class="form-control" name="search_query" placeholder="Search by Name or Email" value="{{ old('search_query', $searchParams['search_query'] ?? '') }}">
                                     <span class="input-group-append">
                                         <button type="submit" class="btn btn-primary">Search</button>
                                     </span>
@@ -42,7 +37,8 @@
                             <thead>
                                 <tr>
                                     <th>Sr #</th>
-                                    <th>Title</th>
+                                    <th>User</th>
+                                    <th>Email</th>
                                     <th>Status</th>
                                     <th>Date</th>
                                     <th>Action</th>
@@ -50,22 +46,23 @@
                             </thead>
                             <tbody>
                                 @php($i = 1)
-                                @foreach($emails as $item)
+                                @foreach($approvals as $item)
                                 <tr class="gradeX">
                                     <td>{{ $i++ }}</td>
-                                    <td>{{ $item->title  }}</td>
+                                    <td>{{ $item->user->first_name . ' ' .  $item->user->last_name }}</td>
+                                    <td>{{ $item->user->email }}</td>
                                     <td>
                                         @if($item->status == 0)
-                                        <span class="badge badge-info">Dispatched</span>
+                                        <span class="badge badge-warning">Pending</span>
                                         @elseif($item->status == 1)
-                                        <span class="badge badge-success">Sent</span>
-                                        @else 
-                                        <span class="badge badge-danger">Failed</span>
+                                        <span class="badge badge-success">Approved</span>
+                                        @else
+                                        <span class="badge badge-danger">Declined</span>
                                         @endif
                                     </td>
                                     <td>{{ formated_date($item->created_at)}}</td>
                                     <td>
-                                        <a class="btn btn-primary btn-sm btn_plan_edit" href="{{url('admin/emails/show/' . $item->id)}}"><i class="fa-solid fa-file"></i> View</button>
+                                        <a class="btn btn-primary btn-sm btn_plan_edit" href="{{url('admin/profile_approvals/show/' . $item->id)}}"><i class="fa-solid fa-file"></i> View</button>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -74,21 +71,14 @@
                     </div>
                     <div class="row">
                         <div class="col-md-9">
-                            <p>Showing {{ $emails->firstItem() }} to {{ $emails->lastItem() }} of {{ $emails->total() }} entries</p>
+                            <p>Showing {{ $approvals->firstItem() }} to {{ $approvals->lastItem() }} of {{ $approvals->total() }} entries</p>
                         </div>
                         <div class="col-md-3 text-right">
-                            {{ $emails->links('pagination::bootstrap-4') }}
+                            {{ $approvals->links('pagination::bootstrap-4') }}
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal inmodal show fade" id="edit_modalbox" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-md" role="document">
-        <div class="modal-content animated flipInY" id="edit_modalbox_body">
         </div>
     </div>
 </div>

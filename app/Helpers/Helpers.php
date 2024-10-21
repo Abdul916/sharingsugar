@@ -1,52 +1,62 @@
 <?php
 
+use App\Models\ProfileChangeLog;
 use Carbon\Carbon;
 
 if (!function_exists('admin_url')) {
-	function admin_url() {
+	function admin_url()
+	{
 		return url('admin');
 	}
 }
 
 if (!function_exists('formated_date')) {
-	function formated_date($datee){
-		return date("d/m/Y" , strtotime($datee));
+	function formated_date($datee)
+	{
+		return date("d/m/Y", strtotime($datee));
 	}
 }
 if (!function_exists('date_formated')) {
-	function date_formated($datee){
-		return date("d-m-Y" , strtotime($datee));
+	function date_formated($datee)
+	{
+		return date("d-m-Y", strtotime($datee));
 	}
 }
 if (!function_exists('date_with_month')) {
-	function date_with_month($datee){
-		return date("F d, Y" , strtotime($datee));
+	function date_with_month($datee)
+	{
+		return date("F d, Y", strtotime($datee));
 	}
 }
 if (!function_exists('db_date')) {
-	function db_date($datee){
-		return date("Y-m-d" , strtotime($datee));
+	function db_date($datee)
+	{
+		return date("Y-m-d", strtotime($datee));
 	}
 }
 if (!function_exists('js_date_formate')) {
-	function js_date_formate(){
+	function js_date_formate()
+	{
 		return "dd/mm/yyyy";
 	}
 }
 if (!function_exists('date_time')) {
-	function date_time ($time) {
-		return $newDateTime = formated_date($time)." ".date('h:i A', strtotime($time));
+	function date_time($time)
+	{
+		return $newDateTime = formated_date($time) . " " . date('h:i A', strtotime($time));
 	}
 }
 
 if (!function_exists('month_date_time')) {
-	function month_date_time ($time) {
-		return $newDateTime = date_with_month($time)." ".date('h:i A', strtotime($time));
+	function month_date_time($time)
+	{
+		return $newDateTime = date_with_month($time) . " " . date('h:i A', strtotime($time));
 	}
 }
 
-if (!function_exists('get_complete_table')){
-	function get_complete_table($table='', $primary_key='', $where_value='', $type='', $status='', $orderby='', $sorted='') {
+if (!function_exists('get_complete_table')) {
+	function get_complete_table($table = '', $primary_key = '', $where_value = '', $type = '', $status = '', $orderby = '', $sorted = '')
+	{
 		$query = DB::table($table);
 		if ($primary_key) {
 			$query->where($primary_key, $where_value);
@@ -57,9 +67,9 @@ if (!function_exists('get_complete_table')){
 		if ($status) {
 			$query->where('status', $status);
 		}
-		if($sorted) {
+		if ($sorted) {
 			$query->orderBy($orderby, $sorted);
-		}else{
+		} else {
 			$query->orderBy('id', 'DESC');
 		}
 		$data = $query->get();
@@ -68,11 +78,12 @@ if (!function_exists('get_complete_table')){
 }
 
 if (!function_exists('get_single_value')) {
-	function get_single_value($table, $value, $id) {
+	function get_single_value($table, $value, $id)
+	{
 		$query = DB::table($table)
-		->select($value)
-		->where('id', $id)
-		->first();
+			->select($value)
+			->where('id', $id)
+			->first();
 		return $query->$value;
 	}
 }
@@ -81,34 +92,37 @@ if (!function_exists('get_section_content')) {
 	function get_section_content($meta_tag, $meta_key)
 	{
 		$query = DB::table('settings')
-		->select('meta_value')
-		->where('meta_tag', $meta_tag)
-		->where('meta_key',$meta_key)
-		->first();
+			->select('meta_value')
+			->where('meta_tag', $meta_tag)
+			->where('meta_key', $meta_key)
+			->first();
 		return $query->meta_value;
 	}
 }
 
-if ( ! function_exists('permanently_deleted')) {
-	function permanently_deleted($table, $primary_key, $where_id) {
+if (! function_exists('permanently_deleted')) {
+	function permanently_deleted($table, $primary_key, $where_id)
+	{
 		$query = DB::table($table)->where($primary_key, $where_id)->delete();
 		return true;
 	}
 }
 
-if ( ! function_exists('softly_deleted')) {
-	function softly_deleted($table, $primary_key, $where_id, $set_column, $value) {
+if (! function_exists('softly_deleted')) {
+	function softly_deleted($table, $primary_key, $where_id, $set_column, $value)
+	{
 		$query = DB::table($table)
-		->where($primary_key, $where_id)
-		->update([
-			$set_column => $value
-		]);
+			->where($primary_key, $where_id)
+			->update([
+				$set_column => $value
+			]);
 		return $query;
 	}
 }
 
 if (!function_exists('count_table_records')) {
-	function count_table_records($table, $status='') {
+	function count_table_records($table, $status = '')
+	{
 		$query = DB::table($table);
 		if ($status) {
 			$query->where('status', $status);
@@ -118,16 +132,17 @@ if (!function_exists('count_table_records')) {
 }
 
 if (!function_exists('check_record_existing')) {
-	function check_record_existing($table, $primary_key, $where_id, $primary_key2='', $where_id2='', $type='', $type_value='', $date_column='', $date_value='') {
+	function check_record_existing($table, $primary_key, $where_id, $primary_key2 = '', $where_id2 = '', $type = '', $type_value = '', $date_column = '', $date_value = '')
+	{
 		$query = DB::table($table);
 		$query->where($primary_key, $where_id);
-		if($primary_key2){
+		if ($primary_key2) {
 			$query->where($primary_key2, $where_id2);
 		}
-		if($type){
+		if ($type) {
 			$query->where($type, $type_value);
 		}
-		if($date_column){
+		if ($date_column) {
 			$query->whereDate($date_column, $date_value);
 		}
 		return $query->count();
@@ -135,13 +150,14 @@ if (!function_exists('check_record_existing')) {
 }
 
 if (!function_exists('get_single_row')) {
-	function get_single_row($table, $primary_key, $where_id, $primary_key2='', $where_id2='', $type='', $type_value='') {
+	function get_single_row($table, $primary_key, $where_id, $primary_key2 = '', $where_id2 = '', $type = '', $type_value = '')
+	{
 		$query = DB::table($table);
 		$query->where($primary_key, $where_id);
-		if($primary_key2){
+		if ($primary_key2) {
 			$query->where($primary_key2, $where_id2);
 		}
-		if($type){
+		if ($type) {
 			$query->where($type, $type_value);
 		}
 		$query->orderBy('id', 'DESC');
@@ -151,7 +167,8 @@ if (!function_exists('get_single_row')) {
 }
 
 if (!function_exists('get_photos')) {
-	function get_photos($table, $user_id, $type, $status) {
+	function get_photos($table, $user_id, $type, $status)
+	{
 		$query = DB::table($table);
 		$query->where('user_id', $user_id);
 		$query->where('type', $type);
@@ -162,8 +179,9 @@ if (!function_exists('get_photos')) {
 	}
 }
 
-if ( ! function_exists('add_login_logs')) {
-	function add_login_logs($id) {
+if (! function_exists('add_login_logs')) {
+	function add_login_logs($id)
+	{
 		DB::table('user_login_logs')->insertGetId([
 			'user_id' => $id,
 			'ip' => request()->ip(),
@@ -172,30 +190,32 @@ if ( ! function_exists('add_login_logs')) {
 		]);
 
 		$query = DB::table('users')
-		->where('id', $id)
-		->update([
-			'last_login' => date('Y-m-d H:i:s')
-		]);
+			->where('id', $id)
+			->update([
+				'last_login' => date('Y-m-d H:i:s')
+			]);
 		return true;
 	}
 }
 
-if ( ! function_exists('update_login_logs')) {
-	function update_login_logs($id) {
+if (! function_exists('update_login_logs')) {
+	function update_login_logs($id)
+	{
 		$last_id = DB::table('user_login_logs')->where('user_id', $id)->orderBy('id', 'DESC')->first();
 
 		$query = DB::table('user_login_logs')
-		->where('id', $last_id->id)
-		->update([
-			'logout_time' => date('Y-m-d H:i:s'),
-			'updated_at' => date('Y-m-d H:i:s')
-		]);
+			->where('id', $last_id->id)
+			->update([
+				'logout_time' => date('Y-m-d H:i:s'),
+				'updated_at' => date('Y-m-d H:i:s')
+			]);
 		return true;
 	}
 }
 
-if ( ! function_exists('time_elapsed_string')) {
-	function time_elapsed_string($datetime, $full = false) {
+if (! function_exists('time_elapsed_string')) {
+	function time_elapsed_string($datetime, $full = false)
+	{
 		$now = new DateTime;
 		$ago = new DateTime($datetime);
 		$diff = $now->diff($ago);
@@ -225,14 +245,15 @@ if ( ! function_exists('time_elapsed_string')) {
 	}
 }
 
-if ( ! function_exists('add_user_configuration')) {
-	function add_user_configuration($user_id, $config_user_id, $type, $desc='', $image='', $status='', $requested_id='') {
-		if($requested_id){
+if (! function_exists('add_user_configuration')) {
+	function add_user_configuration($user_id, $config_user_id, $type, $desc = '', $image = '', $status = '', $requested_id = '')
+	{
+		if ($requested_id) {
 			$query = DB::table('user_configs')
-			->where('id', $requested_id)->update([
-				'status' => 2
-			]);
-		}else{
+				->where('id', $requested_id)->update([
+					'status' => 2
+				]);
+		} else {
 			DB::table('user_configs')->insertGetId([
 				'user_id' => $user_id,
 				'config_user_id' => $config_user_id,
@@ -247,20 +268,22 @@ if ( ! function_exists('add_user_configuration')) {
 	}
 }
 
-if ( ! function_exists('remove_user_configuration')) {
-	function remove_user_configuration($user_id, $config_user_id, $type) {
+if (! function_exists('remove_user_configuration')) {
+	function remove_user_configuration($user_id, $config_user_id, $type)
+	{
 		DB::table('user_configs')
-		->where('user_id', $user_id)
-		->where('config_user_id', $config_user_id)
-		->where('type', $type)
-		->delete();
+			->where('user_id', $user_id)
+			->where('config_user_id', $config_user_id)
+			->where('type', $type)
+			->delete();
 		return true;
 	}
 }
 
 
-if ( ! function_exists('like_photos')) {
-	function like_photos($user_id, $photo_user_id, $photo_id) {
+if (! function_exists('like_photos')) {
+	function like_photos($user_id, $photo_user_id, $photo_id)
+	{
 		DB::table('like_images')->insertGetId([
 			'user_id' => $user_id,
 			'photo_user_id' => $photo_user_id,
@@ -271,45 +294,49 @@ if ( ! function_exists('like_photos')) {
 	}
 }
 
-if ( ! function_exists('unlike_photos')) {
-	function unlike_photos($user_id, $photo_user_id, $photo_id) {
+if (! function_exists('unlike_photos')) {
+	function unlike_photos($user_id, $photo_user_id, $photo_id)
+	{
 		DB::table('like_images')
-		->where('user_id', $user_id)
-		->where('photo_id', $photo_id)
-		->delete();
+			->where('user_id', $user_id)
+			->where('photo_id', $photo_id)
+			->delete();
 		return true;
 	}
 }
 
-if ( ! function_exists('update_user_privacy_settings')) {
-	function update_user_privacy_settings($column, $value) {
+if (! function_exists('update_user_privacy_settings')) {
+	function update_user_privacy_settings($column, $value)
+	{
 		$query = DB::table('users')
-		->where('id', Auth::user()->id)
-		->update([
-			$column => $value
-		]);
+			->where('id', Auth::user()->id)
+			->update([
+				$column => $value
+			]);
 		return true;
 	}
 }
 
-if ( ! function_exists('age')) {
-	function age($dateOfBirth) {
+if (! function_exists('age')) {
+	function age($dateOfBirth)
+	{
 		return $years = Carbon::parse($dateOfBirth)->age;
 	}
 }
 
-if(! function_exists('create_slug')){
-	function create_slug($table, $title, $id=''){
+if (! function_exists('create_slug')) {
+	function create_slug($table, $title, $id = '')
+	{
 		$slug = Str::slug($title);
 		$query = DB::table($table);
 		$query->where('slug', $slug);
-		if($id){
+		if ($id) {
 			$query->where('id', '!=', $id);
 		}
 		$count = $query->count();
-		if($count > 0){
-			$slug_name = $slug.'-'.time();
-		}else{
+		if ($count > 0) {
+			$slug_name = $slug . '-' . time();
+		} else {
 			$slug_name = $slug;
 		}
 		return $slug_name;
@@ -317,8 +344,9 @@ if(! function_exists('create_slug')){
 }
 
 
-if ( ! function_exists('add_notifications')) {
-	function add_notifications($user_id, $notify_user_id, $message, $type) {
+if (! function_exists('add_notifications')) {
+	function add_notifications($user_id, $notify_user_id, $message, $type)
+	{
 		DB::table('notifications')->insertGetId([
 			'user_id' => $user_id,
 			'notify_user_id' => $notify_user_id,
@@ -329,12 +357,13 @@ if ( ! function_exists('add_notifications')) {
 		return true;
 	}
 }
-if ( ! function_exists('update_notifications')) {
-	function update_notifications($id='') {
+if (! function_exists('update_notifications')) {
+	function update_notifications($id = '')
+	{
 		$query = DB::table('notifications');
 		$query->where('notify_user_id', Auth::user()->id);
 		$query->where('status', '1');
-		if($id){
+		if ($id) {
 			$query->where('id', $id);
 		}
 		$query->update([
@@ -344,13 +373,14 @@ if ( ! function_exists('update_notifications')) {
 		return true;
 	}
 }
-if ( ! function_exists('delete_notifications')) {
-	function delete_notifications($id='') {
+if (! function_exists('delete_notifications')) {
+	function delete_notifications($id = '')
+	{
 		$query = DB::table('notifications');
 		$query->where('notify_user_id', Auth::user()->id);
-		if($id){
+		if ($id) {
 			$query->where('id', $id);
-		}else{
+		} else {
 			$query->where('status', '2');
 		}
 		$query->delete();
@@ -358,8 +388,9 @@ if ( ! function_exists('delete_notifications')) {
 	}
 }
 
-if ( ! function_exists('get_random_posts')) {
-	function get_random_posts($offset, $limit) {
+if (! function_exists('get_random_posts')) {
+	function get_random_posts($offset, $limit)
+	{
 		$query = DB::table('posts');
 		$query->where('status', '1');
 		$query->skip($offset)->take($limit);
@@ -368,12 +399,111 @@ if ( ! function_exists('get_random_posts')) {
 	}
 }
 
-if ( ! function_exists('get_next_post')) {
-	function get_next_post($url) {
+if (! function_exists('get_next_post')) {
+	function get_next_post($url)
+	{
 		$query = DB::table('posts');
 		$query->where('status', '1');
 		$query->skip($offset)->take($limit);
 		$data = $query->get();
 		return $data;
+	}
+}
+if (! function_exists('is_profile_approval_pending')) {
+	function is_profile_approval_pending($user_id)
+	{
+		$query = ProfileChangeLog::where('user_id', $user_id)->where('status', 0)->count();
+		if ($query > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+}
+
+
+if (! function_exists('is_profile_approval_declined')) {
+	function is_profile_approval_declined($user_id)
+	{
+		// fetch last profile change log
+		$last_profile_change_log = ProfileChangeLog::where('user_id', $user_id)->orderBy('id', 'DESC')->first();
+		if ($last_profile_change_log) {
+			if ($last_profile_change_log->status == 2) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+}
+if (! function_exists('map_gender')) {
+	function map_gender($value)
+	{
+		switch ($value) {
+			case 1:
+				return 'Male';
+				break;
+			case 2:
+				return 'Female';
+				break;
+			case 3:
+				return 'Transgender';
+				break;
+			default:
+				return 'Not Specified';
+				break;
+		}
+	}
+}
+if (! function_exists('map_marital_status')) {
+	function map_marital_status($value)
+	{
+		switch ($value) {
+			case 1:
+				return 'Single';
+				break;
+			case 2:
+				return 'Married';
+				break;
+			case 3:
+				return 'Widowed';
+				break;
+			case 4:
+				return 'Divorced';
+				break;
+			default:
+				return 'Not Specified';
+				break;
+		}
+	}
+}
+if (! function_exists('map_body')) {
+	function map_body($value)
+	{
+		switch ($value) {
+			case 1:
+				return 'Skinny';
+				break;
+			case 2:
+				return 'Thin';
+				break;
+			case 3:
+				return 'Median';
+				break;
+			case 4:
+				return 'Athletic';
+				break;
+			case 5:
+				return 'Curvilinear';
+				break;
+			case 6:
+				return 'Full Height ';
+				break;
+			default:
+				return 'Not Specified';
+				break;
+		}
 	}
 }
