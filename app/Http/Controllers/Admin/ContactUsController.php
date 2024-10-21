@@ -10,9 +10,19 @@ use Session, Validator, DB;
 
 class ContactUsController extends Controller
 {
-	public function index()
+
+	public function index(Request $request)
 	{
-		$data['contactus_msgs'] = ContactUsMsgs::get();
+		$query = ContactUsMsgs::query();
+		$search_query = $request->input('search_query');
+		if ($request->has('search_query') && !empty($search_query)) {
+			$query->where(function ($query) use ($search_query) {
+				$query->where('name', 'like', '%' . $search_query . '%')
+				->orWhere('email', 'like', '%' . $search_query . '%');
+			});
+		}
+		$data['contactus_msgs'] = $query->orderBy('id', 'DESC')->paginate(50);
+		$data['searchParams'] = $request->all();
 		return view('admin/contacts_us/contacts_us', $data);
 	}
 

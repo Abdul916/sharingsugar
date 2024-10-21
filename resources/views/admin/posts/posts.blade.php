@@ -25,6 +25,20 @@
         <div class="col-lg-12">
             <div class="ibox">
                 <div class="ibox-content">
+
+                    <form id="search_form" action="{{url('admin/posts')}}" method="GET" enctype="multipart/form-data">
+                        <div class="form-group row justify-content-end">
+                            <div class="col-sm-6">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="search_query" placeholder="Search by category, post title" value="{{ old('search_query', $searchParams['search_query'] ?? '') }}">
+                                    <span class="input-group-append">
+                                        <button type="submit" class="btn btn-primary">Search</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
                     <div class="table-responsive">
                         <table id="table_tbl" class=" dataTables-example table table-striped table-bordered dt-responsive nowrap" style="width:100%">
                             <thead>
@@ -78,6 +92,15 @@
                             </tbody>
                         </table>
                     </div>
+
+                    <div class="row">
+                        <div class="col-md-9">
+                            <p>Showing {{ $posts->firstItem() }} to {{ $posts->lastItem() }} of {{ $posts->total() }} entries</p>
+                        </div>
+                        <div class="col-md-3 text-right">
+                            {{ $posts->links('pagination::bootstrap-4') }}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -87,9 +110,9 @@
 @push('scripts')
 <script>
     $('#table_tbl').dataTable({
-        "paging": true,
-        "searching": true,
-        "bInfo":true,
+        "paging": false,
+        "searching": false,
+        "bInfo":false,
         "responsive": true,
         "lengthMenu": [ [10, 25, 50, 100, -1], [10, 25, 50, 100, "All"] ],
         "columnDefs": [

@@ -7,9 +7,17 @@ use App\Models\Admin\Category;
 use Session, Validator, DB, Str;
 class CategoryController extends Controller
 {
-	public function index()
+	public function index(Request $request)
 	{
-		$data['categories'] = Category::orderBy('id', 'DESC')->get();
+		$query = Category::query();
+		$search_query = $request->input('search_query');
+		if ($request->has('search_query') && !empty($search_query)) {
+			$query->where(function ($query) use ($search_query) {
+				$query->where('name', 'like', '%' . $search_query . '%');
+			});
+		}
+		$data['categories'] = $query->orderBy('id', 'DESC')->paginate(50);
+		$data['searchParams'] = $request->all();
 		return view('admin/categories/categories', $data);
 	}
 	public function create()

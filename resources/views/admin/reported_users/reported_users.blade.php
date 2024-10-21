@@ -20,6 +20,18 @@
         <div class="col-lg-12">
             <div class="ibox">
                 <div class="ibox-content">
+                    <form id="search_form" action="{{url('admin/users/reported_users')}}" method="GET" enctype="multipart/form-data">
+                        <div class="form-group row justify-content-end">
+                            <div class="col-sm-6">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="search_query" placeholder="Search by name, email" value="{{ old('search_query', $searchParams['search_query'] ?? '') }}">
+                                    <span class="input-group-append">
+                                        <button type="submit" class="btn btn-primary">Search</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                     <div class="table-responsive">
                         <table id="table_tbl" class=" dataTables-example table table-striped table-bordered dt-responsive nowrap" style="width:100%">
                             <thead>
@@ -36,14 +48,14 @@
                                 <tr id="tr">
                                     <td>{{ $i++ }}</td>
                                     <td>
-                                        @php($user_image = get_single_value('users', 'profile_image', $report->config_user_id))
                                         <a href="{{ url('admin/users/profile')}}/{{$report->config_user_id}}" class="text-navy" data-placement="top" title="View Profile">
-                                            @if(!empty($user_image))
-                                            <img alt="" class="rounded-circle img-fluid" src="{{ asset('assets/app_images')}}/{{$user_image}}" style="width: 40px;">
+                                            @if(!empty($report->profile_image))
+                                            <img alt="" class="rounded-circle img-fluid" src="{{ asset('assets/app_images')}}/{{$report->profile_image}}" style="width: 40px;">
                                             @else
                                             <img alt="" class="rounded-circle img-fluid" src="{{ asset('assets/app_images/profile-pic.png') }}" style="width: 40px;">
                                             @endif
-                                            <br><strong>{{ get_single_value('users', 'username', $report->config_user_id) }}</strong>
+                                            <br><strong>{{ $report->username }}</strong>
+                                            <br><strong>{{ $report->email }}</strong>
                                         </a>
                                     </td>
                                     <td><label class="label label-primary">{{$report->total_reports}}</label></td>
@@ -56,6 +68,15 @@
                             </tbody>
                         </table>
                     </div>
+
+                    <div class="row">
+                        <div class="col-md-9">
+                            <p>Showing {{ $reported_users->firstItem() }} to {{ $reported_users->lastItem() }} of {{ $reported_users->total() }} entries</p>
+                        </div>
+                        <div class="col-md-3 text-right">
+                            {{ $reported_users->links('pagination::bootstrap-4') }}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -67,9 +88,9 @@
 <script>
 
     $('#table_tbl').dataTable({
-        "paging": true,
-        "searching": true,
-        "bInfo":true,
+        "paging": false,
+        "searching": false,
+        "bInfo":false,
         "responsive": true,
         "lengthMenu": [ [10, 25, 50, 100, -1], [10, 25, 50, 100, "All"] ],
         "columnDefs": [
