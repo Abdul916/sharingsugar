@@ -10,9 +10,20 @@ use Hash, Session, Validator, DB;
 
 class UsersController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data['users'] = Users::orderBy('id', 'DESC')->get();
+        $query = Users::query();
+        $search_query = $request->input('search_query');
+        if ($request->has('search_query') && !empty($search_query)) {
+            $query->where(function ($query) use ($search_query) {
+                $query->where('first_name', 'like', '%' . $search_query . '%')
+                ->orWhere('last_name', 'like', '%' . $search_query . '%')
+                ->orWhere('username', 'like', '%' . $search_query . '%')
+                ->orWhere('email', 'like', '%' . $search_query . '%');
+            });
+        }
+        $data['users'] = $query->orderBy('id', 'DESC')->paginate(50);
+        $data['searchParams'] = $request->all();
         return view('admin/users/users', $data);
     }
     public function view_profile($id='')
@@ -70,13 +81,28 @@ class UsersController extends Controller
         }
     }
 
-    public function reported_users()
+    public function reported_users(Request $request)
     {
+        $search_query = $request->input('search_query');
         $data['reported_users'] = DB::table('user_configs')
-        ->select('config_user_id', DB::raw('count(*) as total_reports'))
-        ->groupBy('config_user_id')
-        ->where('type', 4)
-        ->get();
+        ->join('users', 'user_configs.config_user_id', '=', 'users.id')
+        ->select('user_configs.config_user_id', 'users.id', 'users.username', 'users.profile_image', 'users.email', DB::raw('count(*) as total_reports'))
+        ->where('user_configs.type', 4)
+        ->groupBy('users.id', 'users.username', 'users.email')
+        ->orderBy('users.id', 'DESC');
+
+        if (!empty($search_query)) {
+            $data['reported_users']->where(function($query) use ($search_query) {
+                $query->where('users.first_name', 'like', '%' . $search_query . '%')
+                ->orWhere('users.last_name', 'like', '%' . $search_query . '%')
+                ->orWhere('users.username', 'like', '%' . $search_query . '%')
+                ->orWhere('users.email', 'like', '%' . $search_query . '%');
+            });
+        }
+        $data['reported_users'] = $data['reported_users']->paginate(50);
+
+        // print_r($data['reported_users']); exit;
+        $data['searchParams'] = $request->all();
         return view('admin/reported_users/reported_users', $data);
     }
 

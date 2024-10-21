@@ -7,9 +7,20 @@ use App\Models\Admin\Post;
 use Session, Validator, DB, Str;
 class PostController extends Controller
 {
-	public function index()
+	public function index(Request $request)
 	{
-		$data['posts'] = Post::orderBy('id', 'DESC')->get();
+		$query = Post::query();
+		$search_query = $request->input('search_query');
+		$query->join('categories', 'posts.category_id', '=', 'categories.id')
+		->select('posts.*');
+		if ($request->has('search_query') && !empty($search_query)) {
+			$query->where(function ($query) use ($search_query) {
+				$query->where('posts.title', 'like', '%' . $search_query . '%')
+				->orWhere('categories.name', 'like', '%' . $search_query . '%');
+			});
+		}
+		$data['posts'] = $query->orderBy('posts.id', 'DESC')->paginate(50);
+		$data['searchParams'] = $request->all();
 		return view('admin/posts/posts', $data);
 	}
 	public function create()
