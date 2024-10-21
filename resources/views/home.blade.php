@@ -12,74 +12,61 @@
                     Find Love Your Life
                 </h1>
                 <div class="join-now-box wow fadeInUp">
-                    <div class="single-option">
-                        <p class="title">
-                            I am a :
-                        </p>
-                        <div class="option">
-                            <div class="s-input mr-3">
-                                <input type="radio" name="gender" id="male"><label for="male">Male</label>
-                            </div>
-                            <div class="s-input">
-                                <input type="radio" name="gender" id="female"><label for="female">Female</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="single-option gender">
-                        <p class="title">
-                            Seeking a :
-                        </p>
-                        <div class="option">
-                            <div class="s-input mr-4">
-                                <input type="radio" name="seeking" id="males"><label for="males">Man</label>
-                            </div>
-                            <div class="s-input">
-                                <input type="radio" name="seeking" id="females"><label for="females">Woman</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="single-option age">
-                        <p class="title">
-                            Ages :
-                        </p>
-                        <div class="option">
-                            <div class="s-input mr-3">
-                                <select class="select-bar">
-                                    <option value="">18</option>
-                                    <option value="">20</option>
-                                    <option value="">24</option>
-                                </select>
-                            </div>
-                            <div class="separator">
-                                -
-                            </div>
-                            <div class="s-input ml-3">
-                                <select class="select-bar">
-                                    <option value="">30</option>
-                                    <option value="">35</option>
-                                    <option value="">40</option>
-                                </select>
+                    <form id="search-form" action="members" method="GET">
+                        <div class="single-option gender">
+                            <p class="title">
+                                Seeking a:
+                            </p>
+                            <div class="option">
+                                <div class="s-input mr-4">
+                                    <input type="radio" name="interestedin" id="Sugar_Daddy" value="Sugar Daddy"><label for="Sugar_Daddy">Sugar Daddy</label>
+                                </div>
+                                <div class="s-input">
+                                    <input type="radio" name="interestedin" id="Sugar_Mommy" value="Sugar Mommy"><label for="Sugar_Mommy">Sugar Mommy</label>
+                                </div>
+                                {{-- <div class="s-input">
+                                    <input type="radio" name="interestedin" id="Sugar_Daddy_Mommy" value="Sugar Daddy Mommy"><label for="Sugar_Daddy_Mommy">Sugar Daddy Mommy</label>
+                                </div>
+                                <div class="s-input">
+                                    <input type="radio" name="interestedin" id="Sugar_Baby_Man" value="Sugar Baby Man"><label for="Sugar_Baby_Man">Sugar Baby Man</label>
+                                </div>
+                                <div class="s-input">
+                                    <input type="radio" name="interestedin" id="Sugar_Baby_Women" value="Sugar Baby Women"><label for="Sugar_Baby_Women">Sugar Baby Women</label>
+                                </div>
+                                <div class="s-input">
+                                    <input type="radio" name="interestedin" id="Sugar_Baby_Trans" value="Sugar Baby Trans"><label for="Sugar_Baby_Trans">Sugar Baby Trans</label>
+                                </div> --}}
                             </div>
                         </div>
-                    </div>
-                    <div class="single-option last">
-                        <p class="title">
-                            Country :
-                        </p>
-                        <div class="option">
-                            <div class="s-input mr-3">
-                                <select class="select-bar">
-                                    <option>Select Country</option>
-                                    <option value="">India</option>
-                                    <option value="">Japan</option>
-                                    <option value="">England</option>
-                                </select>
+                        <div class="single-option age">
+                            <input type="hidden" name="Age" value="Age">
+                            <p class="title">
+                                Ages :
+                            </p>
+                            <div class="option">
+                                <div class="s-input mr-3">
+                                    <select class="select-bar" name="minAge">
+                                        <option value="18">18</option>
+                                        <option value="20">20</option>
+                                        <option value="24">24</option>
+                                    </select>
+                                </div>
+                                <div class="separator">
+                                    -
+                                </div>
+                                <div class="s-input ml-3">
+                                    <select class="select-bar" name="maxAge">
+                                        <option value="40">40</option>
+                                        <option value="45">45</option>
+                                        <option value="50">50</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="joun-button">
-                        <button class="custom-button">Join Now!</button>
-                    </div>
+                        <div class="joun-button mt-2">
+                            <button type="submit" class="custom-button">Join Now!</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -207,7 +194,7 @@
                     </div>
                     <h4 class="title">Find The Perfect Arrangement</h4>
                     <p>Our goal is to get you paired with the perfect Sugar Daddy or Sugar Baby!</p>
-                   {{-- <a href="{{url('membership')}}" class="custom-button">Join Now !</a> --}}
+                    {{-- <a href="{{url('membership')}}" class="custom-button">Join Now !</a> --}}
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">
