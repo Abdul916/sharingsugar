@@ -31,7 +31,8 @@ class PlanStripeController extends Controller
                 'source' => $request->stripeToken,
                 'description' => 'Payment Description',
             ]);
-            return back()->with('success', 'Payment successful! Charge ID: ' . $charge->id);
+            dd($charge);
+            // return back()->with('success', 'Payment successful! Charge ID: ' . $charge->id);
         } catch (\Stripe\Exception\CardException $e) {
             return back()->with('error', 'Error! ' . $e->getMessage());
         }

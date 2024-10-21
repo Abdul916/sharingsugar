@@ -58,8 +58,7 @@ class ProfileApprovalController extends Controller
         if(!$approval) {
             return response()->json(['status' => 'error', 'message' => 'Approval not found']);
         }
-        $approval->status = 2;
-        $approval->save();
+        $approval->delete();
         return response()->json(['status' => 'success', 'message' => 'Approval declined successfully']);
     }
 }

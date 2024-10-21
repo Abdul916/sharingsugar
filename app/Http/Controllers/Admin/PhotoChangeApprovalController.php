@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\PhotoChangeLog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PhotoChangeApprovalController extends Controller
 {
@@ -30,13 +31,12 @@ class PhotoChangeApprovalController extends Controller
     {
         $data['approval'] = PhotoChangeLog::find($id);
         if (!$data['approval']) {
-            return redirect()->route('admin.profile_approvals')->with('error', 'Approval not found');
+            return redirect()->route('admin.photo_approvals')->with('error', 'Approval not found');
         }
 
         $data['user'] = $data['approval']->user;
-        $data['approval_data'] = json_decode($data['approval']->updated_data, true);
         // dd($data['approval_data']);
-        return view('admin.profile_approvals.show', $data);
+        return view('admin.photo_approvals.show', $data);
     }
 
     public function approve(Request $request)
@@ -45,10 +45,32 @@ class PhotoChangeApprovalController extends Controller
         if (!$approval) {
             return response()->json(['status' => 'error', 'message' => 'Approval not found']);
         }
-        $user = $approval->user;
-        $updated_data = json_decode($approval->updated_data, true);
-        $user->update($updated_data);
-        $approval->delete();
+        // delete old image
+        if ($approval->type == 0) {
+            $old_image = $approval->user->profile_image;
+            // delete old image
+            if ($old_image != 'default.png') {
+                $image_path = public_path('assets/app_images/' . $old_image);
+                if (file_exists($image_path)) {
+                    unlink($image_path);
+                }
+            }
+            $user = $approval->user;
+            $user->profile_image = $approval->photo;
+            $user->save();
+        } else {
+            $query = DB::table('user_photos')->insertGetId([
+                'user_id' => $approval->user->id,
+                'photo' => $approval->photo,
+                'type' => $approval->type,
+                'created_at' => date('Y-m-d H:i:s'),
+            ]);
+
+            if($query){
+                $approval->delete();
+                return response()->json(['status' => 'success', 'message' => 'Approval approved successfully']);
+            }
+        }
         return response()->json(['status' => 'success', 'message' => 'Approval approved successfully']);
     }
 
@@ -58,8 +80,16 @@ class PhotoChangeApprovalController extends Controller
         if (!$approval) {
             return response()->json(['status' => 'error', 'message' => 'Approval not found']);
         }
-        $approval->status = 2;
-        $approval->save();
+        // delete approval photo
+        if ($approval->type == 0) {
+            $image_path = public_path('assets/app_images/' . $approval->photo);
+        } else {
+            $image_path = public_path('assets/app_images/user_photos/' . $approval->photo);
+        }
+        if (file_exists($image_path)) {
+            unlink($image_path);
+        }
+        $approval->delete();
         return response()->json(['status' => 'success', 'message' => 'Approval declined successfully']);
     }
 }

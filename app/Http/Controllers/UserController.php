@@ -236,6 +236,7 @@ class UserController extends Controller
 
     public function upload_photos(Request $request)
     {
+        // dd($request->all());
         $data = $request->all();
         $validator = Validator::make($data, [
             'my_photos' => 'required',
@@ -253,16 +254,24 @@ class UserController extends Controller
                 $destinationPath = public_path('/assets/app_images/user_photos');
                 $image->move($destinationPath, $photo_name);
 
-                $status = DB::table('user_photos')->insertGetId([
-                    'user_id' => $data['id'],
-                    'photo' => $photo_name,
-                    'type' => $data['type'],
-                    'created_at' => date('Y-m-d H:i:s'),
-                ]);
+                // $status = DB::table('user_photos')->insertGetId([
+                //     'user_id' => $data['id'],
+                //     'photo' => $photo_name,
+                //     'type' => $data['type'],
+                //     'created_at' => date('Y-m-d H:i:s'),
+                // ]);
             }
         }
-        if ($status > 0) {
-            $finalResult = response()->json(array('msg' => 'success', 'response' => 'Photos successfully upload.'));
+
+        $photo_change_log = new PhotoChangeLog();
+        $photo_change_log->user_id = $data['id'];
+        $photo_change_log->photo = $photo_name;
+        $photo_change_log->type = $data['type'];
+        $photo_change_log->status  = 0;
+        $query = $photo_change_log->save();
+
+        if ($query > 0) {
+            $finalResult = response()->json(array('msg' => 'success', 'response' => 'Photos uploaded successfully. Changes would be propagated shortly after approval.'));
             return $finalResult;
         } else {
             $finalResult = response()->json(array('msg' => 'error', 'response' => 'Something went wrong.'));
