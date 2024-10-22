@@ -657,7 +657,24 @@ class UserController extends Controller
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s')
         ]);
+        if ($status > 0) {
+            $this->visit_email_to_user($data);
+        }
     }
+
+    public function visit_email_to_user($data)
+    {
+        $data['vuser'] = User::find($data['user_id']);
+        $to = $data['vuser']['email'];
+        $subject = get_section_content('project', 'site_title') . '(Notification)';
+        $email_body = view('emails/visit_profile_email', compact("data"));
+        $body = $email_body;
+        $headers = "MIME-Version: 1.0" . "\r\n";
+        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+        $headers .= 'From: <' . get_section_content('project', 'noreply_email') . '>' . "\r\n";
+        @mail($to, $subject, $body, $headers);
+    }
+
     public function delete_account(Request $request)
     {
         $data = $request->all();
