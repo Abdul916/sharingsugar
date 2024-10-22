@@ -13,6 +13,43 @@
         </div>
     </div>
 </section>
+
+
+
+
+
+
+
+<section class="user-setting-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12 col-md-12">
+                <div class="page-title">Membership Plan Details</div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="single-plan">
+                            <p class="duration">{{$plan->name}}</p>
+                            <h4 class="number">
+                                <sup>$</sup>{{$plan->price}}
+                            </h4>
+                            <p class="stamet">{{$plan->subtitle}}</p>
+                            <a href="#" class="custom-button">Buy Now!</a>
+                            <img class="shape" src="assets/images/membership/plan-bg.png" alt="">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
 <div class="blog-page">
     <div class="container">
         <div class="row">

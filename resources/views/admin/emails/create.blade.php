@@ -43,7 +43,7 @@
                         <div class="form-group row offset-lg-1">
                             <strong class="col-sm-1 col-form-label">Title</strong>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="title" required id="title" placeholder="title">
+                                <input type="text" class="form-control" name="title" id="title" placeholder="title">
                             </div>
                         </div>
                         <div class="form-group row offset-lg-1">
@@ -56,7 +56,7 @@
                         <div class="form-group row">
                             <strong class="col-sm-2 col-offset-3"></strong>
                             <div class="col-sm-10">
-                                <button type="button" class="btn btn-primary" id="btn_save" required title="Submit">Dispatch</button>
+                                <button type="button" class="btn btn-primary" id="btn_save" title="Submit">Dispatch</button>
                             </div>
                         </div>
                     </form>

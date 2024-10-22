@@ -15,7 +15,10 @@ class PlansController extends Controller
         $search_query = $request->input('search_query');
         if ($request->has('search_query') && !empty($search_query)) {
             $query->where(function ($query) use ($search_query) {
-                $query->where('name', 'like', '%' . $search_query . '%');
+                $query->where('name', 'like', '%' . $search_query . '%')
+                ->orWhere('subtitle', 'like', '%' . $search_query . '%')
+                ->orWhere('price', 'like', '%' . $search_query . '%')
+                ->orWhere('off_percent', 'like', '%' . $search_query . '%');
             });
         }
         $data['plans'] = $query->orderBy('id', 'DESC')->paginate(50);
@@ -27,23 +30,17 @@ class PlansController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
+            'subtitle' => 'required',
             'description' => 'required',
             'price' => 'required',
-            'stripe_product_id' => 'required',
         ]);
-
         if ($validator->fails()) {
-            $missing_fields = [];
-            foreach ($validator->errors()->messages() as $key => $value) {
-                $missing_fields[] = $key;
-            }
-            return back()->with('error', 'The following fields are required: ' . implode(', ', $missing_fields));
+            return response()->json(array('msg' => 'lvl_error', 'response'=>$validator->errors()->all()));
         }
-
         $plan = new Plans();
         $plan->name = $request->name;
-        $plan->subtitle = $request->subtitle ?? null;
-        $plan->off_percent = $request->off_percent ?? null;
+        $plan->subtitle = $request->subtitle;
+        $plan->off_percent = $request->off_percent;
         $plan->description = $request->description;
         $plan->price = $request->price;
         $plan->save();
@@ -73,23 +70,18 @@ class PlansController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
+            'subtitle' => 'required',
             'description' => 'required',
             'price' => 'required',
-            'stripe_product_id' => 'required',
         ]);
-
         if ($validator->fails()) {
-            $missing_fields = [];
-            foreach ($validator->errors()->messages() as $key => $value) {
-                $missing_fields[] = $key;
-            }
-            return back()->with('error', 'The following fields are required: ' . implode(', ', $missing_fields));
+            return response()->json(array('msg' => 'lvl_error', 'response'=>$validator->errors()->all()));
         }
         $plan = Plans::where('id', $request->id)->first();
         if (!empty($plan)) {
             $plan->name = $request->name;
-            $plan->subtitle = $request->subtitle ?? null;
-            $plan->off_percent = $request->off_percent ?? null;
+            $plan->subtitle = $request->subtitle;
+            $plan->off_percent = $request->off_percent;
             $plan->description = $request->description;
             $plan->price = $request->price;
             $plan->save();

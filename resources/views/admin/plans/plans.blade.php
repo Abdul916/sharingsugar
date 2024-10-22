@@ -43,7 +43,9 @@
                                 <tr>
                                     <th>Sr #</th>
                                     <th>Title</th>
+                                    <th>Subtitle</th>
                                     <th>Price</th>
+                                    <th>% Off</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -53,7 +55,9 @@
                                 <tr class="gradeX">
                                     <td>{{ $i++ }}</td>
                                     <td>{{ $item->name  }}</td>
-                                    <td>{{$item->price}}</td>
+                                    <td>{{ $item->subtitle  }}</td>
+                                    <td>{{ '$'.$item->price}}</td>
+                                    <td>{{ $item->off_percent.'%' }}</td>
                                     <td>
                                         <button class="btn btn-primary btn-sm btn_plan_edit" data-id="{{$item->id}}" type="button"><i class="fa-solid fa-edit"></i> Edit</button>
                                         <button class="btn btn-danger btn-sm btn_delete" data-id="{{$item->id}}" data-text="you want to delete this plan?" type="button" data-placement="top" title="Delete">Delete</button>

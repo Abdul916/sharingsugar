@@ -37,25 +37,19 @@ class EmailController extends Controller
             'title' => 'required',
             'body' => 'required',
         ]);
-
         if ($validator->fails()) {
-            return response()->json(['msg' => 'error', 'response' => $validator->errors()->all()]);
+            return response()->json(['msg' => 'lvl_error', 'response' => $validator->errors()->all()]);
         }
-
-
         $title = $request->title;
         $body = $request->body;
-
-
         $email = new Email();
         $email->title = $title;
         $email->body = $body;
         $email->save();
-
         $allUsers = User::all();
-        $headers = "From: webmaster@example.com\r\n";
-        $headers .= "Reply-To: webmaster@example.com\r\n";
-        $headers .= "Content-Type: text/html\r\n";
+        $headers = "MIME-Version: 1.0" . "\r\n";
+        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+        $headers .= 'From: <'.get_section_content('project', 'noreply_email').'>' . "\r\n";
         $subject = $title;
         $emailTemplate = view('admin.emails.template', compact(['title', 'body']))->render();
         foreach ($allUsers as $user) {
@@ -66,7 +60,6 @@ class EmailController extends Controller
                 return response()->json(['msg' => 'error', 'response' => 'Email sending failed in process.']);
             }
         }
-
         $email->status = 1;
         $email->save();
         return response()->json(['msg' => 'success', 'response' => 'Email sent successfully']);
