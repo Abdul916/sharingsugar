@@ -27,7 +27,11 @@
                         <a href="{{ url('profile') }}" class="accept">Go to Profile</a>
                     </div>
                 </div>
-
+                @if(session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+                @endif
                 <div class="row">
                     <div class="col-md-12 mb-30">
                         <div class="badge-box">

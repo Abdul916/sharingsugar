@@ -72,7 +72,7 @@
                                         <div id="card-errors" role="alert"></div>
                                         <input type="hidden" name="plan_id" value="{{$plan->id}}">
                                     </div>
-                                    <button type="submit">Pay Now</button>
+                                    <button type="submit" id="submit-btn">Pay Now</button>
                                 </form>
                             </div>
                         </div>
@@ -102,8 +102,12 @@
         var form = document.getElementById('payment_form');
         form.addEventListener('submit', function(event) {
             event.preventDefault();
+            // disable the submit button to prevent repeated clicks
+            document.getElementById('submit-btn').disabled = true;
             stripe.createToken(cardElement).then(function(result) {
                 if (result.error) {
+                    // enable the submit button
+                    document.getElementById('submit-btn').disabled = false;
                     document.getElementById('card-errors').textContent = result.error.message;
                 } else {
                     var hiddenInput = document.createElement('input');
@@ -111,6 +115,7 @@
                     hiddenInput.setAttribute('name', 'stripeToken');
                     hiddenInput.setAttribute('value', result.token.id);
                     form.appendChild(hiddenInput);
+
                     form.submit();
                 }
             });
