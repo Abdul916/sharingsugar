@@ -43,7 +43,6 @@ class PlansController extends Controller
         $plan->off_percent = $request->off_percent;
         $plan->description = $request->description;
         $plan->price = $request->price;
-        $plan->plan_type = $request->plan_type;
         $plan->save();
 
         if ($plan->id > 0) {
@@ -85,7 +84,6 @@ class PlansController extends Controller
             $plan->off_percent = $request->off_percent;
             $plan->description = $request->description;
             $plan->price = $request->price;
-            $plan->plan_type = $request->plan_type;
             $plan->save();
             return response()->json(['msg' => 'success', 'response' => 'Plan updated successfully.']);
         } else {

@@ -22,17 +22,6 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-4 col-form-label"><strong>Plan Type</strong></label>
-                <div class="col-sm-8">
-                    <select class="form-control" name="plan_type">
-                        <option value="1" @if($plan['plan_type'] == '1') selected @endif>Monthly</option>
-                        <option value="2" @if($plan['plan_type'] == '2') selected @endif>Quarterly</option>
-                        <option value="3" @if($plan['plan_type'] == '3') selected @endif>Half Year</option>
-                        <option value="4" @if($plan['plan_type'] == '4') selected @endif>Yearly</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group row">
                 <label class="col-sm-4 col-form-label"><strong>Percentage Off</strong></label>
                 <div class="col-sm-8">
                     <input type="number" min="0" max="99" name="off_percent" value="{{ $plan['off_percent'] }}" class="form-control">

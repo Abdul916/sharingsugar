@@ -44,7 +44,6 @@
                                     <th>Sr #</th>
                                     <th>Title</th>
                                     <th>Subtitle</th>
-                                    <th>Plan Type</th>
                                     <th>Price</th>
                                     <th>% Off</th>
                                     <th>Action</th>
@@ -57,19 +56,6 @@
                                     <td>{{ $i++ }}</td>
                                     <td>{{ $item->name  }}</td>
                                     <td>{{ $item->subtitle  }}</td>
-                                    <td>
-                                        @if($item->plan_type == 1)
-                                        <p>Monthly</p>
-                                        @elseif($item->plan_type == 2)
-                                        <p>Quarterly</p>
-                                        @elseif($item->plan_type == 3)
-                                        <p>Half Year</p>
-                                        @elseif($item->plan_type == 4)
-                                        <p>Yearly</p>
-                                        @else
-                                        <p>Unknown</p>
-                                        @endif
-                                    </td>
                                     <td>{{ '$'.$item->price}}</td>
                                     <td>{{ $item->off_percent.'%' }}</td>
                                     <td>
@@ -117,17 +103,6 @@
                         <label class="col-sm-4 col-form-label"><strong>Subtitle</strong></label>
                         <div class="col-sm-8">
                             <input type="text" name="subtitle" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label"><strong>Plan Type</strong></label>
-                        <div class="col-sm-8">
-                            <select class="form-control" name="plan_type">
-                                <option value="1">Monthly</option>
-                                <option value="2">Quarterly</option>
-                                <option value="3">Half Year</option>
-                                <option value="4">Yearly</option>
-                            </select>
                         </div>
                     </div>
                     <div class="form-group row">
