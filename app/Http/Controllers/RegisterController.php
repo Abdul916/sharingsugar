@@ -66,6 +66,7 @@ class RegisterController extends Controller
         $data['unique_id'] = uniqid($prefix);
 
         $status = User::create([
+            'username' => $prefix,
             'unique_id' => $data['unique_id'],
             'iam' => $data['iam'],
             'interestedin' => $data['iam_interested_in'],
