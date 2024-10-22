@@ -35,7 +35,6 @@
         background-color: #218838;
     }
 </style>
-
 <section class="breadcrumb-area profile-bc-area">
     <div class="container">
         <div class="content">
@@ -63,7 +62,6 @@
                             </h4>
                             <p class="stamet">{{$plan->subtitle}}</p>
                             <p class="stamet">{{$plan->description}}</p>
-                            <img class="shape" src="{{ asset('assets/images/membership/plan-bg.png') }} " alt="">
                             <p class="duration">Billing Details</p>
                             <div class="single-blog post-details">
                                 <form action="{{ route('payment.process') }}" method="POST" id="payment_form">
