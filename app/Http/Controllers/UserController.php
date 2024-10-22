@@ -462,8 +462,8 @@ class UserController extends Controller
             $blocked_ids[] = $block->config_user_id;
         }
         $query->whereNotIn('id', $blocked_ids);
-        // $data['users'] = $query->paginate(3);
-        $users = $query->paginate(3);
+        // $users = $query->paginate(3);
+        $users = $query->paginate(51);
         $users->appends($request->except('page'));
         $data['users'] = $users;
         $data['parameters'] = $request->all();

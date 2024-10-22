@@ -60,6 +60,7 @@
                         </span>
                         <div class="filter-right">
                             <select name="sorting" onchange="$('#sorter').val(this.value); $('#search-form').submit();" class="nice-select select-bar">
+                                {{-- <option value="">Sort By</option> --}}
                                 <option value="last_login" {{isset($parameters['sorting']) ? ($parameters['sorting'] == 'last_login' ? 'selected' : '') : 'selected'}}>Last Login</option>
                                 <option value="distance" {{isset($parameters['sorting']) ? ($parameters['sorting'] == 'distance' ? 'selected' : '') : ''}}>Distance</option>
                             </select>
