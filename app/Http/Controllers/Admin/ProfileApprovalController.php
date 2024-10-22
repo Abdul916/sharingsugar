@@ -17,6 +17,7 @@ class ProfileApprovalController extends Controller
                 $query->whereHas('user', function ($query) use ($search_query) {
                     $query->where('first_name', 'like', '%' . $search_query . '%')
                         ->orWhere('last_name', 'like', '%' . $search_query . '%')
+                        ->orWhere('username', 'like', '%' . $search_query . '%')
                         ->orWhere('email', 'like', '%' . $search_query . '%');
                 });
             });

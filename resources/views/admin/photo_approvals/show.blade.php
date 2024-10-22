@@ -32,7 +32,7 @@
                     <h5>Image Detail</h5>
                 </div>
                 <div class="ibox-content">
-                    <div class="form-group offset-lg-1">
+                    <div class="form-group">
                         <div class="row">
                             <strong class="col-sm-2">Username: </strong>
                             <label class="col-sm-4"> {{$approval->user->username}} </label>
@@ -45,7 +45,6 @@
                             <strong class="col-sm-2">Interested In: </strong>
                             <label class="col-sm-4">{{$approval->user->interestedin}}</label>
                         </div>
-
                         <div class="row">
                             <strong class="col-sm-2"></strong>
                             <label class="col-sm-4"> </label>
@@ -60,32 +59,53 @@
                                 @endif
                             </label>
                         </div>
-                    </div>
-                    <div class="form-group offset-lg-1">
+                        <div class="hr-line-dashed"></div>
                         <div class="row">
-                            <div class="col-sm-4">
-                                <h4>Old Image</h4>
+                            <div class="col-sm-12">
+                                <h4>Profile Image</h4>
                                 <img src="{{ asset('assets/app_images/' . $approval->user->profile_image) }}" class="img-thumbnail" alt="Profile Photo" style="width: 100px; height: 100px;">
                             </div>
-                            <div class="col-sm-4">
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4>Public Images</h4>
+                                @foreach(get_photos('user_photos', $approval->user->id, '1', array('1, 2')) as $public)
+                                <img src="{{ asset('assets/app_images/user_photos') }}/{{$public->photo}}" class="img-thumbnail fixed_image" alt="Public Photo" style="width: 100px; height: 100px;">
+                                @endforeach
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h4>Private Images</h4>
+                                @foreach(get_photos('user_photos', $approval->user->id, '2', array('1, 2')) as $public)
+                                <img src="{{ asset('assets/app_images/user_photos') }}/{{$public->photo}}" class="img-thumbnail fixed_image" alt="Private Photo" style="width: 100px; height: 100px;">
+                                @endforeach
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="row">
+                            <div class="col-sm-12">
                                 <h4>Image that need approval</h4>
                                 @if($approval->type != 0)
-                                <img src="{{ asset('assets/app_images/user_photos/' . $approval->photo) }}" class="img-thumbnail" alt="New Photo" style="width: 100px; height: 100px;">
+                                <img src="{{ asset('assets/app_images/user_photos/' . $approval->photo) }}" class="img-thumbnail" alt="New Photo" style="width: 300px; height: 300px;">
                                 @else
-                                <img src="{{ asset('assets/app_images/' . $approval->photo) }}" class="img-thumbnail" alt="New Photo" style="width: 100px; height: 100px;">
+                                <img src="{{ asset('assets/app_images/' . $approval->photo) }}" class="img-thumbnail" alt="New Photo" style="width: 300px; height: 300px;">
                                 @endif
                             </div>
                         </div>
-                    </div>
-                    <div class="hr-line-dashed"></div>
-                    <div class="form-group row">
-                        <strong class="col-sm-2 col-offset-3"></strong>
-                        <div class="col-sm-10">
-                            <button type="button" class="btn btn-primary " {{$approval->status != 0 ? 'disabled' : ''}} data-id="{{$approval->id}}" id="btn_approve" type="submit">Approve</button>
-                            <button type="button" class="btn btn-danger " {{$approval->status != 0 ? 'disabled' : ''}} data-id="{{$approval->id}}" id="btn_decline">Decline</button>
+                        <div class="hr-line-dashed"></div>
+                        <div class="row">
+                            <div class="col-sm-4"></div>
+                            <div class="col-sm-8">
+                                <button type="button" class="btn btn-primary " {{$approval->status != 0 ? 'disabled' : ''}} data-id="{{$approval->id}}" id="btn_approve" type="submit">Approve</button>
+                                <button type="button" class="btn btn-danger " {{$approval->status != 0 ? 'disabled' : ''}} data-id="{{$approval->id}}" id="btn_decline">Decline</button>
+                            </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>

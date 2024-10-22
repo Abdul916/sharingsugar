@@ -24,7 +24,7 @@
                         <div class="form-group row justify-content-end">
                             <div class="col-sm-6">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="search_query" placeholder="Search by User's Name or Email" value="{{ old('search_query', $searchParams['search_query'] ?? '') }}">
+                                    <input type="text" class="form-control" name="search_query" placeholder="Search by userame, email" value="{{ old('search_query', $searchParams['search_query'] ?? '') }}">
                                     <span class="input-group-append">
                                         <button type="submit" class="btn btn-primary">Search</button>
                                     </span>
@@ -37,7 +37,7 @@
                             <thead>
                                 <tr>
                                     <th>Sr #</th>
-                                    <th>User</th>
+                                    <th>Username</th>
                                     <th>Email</th>
                                     <th>Type</th>
                                     <th>Status</th>
@@ -50,7 +50,7 @@
                                 @foreach($approvals as $item)
                                 <tr class="gradeX">
                                     <td>{{ $i++ }}</td>
-                                    <td>{{ $item->user->first_name . ' ' .  $item->user->last_name }}</td>
+                                    <td>{{ $item->user->username }}</td>
                                     <td>{{ $item->user->email}}</td>
                                     <td>
                                         @if($item->type == 0)

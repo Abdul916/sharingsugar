@@ -17,6 +17,7 @@ class PhotoChangeApprovalController extends Controller
             $query->where(function ($query) use ($search_query) {
                 $query->whereHas('user', function ($query) use ($search_query) {
                     $query->where('email', 'like', '%' . $search_query . '%')
+                        ->orWhere('username', 'like', '%' . $search_query . '%')
                         ->orWhere('last_name', 'like', '%' . $search_query . '%')
                         ->orWhere('first_name', 'like', '%' . $search_query . '%');
                 });
