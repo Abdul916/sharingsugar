@@ -44,6 +44,7 @@
                                     <th>Sr #</th>
                                     <th>Title</th>
                                     <th>Subtitle</th>
+                                    <th>Plan Type</th>
                                     <th>Price</th>
                                     <th>% Off</th>
                                     <th>Action</th>
@@ -56,6 +57,19 @@
                                     <td>{{ $i++ }}</td>
                                     <td>{{ $item->name  }}</td>
                                     <td>{{ $item->subtitle  }}</td>
+                                    <td>
+                                        @if($item->plan_type == 1)
+                                        <p>Monthly</p>
+                                        @elseif($item->plan_type == 2)
+                                        <p>Quarterly</p>
+                                        @elseif($item->plan_type == 3)
+                                        <p>Half Year</p>
+                                        @elseif($item->plan_type == 4)
+                                        <p>Yearly</p>
+                                        @else
+                                        <p>Unknown</p>
+                                        @endif
+                                    </td>
                                     <td>{{ '$'.$item->price}}</td>
                                     <td>{{ $item->off_percent.'%' }}</td>
                                     <td>
@@ -96,31 +110,43 @@
                     <div class="form-group row">
                         <label class="col-sm-4 col-form-label"><strong>Title</strong></label>
                         <div class="col-sm-8">
-                            <input type="text" name="name" required class="form-control" placeholder="">
+                            <input type="text" name="name" class="form-control">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-4 col-form-label"><strong>Subtitle</strong></label>
                         <div class="col-sm-8">
-                            <input type="text" name="subtitle" required class="form-control" placeholder="">
+                            <input type="text" name="subtitle" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label"><strong>Plan Type</strong></label>
+                        <div class="col-sm-8">
+                            <select class="form-control" name="plan_type">
+                                <option value="1">Monthly</option>
+                                <option value="2">Quarterly</option>
+                                <option value="3">Half Year</option>
+                                <option value="4">Yearly</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-4 col-form-label"><strong>Percentage Off</strong></label>
                         <div class="col-sm-8">
-                            <input type="number" min="0" max="99" name="off_percent" required class="form-control" placeholder="">
+                            <input type="number" min="0" max="99" name="off_percent" class="form-control">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-4 col-form-label"><strong>Price</strong></label>
                         <div class="col-sm-8">
-                            <input type="text" name="price" required class="form-control" placeholder="">
+                            <input type="text" name="price" class="form-control">
                         </div>
                     </div>
+
                     <div class="form-group row">
                         <label class="col-sm-4 col-form-label"><strong>Description</strong></label>
                         <div class="col-sm-8">
-                            <textarea name="description" class="form-control" required></textarea>
+                            <textarea name="description" class="form-control"></textarea>
                         </div>
                     </div>
                 </form>
@@ -147,60 +173,60 @@
         "bInfo": false,
         "responsive": true,
         "columnDefs": [{
-                "responsivePriority": 1,
-                "targets": 0
-            },
-            {
-                "responsivePriority": 2,
-                "targets": -1
-            },
+            "responsivePriority": 1,
+            "targets": 0
+        },
+        {
+            "responsivePriority": 2,
+            "targets": -1
+        },
         ]
     });
     $(document).on("click", ".btn_delete", function() {
         var id = $(this).attr('data-id');
         var show_text = $(this).attr('data-text');
         swal({
-                title: "Are you sure",
-                text: show_text,
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, please!",
-                cancelButtonText: "No, cancel please!",
-                closeOnConfirm: false,
-                closeOnCancel: true
-            },
-            function(isConfirm) {
-                if (isConfirm) {
-                    $(".confirm").prop("disabled", true);
-                    $.ajax({
-                        url: "{{ url('admin/plans/delete') }}",
-                        type: 'post',
-                        data: {
-                            "_token": "{{ csrf_token() }}",
-                            'id': id,
-                        },
-                        dataType: 'json',
-                        success: function(status) {
-                            $(".confirm").prop("disabled", false);
-                            if (status.msg == 'success') {
-                                swal({
-                                        title: "Success!",
-                                        text: status.response,
-                                        type: "success"
-                                    },
-                                    function(data) {
-                                        location.reload();
-                                    });
-                            } else if (status.msg == 'error') {
-                                swal("Error", status.response, "error");
-                            }
+            title: "Are you sure",
+            text: show_text,
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, please!",
+            cancelButtonText: "No, cancel please!",
+            closeOnConfirm: false,
+            closeOnCancel: true
+        },
+        function(isConfirm) {
+            if (isConfirm) {
+                $(".confirm").prop("disabled", true);
+                $.ajax({
+                    url: "{{ url('admin/plans/delete') }}",
+                    type: 'post',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        'id': id,
+                    },
+                    dataType: 'json',
+                    success: function(status) {
+                        $(".confirm").prop("disabled", false);
+                        if (status.msg == 'success') {
+                            swal({
+                                title: "Success!",
+                                text: status.response,
+                                type: "success"
+                            },
+                            function(data) {
+                                location.reload();
+                            });
+                        } else if (status.msg == 'error') {
+                            swal("Error", status.response, "error");
                         }
-                    });
-                } else {
-                    swal("Cancelled", "", "error");
-                }
-            });
+                    }
+                });
+            } else {
+                swal("Cancelled", "", "error");
+            }
+        });
     });
 
     $(document).on("click", "#save_plan_button", function() {

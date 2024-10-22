@@ -37,7 +37,7 @@
                             <thead>
                                 <tr>
                                     <th>Sr #</th>
-                                    <th>UserName</th>
+                                    <th>Username</th>
                                     <th>Membership start Date</th>
                                     <th>Membership End Date</th>
                                     <th>Membership Type</th>
@@ -54,18 +54,12 @@
                                     <td>{{ $logs->membership_end }}</td>
                                     <td>
                                         @if($logs->membership_type == 1)
-                                        <p>Bronze</p>
-                                        @elseif($logs->membership_type == 2)
-                                        <p>Silver</p>
-                                        @elseif($logs->membership_type == 3)
-                                        <p>Gold</p>
-                                        @elseif($logs->membership_type == 4)
-                                        <p>Platinum</p>
-                                        @elseif($logs->membership_type == 5)
                                         <p>Monthly</p>
-                                        @elseif($logs->membership_type == 6)
-                                        <p>Half-Yearly</p>
-                                        @elseif($logs->membership_type == 7)
+                                        @elseif($logs->membership_type == 2)
+                                        <p>Quarterly</p>
+                                        @elseif($logs->membership_type == 3)
+                                        <p>Half Year</p>
+                                        @elseif($logs->membership_type == 4)
                                         <p>Yearly</p>
                                         @else
                                         <p>Unknown</p>
