@@ -168,7 +168,7 @@
                 days: 'Days'
             },
             function () {
-                alert('Done!');
+                // alert('Done!');
             });
 
         // Registered Slider
