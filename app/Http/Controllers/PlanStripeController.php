@@ -25,64 +25,65 @@ class PlanStripeController extends Controller
     public function process(Request $request)
     {
         $plan = Plans::find($request->plan_id);
-        if(empty($plan)) {
-            dd('Invalid plan selected.');
-        }
-        $request->validate([
-            'stripeToken' => 'required',
-        ]);
-        $stripeSecretKey = env('STRIPE_SECRET_KEY');
-        \Stripe\Stripe::setApiKey($stripeSecretKey);
-        try {
-            $charge = \Stripe\Charge::create([
-                'amount' => $plan->price * 100,
-                'currency' => 'usd',
-                'source' => $request->stripeToken,
-                'description' => $plan->description,
-            ]);
-            // dd($charge->id);
-            // Record Membership Log
-            switch($plan->id){
-                case 1:
+        $stripeToken = $request->stripeToken;
+        if(!empty($plan->id) && !empty($stripeToken)) {
+            \Stripe\Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
+            try {
+                $charge = \Stripe\Charge::create([
+                    'amount' => $plan->price * 100,
+                    'currency' => 'usd',
+                    'source' => $request->stripeToken,
+                    'description' => $plan->name,
+                ]);
+                switch($plan->id){
+                    case 1:
                     $days = 30;
+                    $membership_type = '1';
                     break;
-                case 2:
+                    case 2:
                     $days = 90;
+                    $membership_type = '2';
                     break;
-                case 3:
+                    case 3:
                     $days = 180;
+                    $membership_type = '3';
                     break;
-                case 4:
+                    case 4:
                     $days = 365;
+                    $membership_type = '4';
                     break;
-                default:
+                    default:
                     $days = 30;
+                    $membership_type = '1';
+                }
+                $query = DB::table('membership_logs')->insert([
+                    'user_id' => auth()->user()->id,
+                    'plan_id' => $plan->id,
+                    'membership_type' => $membership_type,
+                    'membership_price' => $plan->price,
+                    'membership_start' => date('Y-m-d'),
+                    'membership_end' => date('Y-m-d', strtotime('+'.$days . 'days')),
+                    'stripe_charge_id' => $charge->id,
+                    'status' => 2,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+                // Record USer Table
+                $user = auth()->user();
+                $user->membership_plan = $plan->id;
+                $user->membership_type = $membership_type;
+                $user->membership_price = $plan->price;
+                $user->membership_start = date('Y-m-d');
+                $user->membership_end = date('Y-m-d', strtotime('+'.$days . 'days'));
+                $user->membership_status = 7;
+                $user->save();
+
+                dd('Payment Success');
+
+            } catch (\Stripe\Exception\CardException $e) {
+                // return back()->with('error', 'Error! ' . $e->getMessage());
+                dd('Error! ' . $e->getMessage());
             }
-            $query = DB::table('membership_logs')->insert([
-                'user_id' => auth()->user()->id,
-                'plan_id' => $plan->id,
-                'membership_price' => $plan->price,
-                'membership_start' => formated_date(now()),
-                'membership_end' => formated_date(now()->addDays($days)),
-                'stripe_charge_id' => $charge->id,
-                'status' => 2,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-            // Record USer Table 
-            $user = auth()->user();
-            $user->membership_plan = $plan->id;
-            $user->membership_price = $plan->price;
-            $user->membership_start = formated_date(now());
-            $user->membership_end = formated_date(now()->addDays($days));
-            $user->membership_status = 7;
-            $user->save();
-
-            dd('Payment Success');
-
-        } catch (\Stripe\Exception\CardException $e) {
-            // return back()->with('error', 'Error! ' . $e->getMessage());
-            dd('Error! ' . $e->getMessage());
         }
     }
 }

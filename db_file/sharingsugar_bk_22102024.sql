@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Oct 18, 2024 at 02:40 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Host: 127.0.0.1:3306
+-- Generation Time: Oct 22, 2024 at 08:42 AM
+-- Server version: 8.2.0
+-- PHP Version: 8.2.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -27,16 +27,18 @@ SET time_zone = "+00:00";
 -- Table structure for table `admin_users`
 --
 
-CREATE TABLE `admin_users` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `admin_users`;
+CREATE TABLE IF NOT EXISTS `admin_users` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `username` varchar(255) DEFAULT NULL,
   `email` varchar(200) NOT NULL,
   `password` varchar(255) DEFAULT NULL,
-  `type` tinyint(4) DEFAULT 0 COMMENT '0= super_admin, 1 = admin',
-  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '0 = inactive, 1 = active',
+  `type` tinyint DEFAULT '0' COMMENT '0= super_admin, 1 = admin',
+  `status` tinyint NOT NULL DEFAULT '1' COMMENT '0 = inactive, 1 = active',
   `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `admin_users`
@@ -51,17 +53,21 @@ INSERT INTO `admin_users` (`id`, `username`, `email`, `password`, `type`, `statu
 -- Table structure for table `categories`
 --
 
-CREATE TABLE `categories` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `categories`;
+CREATE TABLE IF NOT EXISTS `categories` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `slug` varchar(255) DEFAULT NULL,
   `picture` varchar(255) DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '0 = Inactive, 1 = Active',
+  `status` tinyint NOT NULL DEFAULT '1' COMMENT '0 = Inactive, 1 = Active',
   `created_at` datetime NOT NULL,
-  `created_by` int(11) DEFAULT NULL,
+  `created_by` int DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
-  `updated_by` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  `updated_by` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `created_by` (`created_by`),
+  KEY `updated_by` (`updated_by`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `categories`
@@ -77,18 +83,20 @@ INSERT INTO `categories` (`id`, `name`, `slug`, `picture`, `status`, `created_at
 -- Table structure for table `chat`
 --
 
-CREATE TABLE `chat` (
-  `id` int(11) NOT NULL,
-  `chatted_id` int(11) DEFAULT NULL,
-  `sender_id` int(11) DEFAULT NULL,
-  `receiver_id` int(11) DEFAULT NULL,
-  `message` text DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
-  `created_by` int(11) DEFAULT NULL,
+DROP TABLE IF EXISTS `chat`;
+CREATE TABLE IF NOT EXISTS `chat` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `chatted_id` int DEFAULT NULL,
+  `sender_id` int DEFAULT NULL,
+  `receiver_id` int DEFAULT NULL,
+  `message` text,
+  `status` tinyint NOT NULL DEFAULT '1',
+  `created_by` int DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
-  `updated_by` int(11) DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  `updated_by` int DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `chat`
@@ -131,14 +139,16 @@ INSERT INTO `chat` (`id`, `chatted_id`, `sender_id`, `receiver_id`, `message`, `
 -- Table structure for table `chatted_users`
 --
 
-CREATE TABLE `chatted_users` (
-  `id` int(11) NOT NULL,
-  `sender_id` int(11) NOT NULL,
-  `receiver_id` int(11) NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+DROP TABLE IF EXISTS `chatted_users`;
+CREATE TABLE IF NOT EXISTS `chatted_users` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `sender_id` int NOT NULL,
+  `receiver_id` int NOT NULL,
+  `status` tinyint NOT NULL DEFAULT '1',
   `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `chatted_users`
@@ -160,15 +170,17 @@ INSERT INTO `chatted_users` (`id`, `sender_id`, `receiver_id`, `status`, `create
 -- Table structure for table `contactus_msgs`
 --
 
-CREATE TABLE `contactus_msgs` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `contactus_msgs`;
+CREATE TABLE IF NOT EXISTS `contactus_msgs` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
-  `message` text DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `message` text,
+  `status` tinyint NOT NULL DEFAULT '1',
   `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `contactus_msgs`
@@ -187,18 +199,45 @@ INSERT INTO `contactus_msgs` (`id`, `name`, `email`, `message`, `status`, `creat
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `emails`
+--
+
+DROP TABLE IF EXISTS `emails`;
+CREATE TABLE IF NOT EXISTS `emails` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `body` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint NOT NULL DEFAULT '0' COMMENT '0: dispatched, 1: sent, 2: failed',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `emails`
+--
+
+INSERT INTO `emails` (`id`, `title`, `body`, `status`, `created_at`, `updated_at`) VALUES
+(6, 'Sharing Sugar New Feature Beta Release Announcement', '<table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"body\" style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #f4f5f6; width: 100%;\" width=\"100%\" bgcolor=\"#f4f5f6\">\r\n      <tr>\r\n        <td style=\"font-family: Helvetica, sans-serif; font-size: 16px; vertical-align: top;\" valign=\"top\">&nbsp;</td>\r\n        <td class=\"container\" style=\"font-family: Helvetica, sans-serif; font-size: 16px; vertical-align: top; max-width: 600px; padding: 0; padding-top: 24px; width: 600px; margin: 0 auto;\" width=\"600\" valign=\"top\">\r\n          <div class=\"content\" style=\"box-sizing: border-box; display: block; margin: 0 auto; max-width: 600px; padding: 0;\">\r\n\r\n            <!-- START CENTERED WHITE CONTAINER -->\r\n            <span class=\"preheader\" style=\"color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;\">This is preheader text. Some clients will show this text as a preview.</span>\r\n            <table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"main\" style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background: #ffffff; border: 1px solid #eaebed; border-radius: 16px; width: 100%;\" width=\"100%\">\r\n\r\n              <!-- START MAIN CONTENT AREA -->\r\n              <tr>\r\n                <td class=\"wrapper\" style=\"font-family: Helvetica, sans-serif; font-size: 16px; vertical-align: top; box-sizing: border-box; padding: 24px;\" valign=\"top\">\r\n                  <p style=\"font-family: Helvetica, sans-serif; font-size: 16px; font-weight: normal; margin: 0; margin-bottom: 16px;\">Hi there</p>\r\n                  <p style=\"font-family: Helvetica, sans-serif; font-size: 16px; font-weight: normal; margin: 0; margin-bottom: 16px;\">Sometimes you just want to send a simple HTML email with a simple design and clear call to action. This is it.</p>\r\n                  <table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"btn btn-primary\" style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; box-sizing: border-box; width: 100%; min-width: 100%;\" width=\"100%\">\r\n                    <tbody>\r\n                      <tr>\r\n                        <td align=\"left\" style=\"font-family: Helvetica, sans-serif; font-size: 16px; vertical-align: top; padding-bottom: 16px;\" valign=\"top\">\r\n                          <table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: auto;\">\r\n                            <tbody>\r\n                              <tr>\r\n                                <td style=\"font-family: Helvetica, sans-serif; font-size: 16px; vertical-align: top; border-radius: 4px; text-align: center; background-color: #0867ec;\" valign=\"top\" align=\"center\" bgcolor=\"#0867ec\"> <a href=\"http://htmlemail.io\" target=\"_blank\" style=\"border: solid 2px #0867ec; border-radius: 4px; box-sizing: border-box; cursor: pointer; display: inline-block; font-size: 16px; font-weight: bold; margin: 0; padding: 12px 24px; text-decoration: none; text-transform: capitalize; background-color: #0867ec; border-color: #0867ec; color: #ffffff;\">Call To Action</a> </td>\r\n                              </tr>\r\n                            </tbody>\r\n                          </table>\r\n                        </td>\r\n                      </tr>\r\n                    </tbody>\r\n                  </table>\r\n                  <p style=\"font-family: Helvetica, sans-serif; font-size: 16px; font-weight: normal; margin: 0; margin-bottom: 16px;\">This is a really simple email template. It\'s sole purpose is to get the recipient to click the button with no distractions.</p>\r\n                  <p style=\"font-family: Helvetica, sans-serif; font-size: 16px; font-weight: normal; margin: 0; margin-bottom: 16px;\">Good luck! Hope it works.</p>\r\n                </td>\r\n              </tr>\r\n\r\n              <!-- END MAIN CONTENT AREA -->\r\n              </table>\r\n\r\n            <!-- START FOOTER -->\r\n            <div class=\"footer\" style=\"clear: both; padding-top: 24px; text-align: center; width: 100%;\">\r\n              <table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;\" width=\"100%\">\r\n                <tr>\r\n                  <td class=\"content-block\" style=\"font-family: Helvetica, sans-serif; vertical-align: top; color: #9a9ea6; font-size: 16px; text-align: center;\" valign=\"top\" align=\"center\">\r\n                    <span class=\"apple-link\" style=\"color: #9a9ea6; font-size: 16px; text-align: center;\">Company Inc, 7-11 Commercial Ct, Belfast BT1 2NB</span>\r\n                    <br> Don\'t like these emails? <a href=\"http://htmlemail.io/blog\" style=\"text-decoration: underline; color: #9a9ea6; font-size: 16px; text-align: center;\">Unsubscribe</a>.\r\n                  </td>\r\n                </tr>\r\n                <tr>\r\n                  <td class=\"content-block powered-by\" style=\"font-family: Helvetica, sans-serif; vertical-align: top; color: #9a9ea6; font-size: 16px; text-align: center;\" valign=\"top\" align=\"center\">\r\n                    Powered by <a href=\"http://htmlemail.io\" style=\"color: #9a9ea6; font-size: 16px; text-align: center; text-decoration: none;\">HTMLemail.io</a>\r\n                  </td>\r\n                </tr>\r\n              </table>\r\n            </div>\r\n\r\n            <!-- END FOOTER -->\r\n            \r\n<!-- END CENTERED WHITE CONTAINER --></div>\r\n        </td>\r\n        <td style=\"font-family: Helvetica, sans-serif; font-size: 16px; vertical-align: top;\" valign=\"top\">&nbsp;</td>\r\n      </tr>\r\n    </table>', 1, '2024-10-21 03:57:04', '2024-10-21 03:57:05'),
+(7, 'asdasdasd', 'asdsadasdad', 1, '2024-10-21 04:27:01', '2024-10-21 04:27:02');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `like_images`
 --
 
-CREATE TABLE `like_images` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `photo_user_id` int(11) DEFAULT NULL,
-  `photo_id` int(11) DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+DROP TABLE IF EXISTS `like_images`;
+CREATE TABLE IF NOT EXISTS `like_images` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int DEFAULT NULL,
+  `photo_user_id` int DEFAULT NULL,
+  `photo_id` int DEFAULT NULL,
+  `status` tinyint NOT NULL DEFAULT '1',
   `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `like_images`
@@ -221,17 +260,21 @@ INSERT INTO `like_images` (`id`, `user_id`, `photo_user_id`, `photo_id`, `status
 -- Table structure for table `membership_logs`
 --
 
-CREATE TABLE `membership_logs` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `membership_type` tinyint(4) NOT NULL DEFAULT 1 COMMENT '1=bronz, 2=silver, 3=gold, 4=platinum, 5=monthly, 6=half_yearly, 7=yearly 	',
-  `membership_price` decimal(10,2) NOT NULL DEFAULT 0.00,
+DROP TABLE IF EXISTS `membership_logs`;
+CREATE TABLE IF NOT EXISTS `membership_logs` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int DEFAULT NULL,
+  `stripe_charge_id` varchar(255) DEFAULT NULL,
+  `plan_id` int DEFAULT NULL,
+  `membership_type` tinyint NOT NULL DEFAULT '1' COMMENT '1=Monthly, 2=Quarterly, 3=Half Year, 4=Yearly',
+  `membership_price` decimal(10,2) NOT NULL DEFAULT '0.00',
   `membership_start` date DEFAULT NULL,
   `membership_end` date DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '1=pending, 2=active, 3=inactive',
+  `status` tinyint NOT NULL DEFAULT '1' COMMENT '1=pending, 2=active, 3=inactive',
   `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -239,11 +282,13 @@ CREATE TABLE `membership_logs` (
 -- Table structure for table `migrations`
 --
 
-CREATE TABLE `migrations` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) NOT NULL,
-  `batch` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+DROP TABLE IF EXISTS `migrations`;
+CREATE TABLE IF NOT EXISTS `migrations` (
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `migrations`
@@ -251,7 +296,10 @@ CREATE TABLE `migrations` (
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (1, '2019_12_14_000001_create_personal_access_tokens_table', 1),
-(2, '2024_10_18_075819_create_plans_table', 1);
+(2, '2024_10_18_075819_create_plans_table', 1),
+(3, '2024_10_21_081705_create_emails_table', 2),
+(4, '2024_10_21_095620_create_profile_change_logs_table', 3),
+(5, '2024_10_21_113652_create_photo_change_logs_table', 4);
 
 -- --------------------------------------------------------
 
@@ -259,16 +307,18 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- Table structure for table `notifications`
 --
 
-CREATE TABLE `notifications` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `notify_user_id` int(11) DEFAULT NULL,
-  `message` varchar(255) DEFAULT NULL,
-  `type` tinyint(4) DEFAULT 1 COMMENT '1=like profile, 2=like image, 3=favorite,4=send message, 5=give access private photos',
-  `status` tinyint(4) DEFAULT 1 COMMENT '1=unread, 2=read',
+DROP TABLE IF EXISTS `notifications`;
+CREATE TABLE IF NOT EXISTS `notifications` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int DEFAULT NULL,
+  `notify_user_id` int DEFAULT NULL,
+  `message` varchar(255) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `type` tinyint DEFAULT '1' COMMENT '1=like profile, 2=like image, 3=favorite,4=send message, 5=give access private photos',
+  `status` tinyint DEFAULT '1' COMMENT '1=unread, 2=read',
   `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
 -- Dumping data for table `notifications`
@@ -324,30 +374,58 @@ INSERT INTO `notifications` (`id`, `user_id`, `notify_user_id`, `message`, `type
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `photo_change_logs`
+--
+
+DROP TABLE IF EXISTS `photo_change_logs`;
+CREATE TABLE IF NOT EXISTS `photo_change_logs` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` int UNSIGNED NOT NULL,
+  `photo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` tinyint NOT NULL DEFAULT '0' COMMENT '0: profile, 1: gallery',
+  `status` tinyint NOT NULL DEFAULT '0' COMMENT '0: pending, 1: approved, 2: rejected',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `photo_change_logs`
+--
+
+INSERT INTO `photo_change_logs` (`id`, `user_id`, `photo`, `type`, `status`, `created_at`, `updated_at`) VALUES
+(4, 2, 'blog-post-2-1-640x500_1729520811.jpg', 0, 0, '2024-10-21 09:26:51', '2024-10-21 09:26:51');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `plans`
 --
 
-CREATE TABLE `plans` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `description` mediumtext NOT NULL,
-  `price` decimal(8,2) NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '0=Inactive, 1=Active',
-  `comments` varchar(255) DEFAULT NULL,
-  `stripe_product_id` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+DROP TABLE IF EXISTS `plans`;
+CREATE TABLE IF NOT EXISTS `plans` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `subtitle` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `off_percent` int DEFAULT NULL,
+  `description` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `price` decimal(8,2) NOT NULL DEFAULT '0.00',
+  `status` tinyint NOT NULL DEFAULT '1' COMMENT '0=Inactive, 1=Active',
+  `comments` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `plans`
 --
 
-INSERT INTO `plans` (`id`, `name`, `description`, `price`, `status`, `comments`, `stripe_product_id`, `created_at`, `updated_at`) VALUES
-(1, 'Monthly', 'A premium membership will allow you to view messages from other members. Being a premium member allows you to communicate with others on the site.', 4.95, 1, NULL, 'prod_R2zNV3ccphkd81', '2024-10-18 07:33:17', '2024-10-18 07:33:17'),
-(2, 'Quarterly', 'A premium membership will allow you to view messages from other members. Being a premium member allows you to communicate with others on the site.', 9.95, 1, NULL, 'prod_R2zNpZ78VDukBa', '2024-10-18 07:34:16', '2024-10-18 07:34:16'),
-(3, 'Half Year', 'A premium membership will allow you to view messages from other members. Being a premium member allows you to communicate with others on the site.', 19.95, 1, NULL, 'prod_R2zO2wxiA06ehL', '2024-10-18 07:35:39', '2024-10-18 07:35:39'),
-(4, 'Yearly', 'A premium membership will allow you to view messages from other members. Being a premium member allows you to communicate with others on the site.', 29.95, 1, NULL, 'prod_R2zO5Lvz3YR3QJ', '2024-10-18 07:36:09', '2024-10-18 07:36:48');
+INSERT INTO `plans` (`id`, `name`, `subtitle`, `off_percent`, `description`, `price`, `status`, `comments`, `created_at`, `updated_at`) VALUES
+(1, 'Monthly', 'Basic', 0, 'A monthly premium membership will allow you to view messages from other members. Being a premium member allows you to communicate with others on the site.', '4.95', 1, NULL, '2024-10-18 12:33:17', '2024-10-21 05:29:49'),
+(2, 'Quarterly', 'Regular', 32, 'A quarterly premium membership will allow you to view messages from other members. Being a premium member allows you to communicate with others on the site.', '9.95', 1, NULL, '2024-10-18 12:34:16', '2024-10-21 05:29:37'),
+(3, 'Half Year', 'Intermediate', 32, 'A half-yearly premium membership will allow you to view messages from other members. Being a premium member allows you to communicate with others on the site.', '19.95', 1, NULL, '2024-10-18 12:35:39', '2024-10-21 05:29:27'),
+(4, 'Yearly', 'Advanced', 50, 'A yearly premium membership will allow you to view messages from other members. Being a premium member allows you to communicate with others on the site.', '29.95', 1, NULL, '2024-10-18 12:36:09', '2024-10-21 05:29:18');
 
 -- --------------------------------------------------------
 
@@ -355,21 +433,23 @@ INSERT INTO `plans` (`id`, `name`, `description`, `price`, `status`, `comments`,
 -- Table structure for table `posts`
 --
 
-CREATE TABLE `posts` (
-  `id` int(11) NOT NULL,
-  `category_id` int(11) DEFAULT NULL,
-  `title` varchar(255) DEFAULT NULL,
-  `description` longtext DEFAULT NULL,
-  `thumbnail` varchar(255) DEFAULT NULL,
-  `slug` varchar(255) DEFAULT NULL,
-  `short_description` text DEFAULT NULL,
-  `keywords` text DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 1,
+DROP TABLE IF EXISTS `posts`;
+CREATE TABLE IF NOT EXISTS `posts` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `category_id` int DEFAULT NULL,
+  `title` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `description` longtext COLLATE utf8mb4_general_ci,
+  `thumbnail` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `slug` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `short_description` text COLLATE utf8mb4_general_ci,
+  `keywords` text COLLATE utf8mb4_general_ci,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` datetime DEFAULT NULL,
-  `created_by` int(11) DEFAULT NULL,
+  `created_by` int DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
-  `updated_by` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `updated_by` int DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `posts`
@@ -392,36 +472,24 @@ INSERT INTO `posts` (`id`, `category_id`, `title`, `description`, `thumbnail`, `
 (25, 2, 'What is Lorem Ipsum?', '<div>\r\n<h2>What is Lorem Ipsum?</h2>\r\n<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and\r\n typesetting industry. Lorem Ipsum has been the industry\'s standard \r\ndummy text ever since the 1500s, when an unknown printer took a galley \r\nof type and scrambled it to make a type specimen book. It has survived \r\nnot only five centuries, but also the leap into electronic typesetting, \r\nremaining essentially unchanged. It was popularised in the 1960s with \r\nthe release of Letraset sheets containing Lorem Ipsum passages, and more\r\n recently with desktop publishing software like Aldus PageMaker \r\nincluding versions of Lorem Ipsum.</p>\r\n</div><div>\r\n<h2>Why do we use it?</h2>\r\n<p>It is a long established fact that a reader will be distracted by the\r\n readable content of a page when looking at its layout. The point of \r\nusing Lorem Ipsum is that it has a more-or-less normal distribution of \r\nletters, as opposed to using \'Content here, content here\', making it \r\nlook like readable English. Many desktop publishing packages and web \r\npage editors now use Lorem Ipsum as their default model text, and a \r\nsearch for \'lorem ipsum\' will uncover many web sites still in their \r\ninfancy. Various versions have evolved over the years, sometimes by \r\naccident, sometimes on purpose (injected humour and the like).</p>\r\n</div><br><div>\r\n<h2>Where does it come from?</h2>\r\n<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It\r\n has roots in a piece of classical Latin literature from 45 BC, making \r\nit over 2000 years old. Richard McClintock, a Latin professor at \r\nHampden-Sydney College in Virginia, looked up one of the more obscure \r\nLatin words, consectetur, from a Lorem Ipsum passage, and going through \r\nthe cites of the word in classical literature, discovered the \r\nundoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 \r\nof \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by \r\nCicero, written in 45 BC. This book is a treatise on the theory of \r\nethics, very popular during the Renaissance. The first line of Lorem \r\nIpsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section \r\n1.10.32.</p><p>The standard chunk of Lorem Ipsum used since the 1500s is\r\n reproduced below for those interested. Sections 1.10.32 and 1.10.33 \r\nfrom \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in \r\ntheir exact original form, accompanied by English versions from the 1914\r\n translation by H. Rackham.</p>\r\n</div>\r\n<h2>Where can I get some?</h2>\r\n<p>There are many variations of passages of Lorem Ipsum available, but \r\nthe majority have suffered alteration in some form, by injected humour, \r\nor randomised words which don\'t look even slightly believable. If you \r\nare going to use a passage of Lorem Ipsum, you need to be sure there \r\nisn\'t anything embarrassing hidden in the middle of text. All the Lorem \r\nIpsum generators on the Internet tend to repeat predefined chunks as \r\nnecessary, making this the first true generator on the Internet. It uses\r\n a dictionary of over 200 Latin words, combined with a handful of model \r\nsentence structures, to generate Lorem Ipsum which looks reasonable. The\r\n generated Lorem Ipsum is therefore always free from repetition, \r\ninjected humour, or non-characteristic words etc.</p><p></p>', 'lorem_1669379976.png', 'what-is-lorem-ipsum', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 'keyword1, keyword2, keyword3', 1, '2022-11-25 12:39:36', 1, '2024-09-30 07:57:29', 1),
 (26, 1, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', '<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and \r\ntypesetting industry. Lorem Ipsum has been the industry\'s standard dummy\r\n text ever since the 1500s, when an unknown printer took a galley of \r\ntype and scrambled it to make a type specimen book. It has survived not \r\nonly five centuries, but also the leap into electronic typesetting, \r\nremaining essentially unchanged. It was popularised in the 1960s with \r\nthe release of Letraset sheets containing Lorem Ipsum passages, and more\r\n recently with desktop publishing software like Aldus PageMaker \r\nincluding versions of Lorem Ipsum.</p>', 'about-personal_1727420279.jpg', 'lorem-ipsum-is-simply-dummy-text-of-the-printing-and-typesetting-industry', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 'keyword1, keyword2, keyword3', 1, '2024-09-27 06:57:59', 1, '2024-09-30 07:57:14', 1),
 (27, 2, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', '<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.<br></p>', 'blog-post-9-640x500_1727420382.jpg', 'lorem-ipsum-is-simply-dummy-text-of-the-printing-and-typesetting-industry-1727683160', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 'keyword1, keyword2, keyword3', 1, '2024-09-27 06:59:42', 1, '2024-09-30 07:59:20', 1),
-(28, 1, 'Lorem Ipsum is simply dummy text', '<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and \r\ntypesetting industry. Lorem Ipsum has been the industry\'s standard dummy\r\n text ever since the 1500s, when an unknown printer took a galley of \r\ntype and scrambled it to make a type specimen book. It has survived not \r\nonly five centuries, but also the leap into electronic typesetting, \r\nremaining essentially unchanged. It was popularised in the 1960s with \r\nthe release of Letraset sheets containing Lorem Ipsum passages, and more\r\n recently with desktop publishing software like Aldus PageMaker \r\nincluding versions of Lorem Ipsum.</p><p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and \r\ntypesetting industry. Lorem Ipsum has been the industry\'s standard dummy\r\n text ever since the 1500s, when an unknown printer took a galley of \r\ntype and scrambled it to make a type specimen book. It has survived not \r\nonly five centuries, but also the leap into electronic typesetting, \r\nremaining essentially unchanged. It was popularised in the 1960s with \r\nthe release of Letraset sheets containing Lorem Ipsum passages, and more\r\n recently with desktop publishing software like Aldus PageMaker \r\nincluding versions of Lorem Ipsum.</p><p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and \r\ntypesetting industry. Lorem Ipsum has been the industry\'s standard dummy\r\n text ever since the 1500s, when an unknown printer took a galley of \r\ntype and scrambled it to make a type specimen book. It has survived not \r\nonly five centuries, but also the leap into electronic typesetting, \r\nremaining essentially unchanged. It was popularised in the 1960s with \r\nthe release of Letraset sheets containing Lorem Ipsum passages, and more\r\n recently with desktop publishing software like Aldus PageMaker \r\nincluding versions of Lorem Ipsum.</p><p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and \r\ntypesetting industry. Lorem Ipsum has been the industry\'s standard dummy\r\n text ever since the 1500s, when an unknown printer took a galley of \r\ntype and scrambled it to make a type specimen book. It has survived not \r\nonly five centuries, but also the leap into electronic typesetting, \r\nremaining essentially unchanged. It was popularised in the 1960s with \r\nthe release of Letraset sheets containing Lorem Ipsum passages, and more\r\n recently with desktop publishing software like Aldus PageMaker \r\nincluding versions of Lorem Ipsum.</p><p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and \r\ntypesetting industry. Lorem Ipsum has been the industry\'s standard dummy\r\n text ever since the 1500s, when an unknown printer took a galley of \r\ntype and scrambled it to make a type specimen book. It has survived not \r\nonly five centuries, but also the leap into electronic typesetting, \r\nremaining essentially unchanged. It was popularised in the 1960s with \r\nthe release of Letraset sheets containing Lorem Ipsum passages, and more\r\n recently with desktop publishing software like Aldus PageMaker \r\nincluding versions of Lorem Ipsum.</p>', 'blog-post-2-1-640x500_1727439012.jpg', 'lorem-ipsum-is-simply-dummy-text', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 'keyword1, keyword2, keyword3', 1, '2024-09-27 12:10:12', 1, '2024-09-30 07:56:43', 1);
+(28, 1, 'Lorem Ipsum is simply dummy text', '<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and \r\ntypesetting industry. Lorem Ipsum has been the industry\'s standard dummy\r\n text ever since the 1500s, when an unknown printer took a galley of \r\ntype and scrambled it to make a type specimen book. It has survived not \r\nonly five centuries, but also the leap into electronic typesetting, \r\nremaining essentially unchanged. It was popularised in the 1960s with \r\nthe release of Letraset sheets containing Lorem Ipsum passages, and more\r\n recently with desktop publishing software like Aldus PageMaker \r\nincluding versions of Lorem Ipsum.</p><p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and \r\ntypesetting industry. Lorem Ipsum has been the industry\'s standard dummy\r\n text ever since the 1500s, when an unknown printer took a galley of \r\ntype and scrambled it to make a type specimen book. It has survived not \r\nonly five centuries, but also the leap into electronic typesetting, \r\nremaining essentially unchanged. It was popularised in the 1960s with \r\nthe release of Letraset sheets containing Lorem Ipsum passages, and more\r\n recently with desktop publishing software like Aldus PageMaker \r\nincluding versions of Lorem Ipsum.</p><p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and \r\ntypesetting industry. Lorem Ipsum has been the industry\'s standard dummy\r\n text ever since the 1500s, when an unknown printer took a galley of \r\ntype and scrambled it to make a type specimen book. It has survived not \r\nonly five centuries, but also the leap into electronic typesetting, \r\nremaining essentially unchanged. It was popularised in the 1960s with \r\nthe release of Letraset sheets containing Lorem Ipsum passages, and more\r\n recently with desktop publishing software like Aldus PageMaker \r\nincluding versions of Lorem Ipsum.</p><p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and \r\ntypesetting industry. Lorem Ipsum has been the industry\'s standard dummy\r\n text ever since the 1500s, when an unknown printer took a galley of \r\ntype and scrambled it to make a type specimen book. It has survived not \r\nonly five centuries, but also the leap into electronic typesetting, \r\nremaining essentially unchanged. It was popularised in the 1960s with \r\nthe release of Letraset sheets containing Lorem Ipsum passages, and more\r\n recently with desktop publishing software like Aldus PageMaker \r\nincluding versions of Lorem Ipsum.</p><p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and \r\ntypesetting industry. Lorem Ipsum has been the industry\'s standard dummy\r\n text ever since the 1500s, when an unknown printer took a galley of \r\ntype and scrambled it to make a type specimen book. It has survived not \r\nonly five centuries, but also the leap into electronic typesetting, \r\nremaining essentially unchanged. It was popularised in the 1960s with \r\nthe release of Letraset sheets containing Lorem Ipsum passages, and more\r\n recently with desktop publishing software like Aldus PageMaker \r\nincluding versions of Lorem Ipsum.</p>', 'Screenshot_1_1729580305.png', 'lorem-ipsum-is-simply-dummy-text', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 'keyword1, keyword2, keyword3', 1, '2024-09-27 12:10:12', 1, '2024-10-22 06:58:25', 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `profile_images_logs`
+-- Table structure for table `profile_change_logs`
 --
 
-CREATE TABLE `profile_images_logs` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `profile_image` varchar(255) DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Dumping data for table `profile_images_logs`
---
-
-INSERT INTO `profile_images_logs` (`id`, `user_id`, `profile_image`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, '1666274988.jpg', 1, '2022-10-20 14:09:48', NULL),
-(2, 1, '1666275440.png', 1, '2022-10-20 14:17:20', NULL),
-(3, 1, '1666345134.jpg', 1, '2022-10-21 09:38:54', NULL),
-(5, 1, 'team_member_4_1667217364.jpg', 1, '2022-10-31 11:56:04', NULL),
-(6, 7, 'unnamed_1667385634.jpg', 1, '2022-11-02 10:40:34', NULL),
-(7, 1, 'Screenshot_4_1669131694.png', 1, '2022-11-22 15:41:34', NULL),
-(8, 10, 'mypic_1669618142.jpg', 1, '2022-11-28 06:49:02', NULL),
-(9, 2, 'team_member_1_1670930613.jpg', 1, '2022-12-13 11:23:33', NULL);
+DROP TABLE IF EXISTS `profile_change_logs`;
+CREATE TABLE IF NOT EXISTS `profile_change_logs` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `updated_data` longtext COLLATE utf8mb4_unicode_ci,
+  `status` tinyint NOT NULL DEFAULT '0' COMMENT '0 = Pending, 1 = Approved, 2 = Declined',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -429,12 +497,14 @@ INSERT INTO `profile_images_logs` (`id`, `user_id`, `profile_image`, `status`, `
 -- Table structure for table `settings`
 --
 
-CREATE TABLE `settings` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `settings`;
+CREATE TABLE IF NOT EXISTS `settings` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `meta_tag` varchar(255) DEFAULT NULL,
   `meta_key` varchar(255) DEFAULT NULL,
-  `meta_value` text CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  `meta_value` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `settings`
@@ -453,8 +523,9 @@ INSERT INTO `settings` (`id`, `meta_tag`, `meta_key`, `meta_value`) VALUES
 -- Table structure for table `users`
 --
 
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `unique_id` varchar(255) DEFAULT NULL,
   `first_name` varchar(255) DEFAULT NULL,
   `last_name` varchar(255) DEFAULT NULL,
@@ -463,61 +534,62 @@ CREATE TABLE `users` (
   `password` varchar(255) DEFAULT NULL,
   `iam` varchar(255) DEFAULT NULL,
   `interestedin` varchar(255) DEFAULT NULL,
-  `financial_support` tinyint(4) NOT NULL DEFAULT 1 COMMENT '1 = Willing to give financial support, 2 = I need financial support',
+  `financial_support` tinyint NOT NULL DEFAULT '1' COMMENT '1 = Willing to give financial support, 2 = I need financial support',
   `dob` date DEFAULT NULL,
   `age` decimal(10,2) DEFAULT NULL,
   `height` decimal(10,2) DEFAULT NULL,
   `weight` decimal(10,2) DEFAULT NULL,
-  `body_type` tinyint(4) DEFAULT 1 COMMENT '1=Skinny, 2=Thin, 3=Median, 4=Athletic, 5=Curvilinear, 6=Full Height',
-  `child` int(11) DEFAULT NULL,
+  `body_type` tinyint DEFAULT '1' COMMENT '1=Skinny, 2=Thin, 3=Median, 4=Athletic, 5=Curvilinear, 6=Full Height',
+  `child` int DEFAULT NULL,
   `city` varchar(255) DEFAULT NULL,
   `state` varchar(255) DEFAULT NULL,
   `zipcode` varchar(255) DEFAULT NULL,
   `country` varchar(255) DEFAULT NULL,
-  `address` text DEFAULT NULL,
+  `address` text,
   `timezone` varchar(255) DEFAULT NULL,
-  `gender` tinyint(4) DEFAULT 1 COMMENT '1=Male, 2=Female, 3=Trans',
-  `about_me` text DEFAULT NULL,
+  `gender` tinyint DEFAULT '1' COMMENT '1=Male, 2=Female, 3=Trans',
+  `about_me` text,
   `latitude` varchar(255) DEFAULT NULL,
   `longitude` varchar(100) DEFAULT NULL,
   `profile_image` varchar(255) DEFAULT NULL,
   `last_login` datetime DEFAULT NULL,
-  `membership_type` tinyint(4) NOT NULL DEFAULT 1 COMMENT '1=bronz, 2=silver, 3=gold, 4=platinum, 5=monthly, 6=half_yearly, 7=yearly',
+  `membership_type` tinyint NOT NULL DEFAULT '1' COMMENT '1=Monthly, 2=Quarterly, 3=Half Year, 4=Yearly',
   `membership_price` decimal(10,2) DEFAULT NULL,
   `membership_start` date DEFAULT NULL,
   `membership_end` date DEFAULT NULL,
-  `membership_status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '1=Null, 2=pending, 3=over, 4=monthly, 5=half_yearly, 6=yearly, 7=active',
-  `marital_status` tinyint(4) DEFAULT 1 COMMENT '1=single, 2=married, 3=widowed, 4=divorced',
-  `privacy_status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '1=everyone, 2=requested',
-  `verify_status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '1=unverified, 2=verified',
-  `profile_status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '1=not updated as un verified, 2=updated as verified',
-  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '1=active, 2=block, 3=soft delete',
-  `show_last_login` tinyint(4) NOT NULL DEFAULT 1 COMMENT '0= not show last login time, 1=show last login time',
-  `block_male_msg` tinyint(4) NOT NULL DEFAULT 1 COMMENT '0=block, 1= not block',
-  `block_female_msg` tinyint(4) NOT NULL DEFAULT 1 COMMENT '0=block, 1= not block',
-  `block_trans_msg` tinyint(4) NOT NULL DEFAULT 1 COMMENT '0=block, 1= not block',
-  `block_all_email` tinyint(4) NOT NULL DEFAULT 1 COMMENT '0=block, 1= not block',
-  `block_money_making_opp_email` tinyint(4) NOT NULL DEFAULT 1 COMMENT '0=block, 1= not block',
-  `block_local_event_meet_up_email` tinyint(4) NOT NULL DEFAULT 1 COMMENT '0=block, 1= not block',
-  `block_like_favorite_email` tinyint(4) NOT NULL DEFAULT 1 COMMENT '0=block, 1= not block',
+  `membership_status` tinyint NOT NULL DEFAULT '1' COMMENT '1=Null, 2=pending, 3=over, 4=monthly, 5=half_yearly, 6=yearly, 7=active',
+  `marital_status` tinyint DEFAULT '1' COMMENT '1=single, 2=married, 3=widowed, 4=divorced',
+  `privacy_status` tinyint NOT NULL DEFAULT '1' COMMENT '1=everyone, 2=requested',
+  `verify_status` tinyint NOT NULL DEFAULT '1' COMMENT '1=unverified, 2=verified',
+  `profile_status` tinyint NOT NULL DEFAULT '1' COMMENT '1=not updated as un verified, 2=updated as verified',
+  `status` tinyint NOT NULL DEFAULT '1' COMMENT '1=active, 2=block, 3=soft delete',
+  `show_last_login` tinyint NOT NULL DEFAULT '1' COMMENT '0= not show last login time, 1=show last login time',
+  `block_male_msg` tinyint NOT NULL DEFAULT '1' COMMENT '0=block, 1= not block',
+  `block_female_msg` tinyint NOT NULL DEFAULT '1' COMMENT '0=block, 1= not block',
+  `block_trans_msg` tinyint NOT NULL DEFAULT '1' COMMENT '0=block, 1= not block',
+  `block_all_email` tinyint NOT NULL DEFAULT '1' COMMENT '0=block, 1= not block',
+  `block_money_making_opp_email` tinyint NOT NULL DEFAULT '1' COMMENT '0=block, 1= not block',
+  `block_local_event_meet_up_email` tinyint NOT NULL DEFAULT '1' COMMENT '0=block, 1= not block',
+  `block_like_favorite_email` tinyint NOT NULL DEFAULT '1' COMMENT '0=block, 1= not block',
   `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `unique_id`, `first_name`, `last_name`, `username`, `email`, `password`, `iam`, `interestedin`, `financial_support`, `dob`, `age`, `height`, `weight`, `body_type`, `child`, `city`, `state`, `zipcode`, `country`, `address`, `timezone`, `gender`, `about_me`, `latitude`, `longitude`, `profile_image`, `last_login`, `membership_type`, `membership_price`, `membership_start`, `membership_end`, `membership_status`, `marital_status`, `privacy_status`, `verify_status`, `profile_status`, `status`, `show_last_login`, `block_male_msg`, `block_female_msg`, `block_trans_msg`, `block_all_email`, `block_money_making_opp_email`, `block_local_event_meet_up_email`, `block_like_favorite_email`, `created_at`, `updated_at`) VALUES
-(1, 'testing54564654', 'Test', 'User', 'testing', 'testing@gmail.com', '$2y$10$GEDrB4abkRZeA3zyKAcf0emffhOjKnCEzoOKT6zr.Vg8VW.pvV7Ue', 'Sugar Mommy', 'Sugar Baby (Hombre / Man)', 1, '1991-03-07', 31.00, 185.00, 65.00, 1, 0, 'lahore', 'punjab', '54000', 'pakistan', 'lahore, pakistan', NULL, 1, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '31', '74.11', 'Screenshot_4_1669131694.png', '2022-11-25 13:28:36', 1, NULL, NULL, NULL, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2022-10-18 12:14:23', '2022-11-24 16:27:53'),
-(2, 'test545646546', 'Test', 'User', 'sharelahore', 'test@gmail.com', '$2y$10$GEDrB4abkRZeA3zyKAcf0emffhOjKnCEzoOKT6zr.Vg8VW.pvV7Ue', 'Sugar Daddy', 'Sugar Baby (Mujer / Woman)', 1, '1999-09-24', 25.00, 173.00, 70.00, 1, 2, 'Lahore', 'Punjab', '54000', 'Pakistan', 'Main Bazar, Muft pura Gul Colony, Lahore, Punjab, Pakistan', NULL, 1, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '31.4514756', '74.355674', 'team_member_1_1670930613.jpg', '2024-10-18 09:24:33', 1, NULL, NULL, NULL, 1, 2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 0, '2022-10-18 12:16:35', '2024-10-02 11:59:29'),
-(3, '34534dffghfgh', 'gapagyd', 'zacoloje', 'musygypupo', 'test2@gmail.com', '$2y$10$GEDrB4abkRZeA3zyKAcf0emffhOjKnCEzoOKT6zr.Vg8VW.pvV7Ue', 'Sugar Mommy', 'Sugar Baby (Hombre / Man)', 1, '2000-01-25', 22.00, 122.00, 120.00, 2, 1, 'lahore', 'pun', 'lhr', 'pakistan', 'lahore', NULL, 2, 'Magna sunt dolor ver', '31.29', '74', NULL, '2022-10-25 07:18:09', 1, NULL, NULL, NULL, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2022-10-18 12:20:43', '2022-10-25 07:19:41'),
-(4, '345345345', 'pynexi', 'jyzega', 'pegaguxeka', 'test3@gmail.com', '$2y$10$GEDrB4abkRZeA3zyKAcf0emffhOjKnCEzoOKT6zr.Vg8VW.pvV7Ue', 'Sugar Baby (Mujer / Woman)', 'Sugar Daddy', 2, '1992-04-22', 30.00, 125.00, 100.00, 4, 0, 'LHR', 'PUN', '54000', 'pk', 'LHR', NULL, 1, 'Explicabo Ipsum di', NULL, NULL, '1666345134.jpg', '2020-12-23 07:20:48', 1, NULL, NULL, NULL, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, '2022-10-18 12:26:34', '2022-10-27 13:36:41'),
-(5, '34345dfdgdfg', 'paluzusy', 'mevyc', 'jatejovyq', 'test4@gmail.com', '$2y$10$GEDrB4abkRZeA3zyKAcf0emffhOjKnCEzoOKT6zr.Vg8VW.pvV7Ue', 'Sugar Baby (Hombre / Man)', 'Sugar Mommy', 2, '1992-11-11', 29.00, 98912.00, 14594.00, 1, 0, 'lhr', 'pun', '5400', 'PK', 'PK', NULL, 3, 'PK', NULL, NULL, NULL, '2022-10-25 07:23:04', 1, NULL, NULL, NULL, 1, 4, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, '2022-10-18 12:27:34', '2022-10-27 13:36:28'),
+(1, 'testing54564654', 'Test', 'User', 'testing', 'testing@gmail.com', '$2y$10$GEDrB4abkRZeA3zyKAcf0emffhOjKnCEzoOKT6zr.Vg8VW.pvV7Ue', 'Sugar Mommy', 'Sugar Baby (Hombre / Man)', 1, '1991-03-07', '31.00', '185.00', '65.00', 1, 0, 'lahore', 'punjab', '54000', 'pakistan', 'lahore, pakistan', NULL, 1, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '31', '74.11', 'Screenshot_4_1669131694.png', '2022-11-25 13:28:36', 1, NULL, NULL, NULL, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2022-10-18 12:14:23', '2022-11-24 16:27:53'),
+(2, 'test545646546', 'Test', 'User', 'testuserxl', 'test@gmail.com', '$2y$10$GEDrB4abkRZeA3zyKAcf0emffhOjKnCEzoOKT6zr.Vg8VW.pvV7Ue', 'Sugar Daddy', 'Sugar Baby (Mujer / Woman)', 1, '1997-09-24', '27.00', '173.00', '70.00', 1, 2, 'Lahore', 'Punjab', '54792', 'Pakistan', 'Lahore – Kasur Rd, Shershah Colony Ichhra, Lahore, Punjab, Pakistan', NULL, 1, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '31.5370115', '74.3198811', 'blog-post-7-1-640x500_1729519048.jpg', '2024-10-22 06:24:11', 1, NULL, NULL, NULL, 1, 2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 0, '2022-10-18 12:16:35', '2024-10-21 14:18:19'),
+(3, '34534dffghfgh', 'gapagyd', 'zacoloje', 'musygypupo', 'test2@gmail.com', '$2y$10$GEDrB4abkRZeA3zyKAcf0emffhOjKnCEzoOKT6zr.Vg8VW.pvV7Ue', 'Sugar Mommy', 'Sugar Baby (Hombre / Man)', 1, '2000-01-25', '22.00', '122.00', '120.00', 2, 1, 'lahore', 'pun', 'lhr', 'pakistan', 'lahore', NULL, 2, 'Magna sunt dolor ver', '31.29', '74', NULL, '2022-10-25 07:18:09', 1, NULL, NULL, NULL, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2022-10-18 12:20:43', '2022-10-25 07:19:41'),
+(4, '345345345', 'pynexi', 'jyzega', 'pegaguxeka', 'test3@gmail.com', '$2y$10$GEDrB4abkRZeA3zyKAcf0emffhOjKnCEzoOKT6zr.Vg8VW.pvV7Ue', 'Sugar Baby (Mujer / Woman)', 'Sugar Daddy', 2, '1992-04-22', '30.00', '125.00', '100.00', 4, 0, 'LHR', 'PUN', '54000', 'pk', 'LHR', NULL, 1, 'Explicabo Ipsum di', NULL, NULL, '1666345134.jpg', '2020-12-23 07:20:48', 1, NULL, NULL, NULL, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, '2022-10-18 12:26:34', '2022-10-27 13:36:41'),
+(5, '34345dfdgdfg', 'paluzusy', 'mevyc', 'jatejovyq', 'test4@gmail.com', '$2y$10$GEDrB4abkRZeA3zyKAcf0emffhOjKnCEzoOKT6zr.Vg8VW.pvV7Ue', 'Sugar Baby (Hombre / Man)', 'Sugar Mommy', 2, '1992-11-11', '29.00', '98912.00', '14594.00', 1, 0, 'lhr', 'pun', '5400', 'PK', 'PK', NULL, 3, 'PK', NULL, NULL, NULL, '2022-10-25 07:23:04', 1, NULL, NULL, NULL, 1, 4, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, '2022-10-18 12:27:34', '2022-10-27 13:36:28'),
 (6, '4534534eret', NULL, NULL, 'test919996', 'test919996@gmail.com', '$2y$10$GEDrB4abkRZeA3zyKAcf0emffhOjKnCEzoOKT6zr.Vg8VW.pvV7Ue', 'Sugar Mommy', 'Sugar Baby (Hombre / Man)', 1, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, '2022-10-28 11:21:45', 1, NULL, NULL, NULL, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2022-10-28 11:20:13', '2022-10-28 11:20:13'),
-(7, 'test91654544', 'Test', '916', 'test916', 'test916@gmail.com', '$2y$10$GEDrB4abkRZeA3zyKAcf0emffhOjKnCEzoOKT6zr.Vg8VW.pvV7Ue', 'Sugar Daddy', 'Sugar Baby (Mujer / Woman)', 1, '1992-12-12', 29.00, 615.00, 541.00, 1, 0, 'lahr', 'punjab', '54000', 'pk', 'pak', NULL, 1, 'ok', '31.3916', '73.9644', 'unnamed_1667385634.jpg', '2024-09-30 14:01:52', 1, NULL, NULL, NULL, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2022-10-28 11:26:47', '2022-12-13 06:29:39'),
-(8, 'dgdfg34535345', 'test', '917', 'test917', 'test917@gmail.com', '$2y$10$GEDrB4abkRZeA3zyKAcf0emffhOjKnCEzoOKT6zr.Vg8VW.pvV7Ue', 'Sugar Daddy', 'Sugar Baby (Mujer / Woman)', 1, '2022-11-18', 0.00, 5.00, 4.00, 1, 4, 'Lahore', 'PK', '454', 'pk', 'lahore, pakistan', NULL, 2, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', NULL, NULL, NULL, '2024-09-30 13:56:30', 1, NULL, NULL, NULL, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2022-10-28 11:30:01', '2022-11-25 12:34:36'),
-(10, 'muhammadishtiaqamjad63845879b2667', 'Ishtiaq', 'Amjad', 'iamishtiaq98', 'muhammadishtiaqamjad@gmail.com', '$2y$10$6MLTDMcMqzsB99cjShHJPurzWTPcEuwD67j27snnujxHkoSB1r9RO', 'Sugar Mommy', 'Sugar Baby (Hombre / Man)', 1, '1998-06-05', 24.00, 182.56, 70.00, 4, 0, 'Minchinabad', 'Bahawalpur', '62230', 'Pakistan', 'Mcleod Gunj, MInchinabad, Punjab, Pakistan', NULL, 1, 'Loving', NULL, NULL, 'mypic_1669618142.jpg', '2022-11-28 06:58:56', 1, NULL, NULL, NULL, 1, 1, 1, 1, 2, 2, 1, 0, 1, 0, 1, 1, 1, 1, '2022-11-28 06:43:05', '2023-05-22 13:28:34'),
+(7, 'test91654544', 'Test', '916', 'test916', 'test916@gmail.com', '$2y$10$GEDrB4abkRZeA3zyKAcf0emffhOjKnCEzoOKT6zr.Vg8VW.pvV7Ue', 'Sugar Daddy', 'Sugar Baby (Mujer / Woman)', 1, '1992-12-12', '29.00', '615.00', '541.00', 1, 0, 'lahr', 'punjab', '54000', 'pk', 'pak', NULL, 1, 'ok', '31.3916', '73.9644', 'unnamed_1667385634.jpg', '2024-09-30 14:01:52', 1, NULL, NULL, NULL, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2022-10-28 11:26:47', '2022-12-13 06:29:39'),
+(8, 'dgdfg34535345', 'test', '917', 'test917', 'test917@gmail.com', '$2y$10$GEDrB4abkRZeA3zyKAcf0emffhOjKnCEzoOKT6zr.Vg8VW.pvV7Ue', 'Sugar Daddy', 'Sugar Baby (Mujer / Woman)', 1, '2022-11-18', '0.00', '5.00', '4.00', 1, 4, 'Lahore', 'PK', '454', 'pk', 'lahore, pakistan', NULL, 2, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', NULL, NULL, NULL, '2024-09-30 13:56:30', 1, NULL, NULL, NULL, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2022-10-28 11:30:01', '2022-11-25 12:34:36'),
+(10, 'muhammadishtiaqamjad63845879b2667', 'Ishtiaq', 'Amjad', 'iamishtiaq98', 'muhammadishtiaqamjad@gmail.com', '$2y$10$6MLTDMcMqzsB99cjShHJPurzWTPcEuwD67j27snnujxHkoSB1r9RO', 'Sugar Mommy', 'Sugar Baby (Hombre / Man)', 1, '1998-06-05', '24.00', '182.56', '70.00', 4, 0, 'Minchinabad', 'Bahawalpur', '62230', 'Pakistan', 'Mcleod Gunj, MInchinabad, Punjab, Pakistan', NULL, 1, 'Loving', NULL, NULL, 'mypic_1669618142.jpg', '2022-11-28 06:58:56', 1, NULL, NULL, NULL, 1, 1, 1, 1, 2, 2, 1, 0, 1, 0, 1, 1, 1, 1, '2022-11-28 06:43:05', '2023-05-22 13:28:34'),
 (14, 'alarmingcivil166fb8e27c7c14', NULL, NULL, NULL, 'alarmingcivil1@gmail.com', '$2y$10$Ao0vjzwOpbCwiPTvnOW1Pe9WcI9EFLRaTDNrhykp8wbBkN3I5a7k2', 'Sugar Mommy', 'Sugar Baby (Hombre / Man)', 1, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 05:52:40', '2024-10-01 05:52:40');
 
 -- --------------------------------------------------------
@@ -526,17 +598,19 @@ INSERT INTO `users` (`id`, `unique_id`, `first_name`, `last_name`, `username`, `
 -- Table structure for table `user_configs`
 --
 
-CREATE TABLE `user_configs` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `config_user_id` int(11) DEFAULT NULL,
+DROP TABLE IF EXISTS `user_configs`;
+CREATE TABLE IF NOT EXISTS `user_configs` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int DEFAULT NULL,
+  `config_user_id` int DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
   `image` varchar(255) DEFAULT NULL,
-  `type` tinyint(4) NOT NULL DEFAULT 1 COMMENT '1=favorite, 2=liked, 3=blocked, 4=reported,\r\n5=allow private photos,',
-  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '1=pending, 2=accept, 3=reject',
+  `type` tinyint NOT NULL DEFAULT '1' COMMENT '1=favorite, 2=liked, 3=blocked, 4=reported,\r\n5=allow private photos,',
+  `status` tinyint NOT NULL DEFAULT '1' COMMENT '1=pending, 2=accept, 3=reject',
   `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=84 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user_configs`
@@ -579,16 +653,18 @@ INSERT INTO `user_configs` (`id`, `user_id`, `config_user_id`, `description`, `i
 -- Table structure for table `user_login_logs`
 --
 
-CREATE TABLE `user_login_logs` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
+DROP TABLE IF EXISTS `user_login_logs`;
+CREATE TABLE IF NOT EXISTS `user_login_logs` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int DEFAULT NULL,
   `login_time` datetime DEFAULT NULL,
   `logout_time` datetime DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `status` tinyint NOT NULL DEFAULT '1',
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
-  `ip` varchar(255) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  `ip` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=132 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user_login_logs`
@@ -719,7 +795,12 @@ INSERT INTO `user_login_logs` (`id`, `user_id`, `login_time`, `logout_time`, `st
 (123, 2, '2024-10-16 06:31:59', NULL, 1, '2024-10-16 06:31:59', NULL, '127.0.0.1'),
 (124, 2, '2024-10-17 09:58:47', NULL, 1, '2024-10-17 09:58:47', NULL, '127.0.0.1'),
 (125, 2, '2024-10-17 12:50:56', NULL, 1, '2024-10-17 12:50:56', NULL, '127.0.0.1'),
-(126, 2, '2024-10-18 09:24:33', NULL, 1, '2024-10-18 09:24:33', NULL, '127.0.0.1');
+(126, 2, '2024-10-18 09:24:33', NULL, 1, '2024-10-18 09:24:33', NULL, '127.0.0.1'),
+(127, 2, '2024-10-21 05:17:27', NULL, 1, '2024-10-21 05:17:27', NULL, '127.0.0.1'),
+(128, 2, '2024-10-21 07:07:17', NULL, 1, '2024-10-21 07:07:17', NULL, '127.0.0.1'),
+(129, 2, '2024-10-21 13:28:26', '2024-10-21 13:28:31', 1, '2024-10-21 13:28:26', '2024-10-21 13:28:31', '::1'),
+(130, 2, '2024-10-22 05:00:54', NULL, 1, '2024-10-22 05:00:54', NULL, '::1'),
+(131, 2, '2024-10-22 06:24:11', NULL, 1, '2024-10-22 06:24:11', NULL, '127.0.0.1');
 
 -- --------------------------------------------------------
 
@@ -727,15 +808,17 @@ INSERT INTO `user_login_logs` (`id`, `user_id`, `login_time`, `logout_time`, `st
 -- Table structure for table `user_photos`
 --
 
-CREATE TABLE `user_photos` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
+DROP TABLE IF EXISTS `user_photos`;
+CREATE TABLE IF NOT EXISTS `user_photos` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int DEFAULT NULL,
   `photo` varchar(255) DEFAULT NULL,
-  `type` tinyint(4) NOT NULL DEFAULT 1 COMMENT '1=public photo, 2=private photo',
-  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '1=active, 2=inactive, 3=delete',
+  `type` tinyint NOT NULL DEFAULT '1' COMMENT '1=public photo, 2=private photo',
+  `status` tinyint NOT NULL DEFAULT '1' COMMENT '1=active, 2=inactive, 3=delete',
   `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=49 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user_photos`
@@ -776,7 +859,10 @@ INSERT INTO `user_photos` (`id`, `user_id`, `photo`, `type`, `status`, `created_
 (42, 10, 'images_16696188234991.jpeg', 2, 1, '2022-11-28 07:00:23', NULL),
 (43, 10, 'index_16696188238290.jpeg', 2, 1, '2022-11-28 07:00:23', NULL),
 (44, 8, 'architecture-service-1_17277046106336.jpg', 2, 1, '2024-09-30 13:56:50', NULL),
-(45, 8, 'team-member-1_17277046191580.jpg', 1, 1, '2024-09-30 13:56:59', NULL);
+(45, 8, 'team-member-1_17277046191580.jpg', 1, 1, '2024-09-30 13:56:59', NULL),
+(46, 2, 'unnamed_17295163801133.png', 1, 1, '2024-10-21 13:18:33', NULL),
+(47, 2, 'magazine-min_17295203202697.jpg', 2, 1, '2024-10-21 14:19:20', NULL),
+(48, 2, 'blog-post-8-640x500_17295203105402.jpg', 1, 1, '2024-10-21 14:19:22', NULL);
 
 -- --------------------------------------------------------
 
@@ -784,15 +870,17 @@ INSERT INTO `user_photos` (`id`, `user_id`, `photo`, `type`, `status`, `created_
 -- Table structure for table `visitors`
 --
 
-CREATE TABLE `visitors` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `visitor_user_id` int(11) DEFAULT NULL,
-  `ip` varchar(255) DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT 1,
+DROP TABLE IF EXISTS `visitors`;
+CREATE TABLE IF NOT EXISTS `visitors` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int DEFAULT NULL,
+  `visitor_user_id` int DEFAULT NULL,
+  `ip` varchar(255) COLLATE utf8mb3_unicode_ci DEFAULT NULL,
+  `status` tinyint NOT NULL DEFAULT '1',
   `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=159 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
 -- Dumping data for table `visitors`
@@ -944,232 +1032,6 @@ INSERT INTO `visitors` (`id`, `user_id`, `visitor_user_id`, `ip`, `status`, `cre
 (156, 8, 2, '127.0.0.1', 1, '2024-10-08 08:50:20', '2024-10-08 08:50:20'),
 (157, 4, 2, '127.0.0.1', 1, '2024-10-15 12:47:40', '2024-10-15 12:47:40'),
 (158, 7, 2, '127.0.0.1', 1, '2024-10-16 06:35:22', '2024-10-16 06:35:22');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `admin_users`
---
-ALTER TABLE `admin_users`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `categories`
---
-ALTER TABLE `categories`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `created_by` (`created_by`),
-  ADD KEY `updated_by` (`updated_by`);
-
---
--- Indexes for table `chat`
---
-ALTER TABLE `chat`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `chatted_users`
---
-ALTER TABLE `chatted_users`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `contactus_msgs`
---
-ALTER TABLE `contactus_msgs`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `like_images`
---
-ALTER TABLE `like_images`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `membership_logs`
---
-ALTER TABLE `membership_logs`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `migrations`
---
-ALTER TABLE `migrations`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `notifications`
---
-ALTER TABLE `notifications`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `plans`
---
-ALTER TABLE `plans`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `posts`
---
-ALTER TABLE `posts`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `profile_images_logs`
---
-ALTER TABLE `profile_images_logs`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `settings`
---
-ALTER TABLE `settings`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `user_configs`
---
-ALTER TABLE `user_configs`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `user_login_logs`
---
-ALTER TABLE `user_login_logs`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `user_photos`
---
-ALTER TABLE `user_photos`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `visitors`
---
-ALTER TABLE `visitors`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `admin_users`
---
-ALTER TABLE `admin_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `categories`
---
-ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `chat`
---
-ALTER TABLE `chat`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
-
---
--- AUTO_INCREMENT for table `chatted_users`
---
-ALTER TABLE `chatted_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
-
---
--- AUTO_INCREMENT for table `contactus_msgs`
---
-ALTER TABLE `contactus_msgs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT for table `like_images`
---
-ALTER TABLE `like_images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
---
--- AUTO_INCREMENT for table `membership_logs`
---
-ALTER TABLE `membership_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `migrations`
---
-ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `notifications`
---
-ALTER TABLE `notifications`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
-
---
--- AUTO_INCREMENT for table `plans`
---
-ALTER TABLE `plans`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `posts`
---
-ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
-
---
--- AUTO_INCREMENT for table `profile_images_logs`
---
-ALTER TABLE `profile_images_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT for table `settings`
---
-ALTER TABLE `settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-
---
--- AUTO_INCREMENT for table `user_configs`
---
-ALTER TABLE `user_configs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
-
---
--- AUTO_INCREMENT for table `user_login_logs`
---
-ALTER TABLE `user_login_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=127;
-
---
--- AUTO_INCREMENT for table `user_photos`
---
-ALTER TABLE `user_photos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
-
---
--- AUTO_INCREMENT for table `visitors`
---
-ALTER TABLE `visitors`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=159;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

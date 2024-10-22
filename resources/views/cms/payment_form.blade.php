@@ -1,6 +1,41 @@
 @extends('app')
 @section('title', 'Billing Details')
 @section('content')
+<style>
+    #payment-form {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f7f7f7;
+        border-radius: 8px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    #card-element {
+        background-color: white;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        margin-bottom: 20px;
+    }
+    #card-errors {
+        color: red;
+        margin-bottom: 20px;
+    }
+    #submit-button {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        padding: 12px 20px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    #submit-button:hover {
+        background-color: #218838;
+    }
+</style>
+
 <section class="breadcrumb-area profile-bc-area">
     <div class="container">
         <div class="content">
@@ -13,12 +48,6 @@
         </div>
     </div>
 </section>
-
-
-
-
-
-
 
 <section class="user-setting-section">
     <div class="container">
@@ -33,75 +62,37 @@
                                 <sup>$</sup>{{$plan->price}}
                             </h4>
                             <p class="stamet">{{$plan->subtitle}}</p>
-                            <a href="#" class="custom-button">Buy Now!</a>
-                            <img class="shape" src="assets/images/membership/plan-bg.png" alt="">
+                            <p class="stamet">{{$plan->description}}</p>
+                            <img class="shape" src="{{ asset('assets/images/membership/plan-bg.png') }} " alt="">
+                            <p class="duration">Billing Details</p>
+                            <div class="single-blog post-details">
+                                <form action="{{ route('payment.process') }}" method="POST" id="payment_form">
+                                    @csrf
+                                    <div>
+                                        <label for="card-element">Credit or debit card</label>
+                                        <div id="card-element"></div>
+                                        <div id="card-errors" role="alert"></div>
+                                        <input type="hidden" name="plan_id" value="{{$plan->id}}">
+                                    </div>
+                                    <button type="submit">Pay Now</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 </section>
-
-
-
-
-
-
-
-<div class="blog-page">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <h3 class="title">Plan Details</h3>
-                <p class="duration">{{$plan->name}}</p>
-                <p class="duration">{{$plan->subtitle}}</p>
-                <h4 class="number">$ {{$plan->price}}</h4>
-                <p class="stamet mb-30 mt-30">
-                    {{$plan->description}}
-                </p>
-            </div>
-        </div>
-    </div>
-</div>
-<section class="blog-page">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <h3 class="m-title">Billing Details</h3>
-                <div class="single-blog post-details">
-                    <form action="{{ route('payment.process') }}" method="POST" id="payment_form">
-                        @csrf
-                        <div>
-                            <label for="card-element">Credit or debit card</label>
-                            <div id="card-element"></div>
-                            <div id="card-errors" role="alert"></div>
-                            <input type="text" hidden name="plan_id" value="{{$plan->id}}">
-                        </div>
-                        <button type="submit">Pay</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
 @endsection
-
-</body>
+@push('scripts')
 <script src="https://js.stripe.com/v3/"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Initialize Stripe
         var stripe = Stripe('{{ env('STRIPE_PUBLIC_KEY') }}');
         var elements = stripe.elements();
-
-        // Create an instance of the card Element
         var cardElement = elements.create('card');
         cardElement.mount('#card-element');
-
-        // Handle real-time validation errors from the card Element.
         cardElement.on('change', function(event) {
             var displayError = document.getElementById('card-errors');
             if (event.error) {
@@ -110,18 +101,13 @@
                 displayError.textContent = '';
             }
         });
-
-        // Handle form submission
         var form = document.getElementById('payment_form');
         form.addEventListener('submit', function(event) {
             event.preventDefault();
-
             stripe.createToken(cardElement).then(function(result) {
                 if (result.error) {
-                    // Show error in #card-errors
                     document.getElementById('card-errors').textContent = result.error.message;
                 } else {
-                    // Send the token to your server
                     var hiddenInput = document.createElement('input');
                     hiddenInput.setAttribute('type', 'hidden');
                     hiddenInput.setAttribute('name', 'stripeToken');
@@ -133,4 +119,4 @@
         });
     });
 </script>
-</html>
+@endpush
