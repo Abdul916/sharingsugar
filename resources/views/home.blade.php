@@ -3,8 +3,8 @@
 @section('content')
 
 <section class="banner-section">
-    <img class="img1 wow fadeInLeft" src="assets/images/banner/aimg1.png" alt="">
-    <img class="img2 wow fadeInRight" src="assets/images/banner/aimg2.png" alt="">
+    <img class="img1 wow fadeInLeft" src="{{asset('assets/images/banner/aimg1.png')}}" alt="">
+    <img class="img2 wow fadeInRight" src="{{asset('assets/images/banner/aimg2.png')}}" alt="">
     <div class="container">
         <div class="row">
             <div class="col-xl-4 col-lg-5">
@@ -78,7 +78,7 @@
             <div class="col-lg-3 col-sm-6">
                 <div class="single-feature wow fadeInUp" data-wow-delay="0.1s">
                     <div class="icon">
-                        <img src="assets/images/feature/icon01.png" alt="">
+                        <img src="{{asset('assets/images/feature/icon01.png')}}" alt="">
                     </div>
                     <h4>
                         100% Verifide
@@ -88,7 +88,7 @@
             <div class="col-lg-3 col-sm-6">
                 <div class="single-feature wow fadeInUp" data-wow-delay="0.2s">
                     <div class="icon">
-                        <img src="assets/images/feature/icon02.png" alt="">
+                        <img src="{{asset('assets/images/feature/icon02.png')}}" alt="">
                     </div>
                     <h4>
                         Most Secure
@@ -98,7 +98,7 @@
             <div class="col-lg-3 col-sm-6">
                 <div class="single-feature wow fadeInUp" data-wow-delay="0.3s">
                     <div class="icon">
-                        <img src="assets/images/feature/icon03.png" alt="">
+                        <img src="{{asset('assets/images/feature/icon03.png')}}" alt="">
                     </div>
                     <h4>
                         100% Privacy
@@ -108,7 +108,7 @@
             <div class="col-lg-3 col-sm-6">
                 <div class="single-feature wow fadeInUp" data-wow-delay="0.4s">
                     <div class="icon">
-                        <img src="assets/images/feature/icon04.png" alt="">
+                        <img src="{{asset('assets/images/feature/icon04.png')}}" alt="">
                     </div>
                     <h4>
                         Smart Matching
@@ -148,16 +148,16 @@
             </div>
             <div class="col-lg-6 align-self-center">
                 <div class="img">
-                    <img class="bg-shape" src="assets/images/flirting/circle.png" alt="">
-                    <img src="assets/images/flirting/illutration.png" alt="">
+                    <img class="bg-shape" src="/assets/images/flirting/circle.png')}}" alt="">
+                    <img src="/assets/images/flirting/illutration.png')}}" alt="">
                 </div>
             </div>
         </div>
     </div>
 </section> --}}
 <section class="how-it-work-section">
-    <img class="shape1" src="assets/images/h-it-w/circle-shape.png" alt="">
-    <img class="shape2" src="assets/images/h-it-w/bird.png" alt="">
+    <img class="shape1" src="{{asset('assets/images/h-it-w/circle-shape.png')}}" alt="">
+    <img class="shape2" src="{{asset('assets/images/h-it-w/bird.png')}}" alt="">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-6">
@@ -218,7 +218,7 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="stat-item wow fadeInUp" data-wow-delay="0.1s">
                         <div class="icon">
-                            <img src="assets/images/statistics/stat01.png" alt="">
+                            <img src="{{asset('assets/images/statistics/stat01.png')}}" alt="">
                         </div>
                         <div class="stat-content">
                             <h3 class="counter-item"><span class=" odometer" data-odometer-final="350"></span>M</h3>
@@ -229,7 +229,7 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="stat-item wow fadeInUp" data-wow-delay="0.2s">
                         <div class="icon">
-                            <img src="assets/images/statistics/stat02.png" alt="">
+                            <img src="{{asset('assets/images/statistics/stat02.png')}}" alt="">
                         </div>
                         <div class="stat-content">
                             <h3 class="counter-item"><span class=" odometer" data-odometer-final="447"></span>M</h3>
@@ -240,7 +240,7 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="stat-item wow fadeInUp" data-wow-delay="0.3s">
                         <div class="icon">
-                            <img src="assets/images/statistics/stat03.png" alt="">
+                            <img src="{{asset('assets/images/statistics/stat03.png')}}" alt="">
                         </div>
                         <div class="stat-content">
                             <h3 class="counter-item"><span class=" odometer" data-odometer-final="60"></span>M</h3>
@@ -309,7 +309,7 @@
                     <div class="feature-lists">
                         <div class="single-feature-list wow fadeInUp" data-wow-delay="0.1s">
                             <div class="icon">
-                                <img src="assets/images/feature/i1.png" alt="">
+                                <img src="{{asset('assets/images/feature/i1.png')}}" alt="">
                             </div>
                             <div class="content">
                                 <h4 class="title">
@@ -323,7 +323,7 @@
                         </div>
                         <div class="single-feature-list wow fadeInUp" data-wow-delay="0.2s">
                             <div class="icon">
-                                <img src="assets/images/feature/i2.png" alt="">
+                                <img src="{{asset('assets/images/feature/i2.png')}}" alt="">
                             </div>
                             <div class="content">
                                 <h4 class="title">
@@ -337,7 +337,7 @@
                         </div>
                         <div class="single-feature-list wow fadeInUp" data-wow-delay="0.3s">
                             <div class="icon">
-                                <img src="assets/images/feature/i3.png" alt="">
+                                <img src="{{asset('assets/images/feature/i3.png')}}" alt="">
                             </div>
                             <div class="content">
                                 <h4 class="title">
@@ -351,7 +351,7 @@
                         </div>
                         <div class="single-feature-list wow fadeInUp" data-wow-delay="0.4s">
                             <div class="icon">
-                                <img src="assets/images/feature/i4.png" alt="">
+                                <img src="{{asset('assets/images/feature/i4.png')}}" alt="">
                             </div>
                             <div class="content">
                                 <h4 class="title">
@@ -371,7 +371,7 @@
 </section>
 
 <section class="latest-registered-section">
-    <img class="shape" src="assets/images/registered/shape.png" alt="">
+    <img class="shape" src="{{asset('assets/images/registered/shape.png')}}" alt="">
     <div class="container-fluid">
         <div class="row">
             <div class="col-xl-6">
@@ -394,84 +394,21 @@
             </div>
             <div class="col-xl-6 align-self-center">
                 <div class="registered-slider owl-carousel">
+                    @foreach($latest_users as $user)
                     <div class="single-slider">
                         <div class="img">
-                            <img src="assets/images/registered/p1.png" alt="">
+                            @if(!empty($user->profile_image))
+                            <img src="{{ asset('assets/app_images') }}/{{$user->profile_image}}" alt="" style="width: 100px;">
+                            @else
+                            <img src="{{ asset('assets/images/profile/profile-user.png') }}" alt="">
+                            @endif
                         </div>
                         <div class="inner-content">
-                            <h4 class="name">
-                                Dana Miles
-                            </h4>
-                            <p>
-                                25 Years Old
-                            </p>
+                            <h4 class="name">{{ $user['username'] }}</h4>
+                            <p>{{ number_format($user['age'], 0)}} Years Old</p>
                         </div>
                     </div>
-                    <div class="single-slider">
-                        <div class="img">
-                            <img src="assets/images/registered/p2.png" alt="">
-                        </div>
-                        <div class="inner-content">
-                            <h4 class="name">
-                                Dana Miles
-                            </h4>
-                            <p>
-                                25 Years Old
-                            </p>
-                        </div>
-                    </div>
-                    <div class="single-slider">
-                        <div class="img">
-                            <img src="assets/images/registered/p3.png" alt="">
-                        </div>
-                        <div class="inner-content">
-                            <h4 class="name">
-                                Dana Miles
-                            </h4>
-                            <p>
-                                25 Years Old
-                            </p>
-                        </div>
-                    </div>
-                    <div class="single-slider">
-                        <div class="img">
-                            <img src="assets/images/registered/p4.png" alt="">
-                        </div>
-                        <div class="inner-content">
-                            <h4 class="name">
-                                Dana Miles
-                            </h4>
-                            <p>
-                                25 Years Old
-                            </p>
-                        </div>
-                    </div>
-                    <div class="single-slider">
-                        <div class="img">
-                            <img src="assets/images/registered/p5.png" alt="">
-                        </div>
-                        <div class="inner-content">
-                            <h4 class="name">
-                                Dana Miles
-                            </h4>
-                            <p>
-                                25 Years Old
-                            </p>
-                        </div>
-                    </div>
-                    <div class="single-slider">
-                        <div class="img">
-                            <img src="assets/images/registered/p1.png" alt="">
-                        </div>
-                        <div class="inner-content">
-                            <h4 class="name">
-                                Dana Miles
-                            </h4>
-                            <p>
-                                25 Years Old
-                            </p>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>

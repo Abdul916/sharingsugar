@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Home;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class HomeController extends Controller
 {
@@ -14,7 +15,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+
+        $data['latest_users'] = User::orderBy('last_login', 'desc')->take(15)->get();
+        return view('home', $data);
     }
 
     /**
