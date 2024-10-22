@@ -90,7 +90,7 @@ class UsersController extends Controller
         ->join('users', 'user_configs.config_user_id', '=', 'users.id')
         ->select('user_configs.config_user_id', 'users.id', 'users.username', 'users.profile_image', 'users.email', DB::raw('count(*) as total_reports'))
         ->where('user_configs.type', 4)
-        ->groupBy('users.id', 'users.username', 'users.email')
+        ->groupBy('user_configs.config_user_id', 'users.id', 'users.username', 'users.profile_image', 'users.email')
         ->orderBy('users.id', 'DESC');
 
         if (!empty($search_query)) {

@@ -48,14 +48,16 @@
                                 <tr id="tr">
                                     <td>{{ $i++ }}</td>
                                     <td>
-                                        <a href="{{ url('admin/users/profile')}}/{{$report->config_user_id}}" class="text-navy" data-placement="top" title="View Profile">
+                                        <a href="{{ url('admin/users/profile')}}/{{$report->config_user_id}}" class="d-flex align-items-center" data-placement="top" title="View Profile">
                                             @if(!empty($report->profile_image))
-                                            <img alt="" class="rounded-circle img-fluid" src="{{ asset('assets/app_images')}}/{{$report->profile_image}}" style="width: 40px;">
+                                            <img alt="" class="rounded-circle img-fluid mr-2" src="{{ asset('assets/app_images')}}/{{$report->profile_image}}" style="width: 40px;">
                                             @else
-                                            <img alt="" class="rounded-circle img-fluid" src="{{ asset('assets/app_images/profile-pic.png') }}" style="width: 40px;">
+                                            <img alt="" class="rounded-circle img-fluid mr-2" src="{{ asset('assets/app_images/profile-pic.png') }}" style="width: 40px;">
                                             @endif
-                                            <br><strong>{{ $report->username }}</strong>
-                                            <br><strong>{{ $report->email }}</strong>
+                                            <div>
+                                                <span class="text-navy">{{ $report->username }}</span><br>
+                                                <span class="text-navy">{{ $report->email }}</span>
+                                            </div>
                                         </a>
                                     </td>
                                     <td><label class="label label-primary">{{$report->total_reports}}</label></td>
