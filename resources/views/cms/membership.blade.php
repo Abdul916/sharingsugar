@@ -42,7 +42,15 @@
                                 <p class="stamet mb-30 mt-30">
                                     {{$plan->description}}
                                 </p>
-                                <p class="duration">{{$plan->subtitle}}<br>{{($plan->off_percent != 0 || $plan->off_percent != null) ? '(Save '.$plan->off_percent.'%)' : ''}}</p>
+                                <p class="duration">
+                                    {{$plan->subtitle}}<br>
+                                    <?php
+                                    if($plan->off_percent != 0 || $plan->off_percent != null){ ?>
+                                        (Save <?php echo $plan->off_percent.'%' ?>)
+                                    <?php }else{ ?>
+                                        <br>
+                                    <?php } ?>
+                                </p>
                                 <a href="{{ url('buy-membership') }}/{{$plan->id}}" class="custom-button">Get Started</a>
                                 <img class="shape" src="{{ asset('assets/images/membership/plan-bg.png') }}" alt="">
                             </div>
