@@ -47,9 +47,9 @@
             <li class="{{ Request::is('admin/memberships*') ? 'active' : '' }}">
                 <a href="{{ url('admin/memberships') }}"><i class="fa-sharp fa-solid fa-address-card"></i><span class="nav-label">Membership List</span></a>
             </li>
-            <li class="{{ Request::is('admin/plans*') ? 'active' : '' }}">
+            {{-- <li class="{{ Request::is('admin/plans*') ? 'active' : '' }}">
                 <a href="{{ url('admin/plans') }}"><i class="fa-sharp fa-solid fa-star"></i><span class="nav-label">Membership Plans</span></a>
-            </li>
+            </li> --}}
             <li class="{{ Request::is('admin/emails*') ? 'active' : '' }}">
                 <a href="{{ url('admin/emails') }}"><i class="fa-sharp fa-solid fa-envelope"></i><span class="nav-label">Send Emails</span></a>
             </li>

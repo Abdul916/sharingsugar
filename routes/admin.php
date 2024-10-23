@@ -63,13 +63,13 @@ Route::group(['prefix'  =>  'admin'], function () {
 			Route::get('/', [ContactUsController::class, 'index']);
 			Route::post('delete', [ContactUsController::class, 'destroy']);
 		});
-		Route::group(['prefix' => 'plans'], function () {
-			Route::get('/', [PlansController::class, 'index']);
-			Route::post('store', [PlansController::class, 'store']);
-			Route::post('show', [PlansController::class, 'show']);
-			Route::post('update', [PlansController::class, 'update']);
-			Route::post('delete', [PlansController::class, 'destroy']);
-		});
+		// Route::group(['prefix' => 'plans'], function () {
+		// 	Route::get('/', [PlansController::class, 'index']);
+		// 	Route::post('store', [PlansController::class, 'store']);
+		// 	Route::post('show', [PlansController::class, 'show']);
+		// 	Route::post('update', [PlansController::class, 'update']);
+		// 	Route::post('delete', [PlansController::class, 'destroy']);
+		// });
 		Route::group(['prefix' => 'emails'], function () {
 			Route::get('/', [EmailController::class, 'index']);
 			Route::get('create', [EmailController::class, 'create']);
