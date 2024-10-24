@@ -8,7 +8,7 @@ $slug = Request::segment(1);
 <section class="breadcrumb-area profile-bc-area">
     <div class="container">
         <div class="content">
-            <h2 class="title extra-padding">The Latest Blog</h2>
+            {{-- <h2 class="title extra-padding">The Latest Blog</h2> --}}
             <ul class="breadcrumb-list extra-padding">
                 <li>
                     <a href="{{ url('home') }}">Home</a>

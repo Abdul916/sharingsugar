@@ -26,19 +26,10 @@
             position: relative;
         }
 
-        .wrapper {
+       /* .container1 {
             position: relative;
             width: 100%;
-            background-color: #ffffff;
-            padding: 0px 20px 0px 20px;
-            border-radius: 10px;
-            border: none !important;
-        }
-
-        .container1 {
-            position: relative;
-            width: 100%;
-            height: 100px;
+            height: 0px;
             margin-top: 5px;
             border: none !important;
         }
@@ -84,10 +75,8 @@
 
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
-            height: 1.7em;
-            width: 1.7em;
-            background-image: -o-linear-gradient(284deg, rgb(242, 40, 118) 0%, rgb(148, 45, 217) 100%);
-            background-image: linear-gradient(166deg, rgb(242, 40, 118) 0%, rgb(148, 45, 217) 100%);
+            height: 10px;
+            width: 10px;
             -webkit-box-shadow: 0.872px 9.962px 20px 0px rgba(12, 78, 165, 0.3);
             box-shadow: 0.872px 9.962px 20px 0px rgba(12, 78, 165, 0.3);
             cursor: pointer;
@@ -98,29 +87,25 @@
 
         input[type="range"]::-moz-range-thumb {
             -webkit-appearance: none;
-            height: 1.7em;
-            width: 1.7em;
+            height: 10px;
+            width: 10px;
             cursor: pointer;
             border-radius: 50%;
-            background-color: #3264fe;
             pointer-events: auto;
         }
 
         input[type="range"]::-ms-thumb {
             appearance: none;
-            height: 1.7em;
-            width: 1.7em;
+            height: 10px;
+            width: 10px;
             cursor: pointer;
             border-radius: 50%;
-            background-image: -o-linear-gradient(284deg, rgb(242, 40, 118) 0%, rgb(148, 45, 217) 100%);
-            background-image: linear-gradient(166deg, rgb(242, 40, 118) 0%, rgb(148, 45, 217) 100%);
             -webkit-box-shadow: 0.872px 9.962px 20px 0px rgba(12, 78, 165, 0.3);
             box-shadow: 0.872px 9.962px 20px 0px rgba(12, 78, 165, 0.3);
             pointer-events: auto;
         }
 
         input[type="range"]:active::-webkit-slider-thumb {
-            background-color: #ffffff;
             border: 3px solid #3264fe;
         }
 
@@ -138,6 +123,16 @@
             font-weight: 500;
             font-size: 16px;
             color: #ffffff;
+        }*/
+
+        .xl_bordernone {
+            background: transparent;
+            border: 0px solid #2d4186;
+            padding-left: 0px;
+        }
+
+        .xl_bordernone:focus {
+            border: 0px solid #2d4186;
         }
     </style>
 </head>

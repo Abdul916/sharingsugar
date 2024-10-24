@@ -10,7 +10,9 @@
         }
         $('#search-form').submit();
     }
+
     function NameSearchGet(e) {
+
         $('#search_name').val($('#name_search').val());
         $('#search-form').submit();
     }
@@ -53,12 +55,14 @@
                         </div>
                     </div>
                     <div class="right">
-                        {{-- <span class="span">Sort By :</span> --}}
+                        <span class="span">
+                            Sort By :
+                        </span>
                         <div class="filter-right">
                             <select name="sorting" onchange="$('#sorter').val(this.value); $('#search-form').submit();" class="nice-select select-bar">
-                                <option value="" selected>Sort By</option>
-                                <option value="last_login" {{isset($parameters['sorting']) ? ($parameters['sorting'] == 'last_login' ? 'selected' : '') : ''}}>Sort By Last Login</option>
-                                <option value="distance" {{isset($parameters['sorting']) ? ($parameters['sorting'] == 'distance' ? 'selected' : '') : ''}}>Sort By Distance</option>
+                                {{-- <option value="">Sort By</option> --}}
+                                <option value="last_login" {{isset($parameters['sorting']) ? ($parameters['sorting'] == 'last_login' ? 'selected' : '') : 'selected'}}>Last Login</option>
+                                <option value="distance" {{isset($parameters['sorting']) ? ($parameters['sorting'] == 'distance' ? 'selected' : '') : ''}}>Distance</option>
                             </select>
                         </div>
                     </div>
@@ -133,232 +137,75 @@
             <div class="modal-body">
                 <form id="search-form" action="members" method="GET">
                     <div class="join-now-box">
-                        <label class="title">Interested In</label>
-
-                        <div class="price-range-slider">
-                            <div id="slider"></div>
+                        <div class="ml-3 interested-in">
+                            <p class="title">
+                                Interested in:
+                            </p>
                         </div>
-
-                        <div class="single-option">
+                        <div class="single-option interested-in">
                             <div class="option">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <input type="radio" name="interestedin" id="Sugar Baby (Hombre / Man)" {{isset($parameters['interestedin']) && $parameters['interestedin'] === 'Sugar Baby (Hombre / Man)' ? 'checked' : ''}} value="Sugar Baby (Hombre / Man)"><label for="Sugar Baby (Hombre / Man)">Sugar Baby (Man)</label>
-                                        <input type="radio" name="interestedin" id="Sugar Daddy" {{isset($parameters['interestedin']) && $parameters['interestedin'] === 'Sugar Daddy' ? 'checked' : ''}} value="Sugar Daddy"><label for="Sugar Daddy">Sugar Daddy</label>
-                                        <input type="radio" name="interestedin" id="Sugar Baby (Trans)" {{isset($parameters['interestedin']) && $parameters['interestedin'] === 'Sugar Baby (Trans)' ? 'checked' : ''}} value="Sugar Baby (Trans)"><label for="Sugar Baby (Trans)">Sugar Baby (Trans)</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input type="radio" name="interestedin" id="Sugar Baby (Mujer / Woman)" {{isset($parameters['interestedin']) && $parameters['interestedin'] === 'Sugar Baby (Mujer / Woman)' ? 'checked' : ''}} value="Sugar Baby (Mujer / Woman)"><label for="Sugar Baby (Mujer / Woman)">Sugar Baby (Woman)</label>
-                                        <input type="radio" name="interestedin" id="Sugar Mommy" {{isset($parameters['interestedin']) && $parameters['interestedin'] === 'Sugar Mommy' ? 'checked' : ''}} value="Sugar Mommy"><label for="Sugar Mommy">Sugar Mommy</label>
-                                        {{-- <input type="radio" name="interestedin" id="Sugar Daddy Mommy" {{isset($parameters['interestedin']) && $parameters['interestedin'] === 'Sugar Daddy Mommy' ? 'checked' : ''}} value="Sugar Daddy Mommy"><label for="Sugar Daddy Mommy">Sugar Daddy Mommy</label> --}}
-                                    </div>
+                                <div class="s-input ml-1">
+                                    <input type="radio" name="interestedin" id="Sugar Daddy" {{isset($parameters['interestedin']) && $parameters['interestedin'] === 'Sugar Daddy' ? 'checked' : ''}} value="Sugar Daddy"><label for="Sugar Daddy">Sugar Daddy</label>
                                 </div>
-                            </div>
-                        </div>
-                        <label class="title mt-2">Body Type</label>
-                        <div class="single-option">
-                            <div class="option">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <input type="checkbox" name="Skinny" id="Skinny" value="Skinny" {{isset($parameters['Skinny']) ? 'checked' : ''}}><label for="Skinny">Skinny</label>
-                                        <input type="checkbox" name="Tiny" id="Tiny" value="Tiny" {{isset($parameters['Tiny']) ? 'checked' : ''}}><label for="Tiny">Tiny</label>
-                                        <input type="checkbox" name="Median" id="Median" value="Median" {{isset($parameters['Median']) ? 'checked' : ''}}><label for="Median">Median</label>
-                                        <input type="checkbox" name="Mascular" id="Mascular" value="Mascular" {{isset($parameters['Mascular']) ? 'checked' : ''}}><label for="Mascular">Mascular</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input type="checkbox" name="Athletic" id="Athletic" value="Athletic" {{isset($parameters['Athletic']) ? 'checked' : ''}}><label for="Athletic">Athletic</label>
-                                        <input type="checkbox" name="Curvilinear" id="Curvilinear" value="Curvilinear" {{isset($parameters['Curvilinear']) ? 'checked' : ''}}><label for="Curvilinear">Curvilinear</label>
-                                        <input type="checkbox" name="Full_Height" id="Full Height" value="Full Height" {{isset($parameters['Full_Height']) ? 'checked' : ''}}><label for="Full Height">Full Height</label>
-                                    </div>
+                                <div class="s-input ml-5">
+                                    <input type="radio" name="interestedin" id="Sugar Mommy" {{isset($parameters['interestedin']) && $parameters['interestedin'] === 'Sugar Mommy' ? 'checked' : ''}} value="Sugar Mommy"><label for="Sugar Mommy">Sugar Mommy</label>
+                                </div>
+                                <div class="s-input ml-1">
+                                    <input type="radio" name="interestedin" id="Sugar Daddy Mommy" {{isset($parameters['interestedin']) && $parameters['interestedin'] === 'Sugar Daddy Mommy' ? 'checked' : ''}} value="Sugar Daddy Mommy"><label for="Sugar Daddy Mommy">Sugar Daddy Mommy</label>
+                                </div>
+                                <div class="s-input ml-1">
+                                    <input type="radio" name="interestedin" id="Sugar Baby Man" {{isset($parameters['interestedin']) && $parameters['interestedin'] === 'Sugar Baby Man' ? 'checked' : ''}} value="Sugar Baby Man"><label for="Sugar Baby Man">Sugar Baby (Man)</label>
+                                </div>
+                                <div class="s-input ml-1">
+                                    <input type="radio" name="interestedin" id="Sugar Baby Women" {{isset($parameters['interestedin']) && $parameters['interestedin'] === 'Sugar Baby Women' ? 'checked' : ''}} value="Sugar Baby Women"><label for="Sugar Baby Women">Sugar Baby (Women)</label>
+                                </div>
+                                <div class="s-input ml-1">
+                                    <input type="radio" name="interestedin" id="Sugar Baby Trans" {{isset($parameters['interestedin']) && $parameters['interestedin'] === 'Sugar Baby Trans' ? 'checked' : ''}} value="Sugar Baby Trans"><label for="Sugar Baby Trans">Sugar Baby (Trans)</label>
                                 </div>
                             </div>
                         </div>
-
-
-                        {{-- <label class="title mt-2">Age</label> --}}
-                        <div class="single-option">
+                        <div class="ml-3 body-type">
+                            <p class="title">
+                                Body Type:
+                            </p>
+                        </div>
+                        <div class="single-option body-type">
                             <div class="option">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <input type="checkbox" class="mt-2" name="Age" id="Age" value="Age" onchange="showAgeSlider(this)" {{isset($parameters['Age']) ? 'checked' : ''}}><label for="Age">Age</label>
-                                        <input type="checkbox" class="mt-2" name="Height" id="Height" onchange="showHeightSlider(this)" value="Height" {{isset($parameters['Height']) ? 'checked' : ''}}><label for="Height">Height</label>
-                                        <input type="checkbox" class="mt-2" name="Weight" id="Weight" value="Weight" onchange="showWeightSlider(this)" {{isset($parameters['Weight']) ? 'checked' : ''}}><label for="Weight">Weight</label>
-                                        <input type="checkbox" class="mt-2" name="Children" id="Children" value="Children" onchange="showChildSlider(this)" {{isset($parameters['Children']) ? 'checked' : ''}}><label for="Children">Children</label>
-                                        <input type="checkbox" class="mt-2" name="locationsec" onchange="showLocationSection(this)" {{isset($parameters['locationsec']) ? 'checked' : ''}} id="locationsec" value="1"><label for="locationsec">Location</label>
-                                    </div>
-                                    <div class="col-md-8">
-
-
-
-                                        <div class="" id="ageSlider3">
-                                            <div class="values">
-                                                <span id="range1">
-                                                    <span id="minAgeSpan">{{isset($parameters['Age']) ? $parameters['minAge'] : '18'}}</span>
-                                                </span>
-                                                <span> &dash; </span>
-                                                <span id="range2">
-                                                    <span id="maxAgeSpan">{{isset($parameters['Age']) ? $parameters['maxAge'] : '40'}}</span>
-                                                </span>
-                                            </div>
-                                            <div class="container1">
-                                                <div class="slider-track"></div>
-                                                <input type="range" class="xl_bordernone" min="18" max="100" value="{{isset($parameters['age']) ? $parameters['minAge'] : '18'}}" id="slider-1" name="minAge" oninput="slideOne()" disabled>
-                                                <input type="range" class="xl_bordernone" min="18" max="100" value="{{isset($parameters['age']) ? $parameters['maxAge'] : '40'}}" id="slider-2" name="maxAge" oninput="slideTwo()" disabled>
-                                            </div>
-                                        </div>
-
-                                        <div class="height" id="heightSlider3">
-                                            <div class="values">
-                                                <span id="heightRange1">
-                                                    <span id="minHeightSpan">{{isset($parameters['Height']) ? $parameters['minHeight'] : '120'}}</span>
-
-                                                </span>
-                                                <span> &dash; </span>
-                                                <span id="heightRange2">
-                                                    <span id="maxHeightSpan">{{isset($parameters['Height']) ? $parameters['maxHeight'] : '150'}}</span>
-
-                                                </span>
-                                            </div>
-                                            <div class="container1">
-                                                <div class="slider-track height-slider-track"></div>
-                                                <input type="range" class="xl_bordernone" min="100" max="200" value="{{isset($parameters['Height']) ? $parameters['minHeight'] : '120'}}" id="heightSlider1" name="minHeight" oninput="slideHeightOne()">
-                                                <input type="range" class="xl_bordernone" min="100" max="200" value="{{isset($parameters['Height']) ? $parameters['maxHeight'] : '150'}}" id="heightSlider2" name="maxHeight" oninput="slideHeightTwo()">
-                                            </div>
-                                        </div>
-                                        <div class="" id="weightSlider3">
-                                            <div class="values">
-                                                <span id="weightRange1">
-                                                    <span id="minWeightSpan">{{isset($parameters['Weight']) ? $parameters['minWeight'] : '55'}}</span>
-
-                                                </span>
-                                                <span> &dash; </span>
-                                                <span id="weightRange2">
-                                                    <span id="maxWeightSpan">{{isset($parameters['Weight']) ? $parameters['maxWeight'] : '85'}}</span>
-
-                                                </span>
-                                            </div>
-                                            <div class="container1">
-                                                <div class="slider-track weight-slider-track"></div>
-                                                <input type="range" class="xl_bordernone" min="40" max="150" value="{{isset($parameters['Weight']) ? $parameters['minWeight'] : '120'}}" id="weightSlider1" name="minWeight" oninput="slideWeightOne()">
-                                                <input type="range" class="xl_bordernone" min="40" max="150" value="{{isset($parameters['Weight']) ? $parameters['maxWeight'] : '150'}}" id="weightSlider2" name="maxWeight" oninput="slideWeightTwo()">
-                                            </div>
-                                        </div>
-
-                                        <div class="children" id="childSlider3">
-                                            <div class="values">
-                                                <span id="childrenRange1">
-                                                    <span id="minChildrenSpan">{{isset($parameters['Children']) ? $parameters['minChildren'] : '0'}}</span>
-                                                </span>
-                                                <span> &dash; </span>
-                                                <span id="childrenRange2">
-                                                    <span id="maxChildrenSpan">{{isset($parameters['Children']) ? $parameters['maxChildren'] : '9'}}</span>
-                                                </span>
-                                            </div>
-                                            <div class="container1">
-                                                <div class="slider-track children-slider-track"></div>
-                                                <input type="range" class="xl_bordernone" min="0" max="9" value="{{isset($parameters['Children']) ? $parameters['minChildren'] : '1'}}" id="childrenSlider1" name="minChildren" oninput="slideChildrenOne()">
-                                                <input type="range" class="xl_bordernone" min="0" max="9" value="{{isset($parameters['Children']) ? $parameters['maxChildren'] : '9'}}" id="childrenSlider2" name="maxChildren" oninput="slideChildrenTwo()">
-                                            </div>
-                                        </div>
-
-
-                                    </div>
+                                <div class="s-input ml-1">
+                                    <input type="checkbox" name="Skinny" id="Skinny" value="Skinny" {{isset($parameters['Skinny']) ? 'checked' : ''}}><label for="Skinny">Skinny</label>
+                                </div>
+                                <div class="s-input ml-1">
+                                    <input type="checkbox" name="Tiny" id="Tiny" value="Tiny" {{isset($parameters['Tiny']) ? 'checked' : ''}}><label for="Tiny">Tiny</label>
+                                </div>
+                                <div class="s-input ml-1">
+                                    <input type="checkbox" name="Median" id="Median" value="Median" {{isset($parameters['Median']) ? 'checked' : ''}}><label for="Median">Median</label>
+                                </div>
+                                <div class="s-input ml-1">
+                                    <input type="checkbox" name="Mascular" id="Mascular" value="Mascular" {{isset($parameters['Mascular']) ? 'checked' : ''}}><label for="Mascular">Mascular</label>
+                                </div>
+                                <div class="s-input ml-1">
+                                    <input type="checkbox" name="Athletic" id="Athletic" value="Athletic" {{isset($parameters['Athletic']) ? 'checked' : ''}}><label for="Athletic">Athletic</label>
+                                </div>
+                                <div class="s-input ml-1">
+                                    <input type="checkbox" name="Curvilinear" id="Curvilinear" value="Curvilinear" {{isset($parameters['Curvilinear']) ? 'checked' : ''}}><label for="Curvilinear">Curvilinear</label>
+                                </div>
+                                <div class="s-input ml-1">
+                                    <input type="checkbox" name="Full_Height" id="Full Height" value="Full Height" {{isset($parameters['Full_Height']) ? 'checked' : ''}}><label for="Full Height">Full Height</label>
                                 </div>
                             </div>
                         </div>
-
-
-
-                        {{-- <style>
-                            .xlcustomsize {
-                                display: inline-block;
-                                width: 14px;
-                                height: 14px;
-                                color: #5650ce;
-                                z-index: -9;
-                                text-align: center;
-                            }
-                        </style>
-
-                        <div class="row">
-                            <div class="col-md-4">
-                                <input type="checkbox" class="xlcustomsize" name="Age" id="Age" value="Age" onchange="showAgeSlider(this)" {{isset($parameters['Age']) ? 'checked' : ''}}><label for="Age"> Age </label>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="" id="ageSlider">
-                                    <div class="wrapper">
-                                        <div class="values">
-                                            <span id="range1">
-                                                <span id="minAgeSpan">{{isset($parameters['Age']) ? $parameters['minAge'] : '18'}}</span>
-
-                                            </span>
-                                            <span> &dash; </span>
-                                            <span id="range2">
-                                                <span id="maxAgeSpan">{{isset($parameters['Age']) ? $parameters['maxAge'] : '40'}}</span>
-
-                                            </span>
-                                        </div>
-                                        <div class="container1">
-                                            <div class="slider-track"></div>
-                                            <input type="range" class="xl_bordernone" min="18" max="100" value="{{isset($parameters['age']) ? $parameters['minAge'] : '18'}}" id="slider-1" name="minAge" oninput="slideOne()">
-                                            <input type="range" class="xl_bordernone" min="18" max="100" value="{{isset($parameters['age']) ? $parameters['maxAge'] : '40'}}" id="slider-2" name="maxAge" oninput="slideTwo()">
-                                        </div>
-                                    </div>
+                        <div class="single-option age">
+                            <div class="option title">
+                                <div class="s-input mr-1">
+                                    <input type="checkbox" name="Age" id="Age" value="Age" onchange="showAgeSlider(this)" {{isset($parameters['Age']) ? 'checked' : ''}}><label for="Age">Age</label>
                                 </div>
                             </div>
-                        </div> --}}
-
-                        {{-- <div class="single-option"> --}}
-                            {{-- <div class="option"> --}}
-                                {{-- <div class="row">
-                                    <div class="col-md-6">
-                                        <span>
-                                            <input type="checkbox" name="Age" id="Age" value="Age" onchange="showAgeSlider(this)" {{isset($parameters['Age']) ? 'checked' : ''}}><label for="Age">Age</label>
-                                        </span>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div>
-                                            <div class="wrapper">
-                                                <div class="values">
-                                                    <span id="range1">
-                                                        <span id="minAgeSpan">{{isset($parameters['Age']) ? $parameters['minAge'] : '18'}}</span>
-
-                                                    </span>
-                                                    <span> &dash; </span>
-                                                    <span id="range2">
-                                                        <span id="maxAgeSpan">{{isset($parameters['Age']) ? $parameters['maxAge'] : '40'}}</span>
-
-                                                    </span>
-                                                </div>
-                                                <div class="container1">
-                                                    <div class="slider-track"></div>
-                                                    <input type="range" class="xl_bordernone" min="18" max="100" value="{{isset($parameters['age']) ? $parameters['minAge'] : '18'}}" id="slider-1" name="minAge" oninput="slideOne()">
-                                                    <input type="range" class="xl_bordernone" min="18" max="100" value="{{isset($parameters['age']) ? $parameters['maxAge'] : '40'}}" id="slider-2" name="maxAge" oninput="slideTwo()">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> --}}
-                            {{-- </div> --}}
-                        {{-- </div> --}}
-
-                        {{-- <div class="single-option">
-                            <div class="option">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <input type="checkbox" name="Age" id="Age" value="Age" onchange="showAgeSlider(this)" {{isset($parameters['Age']) ? 'checked' : ''}}><label for="Age">Age</label>
-                                    </div>
-                                    <div class="col-md-6">
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
-                        {{-- <div class="{{isset($parameters['Age']) ? 'd-block' : 'd-none'}} age" id="ageSlider">
+                        </div>
+                        <div class="{{isset($parameters['Age']) ? 'd-block' : 'd-none'}} age" id="ageSlider">
                             <div class="wrapper">
                                 <div class="values">
                                     <span id="range1">
-                                        <span id="minAgeSpan">{{isset($parameters['Age']) ? $parameters['minAge'] : '18'}}</span>
+                                        <span id="minAgeSpan">{{isset($parameters['Age']) ? $parameters['minAge'] : '22'}}</span>
 
                                     </span>
                                     <span> &dash; </span>
@@ -369,20 +216,19 @@
                                 </div>
                                 <div class="container1">
                                     <div class="slider-track"></div>
-                                    <input type="range" class="xl_bordernone" min="18" max="100" value="{{isset($parameters['age']) ? $parameters['minAge'] : '18'}}" id="slider-1" name="minAge" oninput="slideOne()">
-                                    <input type="range" class="xl_bordernone" min="18" max="100" value="{{isset($parameters['age']) ? $parameters['maxAge'] : '40'}}" id="slider-2" name="maxAge" oninput="slideTwo()">
+                                    <input type="range" min="18" max="60" value="{{isset($parameters['age']) ? $parameters['minAge'] : '22'}}" id="slider-1" name="minAge" oninput="slideOne()">
+                                    <input type="range" min="18" max="60" value="{{isset($parameters['age']) ? $parameters['maxAge'] : '40'}}" id="slider-2" name="maxAge" oninput="slideTwo()">
                                 </div>
                             </div>
-                        </div> --}}
-
-                        {{-- <div class="single-option mb-2">
+                        </div>
+                        <div class="single-option height">
                             <div class="option title">
-                                <div class="mr-1">
+                                <div class="s-input mr-1">
                                     <input type="checkbox" name="Height" id="Height" onchange="showHeightSlider(this)" value="Height" {{isset($parameters['Height']) ? 'checked' : ''}}><label for="Height">Height</label>
                                 </div>
                             </div>
-                        </div> --}}
-                        {{-- <div class="height {{isset($parameters['Height']) ? 'd-block' : 'd-none'}}" id="heightSlider">
+                        </div>
+                        <div class="height {{isset($parameters['Height']) ? 'd-block' : 'd-none'}}" id="heightSlider">
                             <div class="wrapper">
                                 <div class="values">
                                     <span id="heightRange1">
@@ -397,19 +243,19 @@
                                 </div>
                                 <div class="container1">
                                     <div class="slider-track height-slider-track"></div>
-                                    <input type="range" class="xl_bordernone" min="100" max="200" value="{{isset($parameters['Height']) ? $parameters['minHeight'] : '120'}}" id="heightSlider1" name="minHeight" oninput="slideHeightOne()">
-                                    <input type="range" class="xl_bordernone" min="100" max="200" value="{{isset($parameters['Height']) ? $parameters['maxHeight'] : '150'}}" id="heightSlider2" name="maxHeight" oninput="slideHeightTwo()">
+                                    <input type="range" min="100" max="200" value="{{isset($parameters['Height']) ? $parameters['minHeight'] : '120'}}" id="heightSlider1" name="minHeight" oninput="slideHeightOne()">
+                                    <input type="range" min="100" max="200" value="{{isset($parameters['Height']) ? $parameters['maxHeight'] : '150'}}" id="heightSlider2" name="maxHeight" oninput="slideHeightTwo()">
                                 </div>
                             </div>
-                        </div> --}}
-                        {{-- <div class="single-option mb-2">
+                        </div>
+                        <div class="single-option weight">
                             <div class="option title">
-                                <div class="mr-1">
+                                <div class="s-input mr-1">
                                     <input type="checkbox" name="Weight" id="Weight" value="Weight" onchange="showWeightSlider(this)" {{isset($parameters['Weight']) ? 'checked' : ''}}><label for="Weight">Weight</label>
                                 </div>
                             </div>
-                        </div> --}}
-                        {{-- <div class="{{isset($parameters['Weight']) ? 'd-block' : 'd-none'}} weight" id="weightSlider">
+                        </div>
+                        <div class="{{isset($parameters['Weight']) ? 'd-block' : 'd-none'}} weight" id="weightSlider">
                             <div class="wrapper">
                                 <div class="values">
                                     <span id="weightRange1">
@@ -424,43 +270,45 @@
                                 </div>
                                 <div class="container1">
                                     <div class="slider-track weight-slider-track"></div>
-                                    <input type="range" class="xl_bordernone" min="40" max="150" value="{{isset($parameters['Weight']) ? $parameters['minWeight'] : '120'}}" id="weightSlider1" name="minWeight" oninput="slideWeightOne()">
-                                    <input type="range" class="xl_bordernone" min="40" max="150" value="{{isset($parameters['Weight']) ? $parameters['maxWeight'] : '150'}}" id="weightSlider2" name="maxWeight" oninput="slideWeightTwo()">
+                                    <input type="range" min="40" max="150" value="{{isset($parameters['Weight']) ? $parameters['minWeight'] : '120'}}" id="weightSlider1" name="minWeight" oninput="slideWeightOne()">
+                                    <input type="range" min="40" max="150" value="{{isset($parameters['Weight']) ? $parameters['maxWeight'] : '150'}}" id="weightSlider2" name="maxWeight" oninput="slideWeightTwo()">
                                 </div>
                             </div>
-                        </div> --}}
-                        {{-- <div class="single-option mb-2">
+                        </div>
+                        <div class="single-option children">
                             <div class="option title">
-                                <div class="mr-1">
+                                <div class="s-input mr-1">
                                     <input type="checkbox" name="Children" id="Children" value="Children" onchange="showChildSlider(this)" {{isset($parameters['Children']) ? 'checked' : ''}}><label for="Children">Children</label>
                                 </div>
                             </div>
-                        </div> --}}
-                        {{-- <div class="children {{isset($parameters['Children']) ? 'd-block' : 'd-none'}}" id="childSlider">
+                        </div>
+                        <div class="children {{isset($parameters['Children']) ? 'd-block' : 'd-none'}}" id="childSlider">
                             <div class="wrapper">
                                 <div class="values">
                                     <span id="childrenRange1">
                                         <span id="minChildrenSpan">{{isset($parameters['Children']) ? $parameters['minChildren'] : '0'}}</span>
+
                                     </span>
                                     <span> &dash; </span>
                                     <span id="childrenRange2">
                                         <span id="maxChildrenSpan">{{isset($parameters['Children']) ? $parameters['maxChildren'] : '9'}}</span>
+
                                     </span>
                                 </div>
                                 <div class="container1">
                                     <div class="slider-track children-slider-track"></div>
-                                    <input type="range" class="xl_bordernone" min="0" max="9" value="{{isset($parameters['Children']) ? $parameters['minChildren'] : '1'}}" id="childrenSlider1" name="minChildren" oninput="slideChildrenOne()">
-                                    <input type="range" class="xl_bordernone" min="0" max="9" value="{{isset($parameters['Children']) ? $parameters['maxChildren'] : '9'}}" id="childrenSlider2" name="maxChildren" oninput="slideChildrenTwo()">
+                                    <input type="range" min="0" max="9" value="{{isset($parameters['Children']) ? $parameters['minChildren'] : '1'}}" id="childrenSlider1" name="minChildren" oninput="slideChildrenOne()">
+                                    <input type="range" min="0" max="9" value="{{isset($parameters['Children']) ? $parameters['maxChildren'] : '9'}}" id="childrenSlider2" name="maxChildren" oninput="slideChildrenTwo()">
                                 </div>
                             </div>
-                        </div> --}}
-                        {{-- <div class="single-option mb-2">
+                        </div>
+                        <div class="single-option location">
                             <div class="option title">
-                                <div class="mr-1">
+                                <div class="s-input mr-1">
                                     <input type="checkbox" onchange="showLocationSection(this)" name="locationsec" {{isset($parameters['locationsec']) ? 'checked' : ''}} id="locationsec" value="1"><label for="locationsec">Location</label>
                                 </div>
                             </div>
-                        </div> --}}
+                        </div>
                         <div class="d-none">
                             <input type="text" name="name" id="search_name" value="{{isset($parameters['name']) ? $parameters['name'] : ''}}">
                             <input type="text" name="sorting" id="sorter" value="{{isset($parameters['sorting']) ? $parameters['sorting'] : 'last_login'}}">
@@ -501,7 +349,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="joun-button mt-2">
+                        <div class="joun-button">
                             <button type="submit" class="custom-button">Search</button>
                         </div>
                     </div>
@@ -528,9 +376,6 @@
 
 @endsection
 @push('scripts')
-
-<script src="{{ asset('assets/js/jquery-ui.min.js') }}"></script>
-<script src="{{ asset('assets/js/price-range.js') }}"></script>
 
 <script>
     function showHeightSlider(elm) {

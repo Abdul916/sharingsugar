@@ -352,24 +352,16 @@ class UserController extends Controller
         $query = User::query();
         $query->where('id', '<>', Auth::user()->id);
         if ($request->has('interestedin')) {
-            if ($request->interestedin == 'Sugar Daddy') {
-                $query->where('iam', 'Sugar Daddy');
-            } else if ($request->interestedin == 'Sugar Mommy') {
-                $query->where('iam', 'Sugar Mommy');
-            } else if ($request->interestedin == 'Sugar Daddy Mommy') {
-                $query->where('iam', 'Sugar Daddy Mommy');
-            } else if ($request->interestedin == 'Sugar Baby Man') {
-                $query->where('iam', 'Sugar Baby (Hombre / Man)');
-            } else if ($request->interestedin == 'Sugar Baby Women') {
-                $query->where('iam', 'Sugar Baby (Mujer / Woman)');
-            } else if ($request->interestedin == 'Sugar Baby Trans') {
-                $query->where('iam', 'Sugar Baby (Trans)');
-            }
+            $query->where('iam', $request->interestedin);
+        }else{
+            $query->where('iam', Auth::user()->interestedin);
         }
         if($request->sorting == 'last_login'){
             $query->orderBy('last_login', 'DESC');
         } else if ($request->sorting == 'distance'){
             $query->orderByRaw('latitude IS NULL, longitude IS NULL, ( 3959 * acos( cos( radians('.$request->latitude.') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians('.$request->longitude.') ) + sin( radians('.$request->latitude.') ) * sin( radians( latitude ) ) ) )');
+        }else{
+            $query->orderBy('last_login', 'DESC');
         }
 
         if($request->only_photos == 'on'){

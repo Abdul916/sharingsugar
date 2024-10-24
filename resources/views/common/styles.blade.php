@@ -4,6 +4,9 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/fontawesome.css') }}">
+
+<link rel="stylesheet" href="{{ asset('assets/css/all.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/jquery-ui.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/animate.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/flaticon.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/magnific-popup.css') }}">

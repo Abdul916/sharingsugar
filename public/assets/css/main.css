@@ -530,7 +530,8 @@ select {
 input {
   background: transparent;
   border: 1px solid #2d4186;
-  padding-left: 10px;
+/*  padding-left: 10px;*/
+  padding-left: 0px;
 }
 
 input:focus {
@@ -3663,7 +3664,8 @@ input[type=submit] {
 }
 
 .community-section {
-  padding: 118px 0px 120px;
+/*  padding: 118px 0px 120px;*/
+  padding: 20px 0px 20px;
 }
 
 .community-section .section-header {
@@ -4586,8 +4588,9 @@ input[type=submit] {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 22px 20px 15px;
+/*  border-bottom: 1px solid rgba(0, 0, 0, 0.1);*/
+/*  padding: 22px 20px 15px;*/
+  padding: 0px 0px 0px;
 }
 
 .modal.filter-p .join-now-box .single-option:first-child {
@@ -4681,7 +4684,8 @@ input[type=submit] {
   font-size: 18px;
   line-height: 28px;
   font-weight: 400;
-  text-transform: uppercase;
+/*  text-transform: uppercase;*/
+  text-transform: unset;
 }
 
 .modal.filter-p .join-now-box .single-option .option label::before {
