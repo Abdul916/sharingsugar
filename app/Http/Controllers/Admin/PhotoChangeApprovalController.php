@@ -17,9 +17,9 @@ class PhotoChangeApprovalController extends Controller
             $query->where(function ($query) use ($search_query) {
                 $query->whereHas('user', function ($query) use ($search_query) {
                     $query->where('email', 'like', '%' . $search_query . '%')
-                        ->orWhere('username', 'like', '%' . $search_query . '%')
-                        ->orWhere('last_name', 'like', '%' . $search_query . '%')
-                        ->orWhere('first_name', 'like', '%' . $search_query . '%');
+                    ->orWhere('username', 'like', '%' . $search_query . '%')
+                    ->orWhere('last_name', 'like', '%' . $search_query . '%')
+                    ->orWhere('first_name', 'like', '%' . $search_query . '%');
                 });
             });
         }
@@ -43,6 +43,7 @@ class PhotoChangeApprovalController extends Controller
     public function approve(Request $request)
     {
         $approval = PhotoChangeLog::find($request->id);
+        $user = $approval->user;
         if (!$approval) {
             return response()->json(['status' => 'error', 'message' => 'Approval not found']);
         }
@@ -67,20 +68,18 @@ class PhotoChangeApprovalController extends Controller
                 'type' => $approval->type,
                 'created_at' => date('Y-m-d H:i:s'),
             ]);
-
-            if ($query) {
-                $query_two = $approval->delete();
-                if ($query_two) {
-                    return response()->json(['status' => 'success', 'message' => 'Approval approved successfully']);
-                }
-            }
+            $query_two = $approval->delete();
         }
+        $email_subject = get_section_content('project', 'site_title') . '(Image approval)';
+        $email_text = 'Your acount image has been approved';
+        send_notification_email($user, $email_subject, $email_text);
         return response()->json(['status' => 'success', 'message' => 'Approval approved successfully']);
     }
 
     public function decline(Request $request)
     {
         $approval = PhotoChangeLog::find($request->id);
+        $user = $approval->user;
         if (!$approval) {
             return response()->json(['status' => 'error', 'message' => 'Approval not found']);
         }
@@ -94,6 +93,9 @@ class PhotoChangeApprovalController extends Controller
             unlink($image_path);
         }
         $approval->delete();
+        $email_subject = $email_subject = get_section_content('project', 'site_title') . '(Image rejection)';
+        $email_text = 'Your image has been rejected because it is violating over policy please resubmit your profile details and if you need any help please fill contact us form';
+        send_notification_email($user, $email_subject, $email_text);
         return response()->json(['status' => 'success', 'message' => 'Approval declined successfully']);
     }
 }

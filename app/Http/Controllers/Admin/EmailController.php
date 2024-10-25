@@ -51,7 +51,7 @@ class EmailController extends Controller
         $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
         $headers .= 'From: <'.get_section_content('project', 'noreply_email').'>' . "\r\n";
         $subject = $title;
-        $emailTemplate = view('admin.emails.template', compact(['title', 'body']))->render();
+        $emailTemplate = view('emails.template', compact(['title', 'body']))->render();
         foreach ($allUsers as $user) {
             $sendMail = mail($user->email, $subject, $emailTemplate, $headers);
             if(!$sendMail){

@@ -34,10 +34,8 @@ class ProfileApprovalController extends Controller
         if(!$data['approval']) {
             return redirect()->route('admin.profile_approvals')->with('error', 'Approval not found');
         }
-
         $data['user'] = $data['approval']->user;
         $data['approval_data'] = json_decode($data['approval']->updated_data, true);
-        // dd($data['approval_data']);
         return view('admin.profile_approvals.show', $data);
     }
 
@@ -74,6 +72,9 @@ class ProfileApprovalController extends Controller
             $user->save();
         }
         $approval->delete();
+        $email_subject = get_section_content('project', 'site_title') . '(Profile update approval)';
+        $email_text = 'Your acount detail has been approved';
+        send_notification_email($user, $email_subject, $email_text);
         return response()->json(['status' => 'success', 'message' => 'Approval approved successfully']);
     }
 
@@ -83,7 +84,11 @@ class ProfileApprovalController extends Controller
         if(!$approval) {
             return response()->json(['status' => 'error', 'message' => 'Approval not found']);
         }
+        $user = User::find($approval->user_id);
         $approval->delete();
+        $email_subject = get_section_content('project', 'site_title') . '(Profile update rejected)';
+        $email_text = 'Your profile detail has been rejected because it is violating over policy please resubmit your profile details and if you need any help please fill contact us form';
+        send_notification_email($user, $email_subject, $email_text);
         return response()->json(['status' => 'success', 'message' => 'Approval declined successfully']);
     }
 }

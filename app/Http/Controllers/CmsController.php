@@ -33,7 +33,7 @@ class CmsController extends Controller
             'updated_at' => date('Y-m-d H:i:s'),
         ]);
         if($inserted_id > 0) {
-            // $this->send_contact_email($data);
+            $this->send_contact_email($data);
             $finalResult = response()->json(array('msg' => 'success', 'response'=>'Thank you for submitting your request we will get in touch with you shortly.'));
             return $finalResult;
         } else {
@@ -41,18 +41,18 @@ class CmsController extends Controller
             return $finalResult;
         }
     }
-    // public function send_contact_email($data)
-    // {
-    //     $to = get_section_content('project', 'admin_email');
-    //     $subject = 'Contact Us - ' . get_section_content('project', 'site_title');
-    //     $email_body = view('emails/contact_email', compact("data"));
-    //     $body = $email_body;
-    //     $headers = "MIME-Version: 1.0" . "\r\n";
-    //     $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-    //     $headers .= 'From: <'.$data['email'].'>' . "\r\n";
-    //     @mail($to, $subject, $body, $headers);
-    //     return true;
-    // }
+    public function send_contact_email($data)
+    {
+        $to = get_section_content('project', 'admin_email');
+        $subject = 'Contact Us - ' . get_section_content('project', 'site_title');
+        $email_body = view('emails/contact_email', compact("data"));
+        $body = $email_body;
+        $headers = "MIME-Version: 1.0" . "\r\n";
+        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+        $headers .= 'From: <'.$data['email'].'>' . "\r\n";
+        @mail($to, $subject, $body, $headers);
+        return true;
+    }
     public function about_us()
     {
         return view('cms/about_us');
