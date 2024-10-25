@@ -38,8 +38,8 @@
                                 <tr>
                                     <th>Sr #</th>
                                     <th>Username</th>
-                                    <th>Membership start Date</th>
-                                    <th>Membership End Date</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
                                     <th>Membership Type</th>
                                     <th>Membership Price</th>
                                 </tr>
@@ -114,7 +114,7 @@
             confirmButtonText: "Yes, please!",
             cancelButtonText: "No, cancel please!",
             closeOnConfirm: false,
-            closeOnCancel: false
+            closeOnCancel: true
         },
         function(isConfirm) {
             if (isConfirm) {

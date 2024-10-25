@@ -202,14 +202,12 @@ class UserController extends Controller
         //     'profile_image' => $data['profile_image']
         // ]);
 
-        // Photo ChangeLog
         $last_change_approval = PhotoChangeLog::where('user_id', $data['id'])->where('type', 0)->orderBy('created_at', 'desc')->first();
         if($last_change_approval != null && $last_change_approval->status == 0){
-            // delete image from folder
             $file_path = public_path('/assets/app_images/'.$last_change_approval->photo);
-            if(file_exists($file_path)){
-                unlink($file_path);
-            }
+            // if(file_exists($file_path)){
+            //     unlink($file_path);
+            // }
             $last_change_approval->delete();
         }
         $photo_change_log = new PhotoChangeLog();
@@ -236,7 +234,6 @@ class UserController extends Controller
 
     public function upload_photos(Request $request)
     {
-        // dd($request->all());
         $data = $request->all();
         $validator = Validator::make($data, [
             'my_photos' => 'required',
@@ -283,6 +280,19 @@ class UserController extends Controller
     {
         $data = $request->all();
         $response_status = softly_deleted('user_photos', 'id', $data['id'], 'status', '3');
+        if ($response_status > 0) {
+            $finalResult = response()->json(['msg' => 'success', 'response' => 'Photo successfully deleted.']);
+            return $finalResult;
+        } else {
+            $finalResult = response()->json(['msg' => 'error', 'response' => 'Something went wrong!']);
+            return $finalResult;
+        }
+    }
+
+    public function delete_profile_photos(Request $request)
+    {
+        $data = $request->all();
+        $response_status = softly_deleted('users', 'id', Auth::user()->id, 'profile_image', 'user.png');
         if ($response_status > 0) {
             $finalResult = response()->json(['msg' => 'success', 'response' => 'Photo successfully deleted.']);
             return $finalResult;

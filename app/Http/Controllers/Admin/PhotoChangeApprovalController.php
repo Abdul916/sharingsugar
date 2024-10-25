@@ -34,9 +34,7 @@ class PhotoChangeApprovalController extends Controller
         if (!$data['approval']) {
             return redirect()->route('photo_approvals');
         }
-
         $data['user'] = $data['approval']->user;
-        // print_r($data['user']); exit;
         return view('admin.photo_approvals.show', $data);
     }
 
@@ -47,16 +45,14 @@ class PhotoChangeApprovalController extends Controller
         if (!$approval) {
             return response()->json(['status' => 'error', 'message' => 'Approval not found']);
         }
-        // delete old image
         if ($approval->type == 0) {
             $old_image = $approval->user->profile_image;
-            // delete old image
-            if ($old_image != 'default.png') {
-                $image_path = public_path('assets/app_images/' . $old_image);
-                if (file_exists($image_path)) {
-                    unlink($image_path);
-                }
-            }
+            // if ($old_image != 'default.png') {
+            //     $image_path = public_path('assets/app_images/' . $old_image);
+            //     if (file_exists($image_path)) {
+            //         unlink($image_path);
+            //     }
+            // }
             $user = $approval->user;
             $user->profile_image = $approval->photo;
             $user->save();
@@ -83,15 +79,14 @@ class PhotoChangeApprovalController extends Controller
         if (!$approval) {
             return response()->json(['status' => 'error', 'message' => 'Approval not found']);
         }
-        // delete approval photo
         if ($approval->type == 0) {
             $image_path = public_path('assets/app_images/' . $approval->photo);
         } else {
             $image_path = public_path('assets/app_images/user_photos/' . $approval->photo);
         }
-        if (file_exists($image_path)) {
-            unlink($image_path);
-        }
+        // if (file_exists($image_path)) {
+        //     unlink($image_path);
+        // }
         $approval->delete();
         $email_subject = $email_subject = get_section_content('project', 'site_title') . '(Image rejection)';
         $email_text = 'Your image has been rejected because it is violating over policy please resubmit your profile details and if you need any help please fill contact us form';

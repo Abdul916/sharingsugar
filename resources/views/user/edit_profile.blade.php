@@ -26,23 +26,60 @@
                         {{-- <a href="{{ url('profile') }}" class="accept">Back to Profile</a> --}}
                     </div>
                 </div>
-                {{-- <div class="row">
-                    <div class="col-lg-12">
-                        <div class="profile-about-box">
-                            <div class="top-bg"></div>
-                            <div class="p-inner-content">
-                                <div class="profile-img">
-                                    @if(!empty($user->profile_image))
-                                    <img src="{{ asset('assets/app_images') }}/{{$user->profile_image}}" alt="" style="width: 120px;">
-                                    @else
-                                    <img src="{{ asset('assets/images/profile/profile-user.png') }}" alt="">
-                                    @endif
-                                    <div class="active-online"></div>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <form id="upload_profile_image" method="post" enctype="multipart/form-data">
+                            @csrf
+                            <input type="hidden" name="id" value="{{ $user->id }}">
+                            <div class="up-photo-card mb-30 upload_div" onclick="document.getElementById('upload_image').click();">
+                                <input type="file" style="display:none;" id="upload_image" name="profile_pic" accept="image/*">
+                                <div class="icon">
+                                    <i class="fas fa-user"></i>
                                 </div>
+                                <div class="content">
+                                    <h4>Change Avatar</h4>
+                                    <span>120x120p size minimum</span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-lg-6">
+                        <form id="upload_cover_image" method="post" enctype="multipart/form-data">
+                            @csrf
+                            <div class="up-photo-card upload_div">
+                                <div class="icon">
+                                    <i class="fas fa-image"></i>
+                                </div>
+                                <div class="content">
+                                    <h4>Change Cover</h4>
+                                    <span>1200x300p size minimum</span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="up-photo-card mb-30">
+                            <div class="icon"><i class="fas fa-male"></i></div>
+                            <div class="content">
+                                <h4>I Am a</h4>
+                                <span style="color: #d72993">{{ $user->iam}}</span>
                             </div>
                         </div>
                     </div>
-                </div> --}}
+                    <div class="col-lg-6">
+                        <div class="up-photo-card">
+                            <div class="icon"><i class="fas fa-female"></i></div>
+                            <div class="content">
+                                <h4>Interested in</h4>
+                                <span style="color: #d72993">{{ $user->interestedin}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="input-info-box mt-30">
                     <div class="header">About your Profile</div>
                     <form id="update_form" method="post" enctype="multipart/form-data">

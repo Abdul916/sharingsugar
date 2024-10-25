@@ -32,7 +32,7 @@
 			confirmButtonText: "Yes, please!",
 			cancelButtonText: "No, cancel please!",
 			closeOnConfirm: false,
-			closeOnCancel: false
+			closeOnCancel: true
 		},
 		function(isConfirm) {
 			if (isConfirm) {
@@ -101,7 +101,7 @@
 			confirmButtonText: "Yes, please!",
 			cancelButtonText: "No, cancel please!",
 			closeOnConfirm: false,
-			closeOnCancel: false
+			closeOnCancel: true
 		},
 		function(isConfirm) {
 			if (isConfirm) {
@@ -152,7 +152,7 @@
 			confirmButtonText: "Yes, please!",
 			cancelButtonText: "No, cancel please!",
 			closeOnConfirm: false,
-			closeOnCancel: false
+			closeOnCancel: true
 		},
 		function(isConfirm) {
 			if (isConfirm) {
@@ -231,7 +231,7 @@
 			confirmButtonText: "Yes, please!",
 			cancelButtonText: "No, cancel please!",
 			closeOnConfirm: false,
-			closeOnCancel: false
+			closeOnCancel: true
 		},
 		function(isConfirm) {
 			if (isConfirm) {
@@ -300,6 +300,19 @@
 					});
 					toastr.error(message, "Error");
 				}
+			}
+		});
+	});
+
+
+	$(document).on("click" , ".btn_removeimage" , function(){
+		$.ajax({
+			url:'{{ url('delete_profile_photos') }}',
+			type:'post',
+			data:{"_token": "{{ csrf_token() }}"},
+			dataType:'json',
+			success:function(status){
+				location.reload(true);
 			}
 		});
 	});

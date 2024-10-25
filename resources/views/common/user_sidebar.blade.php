@@ -1,3 +1,26 @@
+<style>
+    .profile-img {
+        position: relative;
+        display: inline-block;
+    }
+
+    .btn_removeimage {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background-image: linear-gradient(166deg, rgb(242, 40, 118) 0%, rgb(148, 45, 217) 100%);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
 <div class="col-xl-4 col-md-5">
     <div class="left-profile-area">
         <div class="profile-about-box">
@@ -5,9 +28,12 @@
             <div class="p-inner-content">
                 <div class="profile-img">
                     @if(!empty(Auth::user()->profile_image))
-                    <img src="{{ asset('assets/app_images') }}/{{Auth::user()->profile_image}}" alt="" style="width: 100px; border-radius: 50%;">
+                    <img src="{{ asset('assets/app_images') }}/{{Auth::user()->profile_image}}" alt="" style="width: 100px; border-radius: 50%; cursor: pointer;" onclick="document.getElementById('upload_image').click();">
+                    @if(Auth::user()->profile_image != 'user.png')
+                    <button class="btn_removeimage"> X </button>
+                    @endif
                     @else
-                    <img src="{{ asset('assets/images/profile/profile-user.png') }}" alt="">
+                    <img src="{{ asset('assets/app_images/user.png') }}" alt="" onclick="document.getElementById('upload_image').click();" style="cursor: pointer;">
                     @endif
                     <div class="active-online"></div>
                 </div>

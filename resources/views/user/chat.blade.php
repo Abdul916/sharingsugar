@@ -41,7 +41,7 @@
                                             @if(!empty($data->profile_image))
                                             <img src="{{ asset('assets/app_images') }}/{{$data->profile_image}}" alt="" style="width: 40px; border-radius: 50%;">
                                             @else
-                                            <img src="{{ asset('assets/images/profile/profile-user.png') }}" alt="" style="width: 40px; border-radius: 50%;">
+                                            <img src="{{ asset('assets/app_images/user.png') }}" alt="" style="width: 40px; border-radius: 50%;">
                                             @endif
                                         </a>
                                         <a href="javascript:void(0)" data-id="{{$chat->id}}" data-rec-id="{{$last_receiver_id}}" class="btn_change_chat user_name">

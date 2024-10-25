@@ -163,7 +163,7 @@
 // 		confirmButtonText: "Yes, please!",
 // 		cancelButtonText: "No, cancel please!",
 // 		closeOnConfirm: false,
-// 		closeOnCancel: false
+// 		closeOnCancel: true
 // 	},
 // 	function(isConfirm) {
 // 		if (isConfirm) {
@@ -202,7 +202,7 @@
 			confirmButtonText: "Yes, please!",
 			cancelButtonText: "No, cancel please!",
 			closeOnConfirm: false,
-			closeOnCancel: false
+			closeOnCancel: true
 		},
 		function(isConfirm) {
 			if (isConfirm) {
@@ -241,7 +241,7 @@
 			confirmButtonText: "Yes, please!",
 			cancelButtonText: "No, cancel please!",
 			closeOnConfirm: false,
-			closeOnCancel: false
+			closeOnCancel: true
 		},
 		function(isConfirm) {
 			if (isConfirm) {

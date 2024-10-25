@@ -117,7 +117,8 @@ if (! function_exists('softly_deleted')) {
 		->update([
 			$set_column => $value
 		]);
-		return $query;
+		// return $query;
+		return true;
 	}
 }
 

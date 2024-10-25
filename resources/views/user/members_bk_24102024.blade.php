@@ -82,7 +82,7 @@
                             @if(!empty($user->profile_image))
                             <img src="{{ asset('assets/app_images') }}/{{$user->profile_image}}" alt="" style="width: 360px; height: 225px;">
                             @else
-                            <img src="{{ asset('assets/images/cummunity/img1.jpg') }}" alt="" style="width: 360px; height: 225px;">
+                            <img src="{{ asset('assets/app_images/user.png') }}" alt="" style="width: 360px; height: 225px;">
                             @endif
                         </div>
                     </a>

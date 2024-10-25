@@ -54,6 +54,7 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('my_photos', [UserController::class, 'my_photos']);
 	Route::post('upload_photos', [UserController::class, 'upload_photos']);
 	Route::post('delete_photos', [UserController::class, 'delete_photos']);
+	Route::post('delete_profile_photos', [UserController::class, 'delete_profile_photos']);
 	Route::get('public_profile/{unique_id}', [UserController::class, 'public_profile']);
 	Route::get('members', [UserController::class, 'members']);
 	Route::post('add_remover_user_configuration', [UserController::class, 'add_remover_user_configuration']);

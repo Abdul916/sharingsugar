@@ -83,9 +83,9 @@
                                         @elseif(($user->status == 2) || ($user->status == 3))
                                         <button class="btn btn-primary btn-sm btn_active_inactive" title="Activate" data-id="{{ $user->id }}" data-action="1" type="button" data-placement="top">Activate</button>
                                         @endif
-                                        <button class="btn btn-sm btn-danger btn_delete" title="Permanently Delete" data-id="{{ $user->id }}" data-placement="top" type="button">Delete</button>
-
+                                        <button class="btn btn-sm btn-primary btn_membership" title="Free membership for one month" data-id="{{ $user->id }}" data-placement="top" type="button">Membership</button>
                                         <button class="btn btn-sm btn-info btn_generate_new_passwprd" title="Generate New Passowrd" data-id="{{ $user->id }}" data-placement="top" type="button">Generate New Passowrd</button>
+                                        <button class="btn btn-sm btn-danger btn_delete" title="Permanently Delete" data-id="{{ $user->id }}" data-placement="top" type="button">Delete</button>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -138,7 +138,7 @@
             confirmButtonText: "Yes, please!",
             cancelButtonText: "No, cancel please!",
             closeOnConfirm: false,
-            closeOnCancel: false
+            closeOnCancel: true
         },
         function(isConfirm) {
             if (isConfirm) {
@@ -177,7 +177,7 @@
             confirmButtonText: "Yes, please!",
             cancelButtonText: "No, cancel please!",
             closeOnConfirm: false,
-            closeOnCancel: false
+            closeOnCancel: true
         },
         function(isConfirm) {
             if (isConfirm) {
@@ -216,13 +216,51 @@
             confirmButtonText: "Yes, please!",
             cancelButtonText: "No, cancel please!",
             closeOnConfirm: false,
-            closeOnCancel: false
+            closeOnCancel: true
         },
         function(isConfirm) {
             if (isConfirm) {
                 $(".confirm").prop("disabled", true);
                 $.ajax({
                     url:"{{ url('admin/users/generate_password') }}",
+                    type:'post',
+                    data:{"_token": "{{ csrf_token() }}", 'id': id},
+                    dataType:'json',
+                    success:function(status){
+                        $(".confirm").prop("disabled", false);
+                        if(status.msg == 'success'){
+                            swal({title: "Success!", text: status.response, type: "success"},
+                                function(data){
+                                    location.reload(true);
+                                });
+                        } else if(status.msg=='error'){
+                            swal("Error", status.response, "error");
+                        }
+                    }
+                });
+            } else {
+                swal("Cancelled", "", "error");
+            }
+        });
+    });
+    $(document).on("click" , ".btn_membership" , function(){
+        var id = $(this).attr('data-id');
+        swal({
+            title: "Are you sure?",
+            text: "You want to give free membership to the user!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, please!",
+            cancelButtonText: "No, cancel please!",
+            closeOnConfirm: false,
+            closeOnCancel: true
+        },
+        function(isConfirm) {
+            if (isConfirm) {
+                $(".confirm").prop("disabled", true);
+                $.ajax({
+                    url:"{{ url('admin/users/free_membership') }}",
                     type:'post',
                     data:{"_token": "{{ csrf_token() }}", 'id': id},
                     dataType:'json',

@@ -19,7 +19,7 @@
             @if(!empty($data->profile_image))
             <img src="{{ asset('assets/app_images') }}/{{$data->profile_image}}" alt="" style="width: 40px; border-radius: 50%;">
             @else
-            <img src="{{ asset('assets/images/profile/profile-user.png') }}" alt="" style="width: 40px; border-radius: 50%;">
+            <img src="{{ asset('assets/app_images/user.png') }}" alt="" style="width: 40px; border-radius: 50%;">
             @endif
         </div>
         <div class="triangle"></div>
@@ -32,7 +32,7 @@
             @if(!empty($data->profile_image))
             <img src="{{ asset('assets/app_images') }}/{{$data->profile_image}}" alt="" style="width: 40px; border-radius: 50%;">
             @else
-            <img src="{{ asset('assets/images/profile/profile-user.png') }}" alt="" style="width: 40px; border-radius: 50%;">
+            <img src="{{ asset('assets/app_images/user.png') }}" alt="" style="width: 40px; border-radius: 50%;">
             @endif
             {{-- <h2>{{ $data->username }}</h2> --}}
             {{-- <span class="status blue"></span> --}}

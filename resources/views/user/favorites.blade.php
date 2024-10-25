@@ -59,7 +59,7 @@
                                                         </a>
                                                         @else
                                                         <a href="{{ url('public_profile') }}/{{ get_single_value('users', 'unique_id', $my_favorite->config_user_id) }}" class="name" target="_blank">
-                                                            <img src="{{ asset('assets/images/cummunity/img1.jpg') }}" alt="" style="width: 80px; height: 95px;">
+                                                            <img src="{{ asset('assets/app_images/user.png') }}" alt="" style="width: 80px; height: 95px;">
                                                         </a>
                                                         @endif
 
@@ -98,7 +98,7 @@
                                                         </a>
                                                         @else
                                                         <a href="{{ url('public_profile') }}/{{ get_single_value('users', 'unique_id', $me_favorite->user_id) }}" class="name" target="_blank">
-                                                            <img src="{{ asset('assets/images/cummunity/img1.jpg') }}" alt="" style="width: 80px; height: 95px;">
+                                                            <img src="{{ asset('assets/app_images/user.png') }}" alt="" style="width: 80px; height: 95px;">
                                                         </a>
                                                         @endif
                                                         <div class="content">

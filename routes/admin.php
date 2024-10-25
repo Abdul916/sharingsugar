@@ -35,6 +35,7 @@ Route::group(['prefix'  =>  'admin'], function () {
 			Route::get('view_report/{id}', [UsersController::class, 'view_report']);
 			Route::post('delete_reports', [UsersController::class, 'destroy_reports']);
 			Route::post('generate_password', [UsersController::class, 'generate_new_user_password']);
+			Route::post('free_membership', [UsersController::class, 'free_membership']);
 			Route::get('export/{format}', [UsersController::class, 'export_users']);
 		});
 

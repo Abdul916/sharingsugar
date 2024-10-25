@@ -170,4 +170,39 @@ class UsersController extends Controller
         return redirect()->back()->with('error', 'Invalid format requested.');
     }
 
+    public function free_membership(Request $request)
+    {
+        $data = $request->all();
+        $days = 30;
+        $membership_type = '1';
+        DB::table('membership_logs')->insert([
+            'user_id' => $data['id'],
+            'plan_id' => 1,
+            'membership_type' => 1,
+            'membership_price' => 0,
+            'membership_start' => date('Y-m-d'),
+            'membership_end' => date('Y-m-d', strtotime('+' . $days . 'days')),
+            'status' => 2,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        $query = DB::table('users')
+        ->where('id', $data['id'])
+        ->update([
+            'plan_id' => 1,
+            'membership_type' => 1,
+            'membership_price' => 0,
+            'membership_start' => date('Y-m-d'),
+            'membership_end' => date('Y-m-d', strtotime('+' . $days . 'days')),
+            'membership_status' => 7,
+        ]);
+
+        if($query > 0) {
+            return response()->json(['msg' => 'success', 'response'=>'One month free membership successfully processed.']);
+        } else {
+            return response()->json(['msg' => 'error', 'response'=>'Something went wrong!']);
+        }
+    }
+
 }

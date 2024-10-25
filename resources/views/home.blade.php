@@ -400,7 +400,7 @@
                             @if(!empty($user->profile_image))
                             <img src="{{ asset('assets/app_images') }}/{{$user->profile_image}}" alt="" style="width: 100px;">
                             @else
-                            <img src="{{ asset('assets/images/profile/profile-user.png') }}" alt="">
+                            <img src="{{ asset('assets/app_images/user.png') }}" alt="">
                             @endif
                         </div>
                         <div class="inner-content">

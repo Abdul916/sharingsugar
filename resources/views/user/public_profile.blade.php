@@ -30,7 +30,7 @@
                                 @if(!empty($user->profile_image))
                                 <img src="{{ asset('assets/app_images') }}/{{$user->profile_image}}" alt="" style="width: 100px; border-radius: 50%">
                                 @else
-                                <img src="{{ asset('assets/images/profile/profile-user.png') }}" alt="" style="border-radius: 5%">
+                                <img src="{{ asset('assets/app_images/user.png') }}" alt="" style="border-radius: 5%">
                                 @endif
                                 <div class="active-online"></div>
                             </div>
