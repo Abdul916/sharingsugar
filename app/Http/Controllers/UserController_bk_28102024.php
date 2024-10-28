@@ -202,12 +202,14 @@ class UserController extends Controller
         //     'profile_image' => $data['profile_image']
         // ]);
 
+        // Photo ChangeLog
         $last_change_approval = PhotoChangeLog::where('user_id', $data['id'])->where('type', 0)->orderBy('created_at', 'desc')->first();
         if($last_change_approval != null && $last_change_approval->status == 0){
+            // delete image from folder
             $file_path = public_path('/assets/app_images/'.$last_change_approval->photo);
-            // if(file_exists($file_path)){
-            //     unlink($file_path);
-            // }
+            if(file_exists($file_path)){
+                unlink($file_path);
+            }
             $last_change_approval->delete();
         }
         $photo_change_log = new PhotoChangeLog();
@@ -234,6 +236,7 @@ class UserController extends Controller
 
     public function upload_photos(Request $request)
     {
+        // dd($request->all());
         $data = $request->all();
         $validator = Validator::make($data, [
             'my_photos' => 'required',
@@ -280,19 +283,6 @@ class UserController extends Controller
     {
         $data = $request->all();
         $response_status = softly_deleted('user_photos', 'id', $data['id'], 'status', '3');
-        if ($response_status > 0) {
-            $finalResult = response()->json(['msg' => 'success', 'response' => 'Photo successfully deleted.']);
-            return $finalResult;
-        } else {
-            $finalResult = response()->json(['msg' => 'error', 'response' => 'Something went wrong!']);
-            return $finalResult;
-        }
-    }
-
-    public function delete_profile_photos(Request $request)
-    {
-        $data = $request->all();
-        $response_status = softly_deleted('users', 'id', Auth::user()->id, 'profile_image', 'user.png');
         if ($response_status > 0) {
             $finalResult = response()->json(['msg' => 'success', 'response' => 'Photo successfully deleted.']);
             return $finalResult;
@@ -362,26 +352,32 @@ class UserController extends Controller
         $query = User::query();
         $query->where('id', '<>', Auth::user()->id);
         if ($request->has('interestedin')) {
-            $query->where('iam', $request->interestedin);
-        }else{
-            $query->where('iam', Auth::user()->interestedin);
+            if ($request->interestedin == 'Sugar Daddy') {
+                $query->where('iam', 'Sugar Daddy');
+            } else if ($request->interestedin == 'Sugar Mommy') {
+                $query->where('iam', 'Sugar Mommy');
+            } else if ($request->interestedin == 'Sugar Daddy Mommy') {
+                $query->where('iam', 'Sugar Daddy Mommy');
+            } else if ($request->interestedin == 'Sugar Baby Man') {
+                $query->where('iam', 'Sugar Baby (Hombre / Man)');
+            } else if ($request->interestedin == 'Sugar Baby Women') {
+                $query->where('iam', 'Sugar Baby (Mujer / Woman)');
+            } else if ($request->interestedin == 'Sugar Baby Trans') {
+                $query->where('iam', 'Sugar Baby (Trans)');
+            }
         }
         if($request->sorting == 'last_login'){
             $query->orderBy('last_login', 'DESC');
         } else if ($request->sorting == 'distance'){
             $query->orderByRaw('latitude IS NULL, longitude IS NULL, ( 3959 * acos( cos( radians('.$request->latitude.') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians('.$request->longitude.') ) + sin( radians('.$request->latitude.') ) * sin( radians( latitude ) ) ) )');
-        }else{
-            $query->orderBy('last_login', 'DESC');
         }
 
         if($request->only_photos == 'on'){
-            $query->where('profile_image', '!=', 'user.png')
-            ->Where('profile_image', '!=', null);
+            $query->where('profile_image', '!=', NULL);
         }
         if($request->name != ''){
             $query->where('first_name', 'like', '%' . $request->name . '%')
-            ->orWhere('last_name', 'like', '%' . $request->name . '%')
-            ->orWhere('username', 'like', '%' . $request->name . '%');
+            ->orWhere('last_name', 'like', '%' . $request->name . '%');
         }
         if ($request->has('Age')) {
             $query->where('age', '>=', $request->minAge);
@@ -456,6 +452,7 @@ class UserController extends Controller
                 $query->whereBetween('longitude', [$lngMin, $lngMax]);
             }
         }
+        // those blocked should not be in query
         $blocked = DB::table('user_configs')
         ->where('user_id', Auth::user()->id)
         ->where('type', 3)
@@ -465,8 +462,8 @@ class UserController extends Controller
             $blocked_ids[] = $block->config_user_id;
         }
         $query->whereNotIn('id', $blocked_ids);
-        // $users = $query->paginate(3);
-        $users = $query->paginate(51);
+        // $data['users'] = $query->paginate(3);
+        $users = $query->paginate(3);
         $users->appends($request->except('page'));
         $data['users'] = $users;
         $data['parameters'] = $request->all();
@@ -660,24 +657,7 @@ class UserController extends Controller
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s')
         ]);
-        if ($status > 0) {
-            $this->visit_email_to_user($data);
-        }
     }
-
-    public function visit_email_to_user($data)
-    {
-        $data['vuser'] = User::find($data['user_id']);
-        $to = $data['vuser']['email'];
-        $subject = get_section_content('project', 'site_title') . '(Notification)';
-        $email_body = view('emails/visit_profile_email', compact("data"));
-        $body = $email_body;
-        $headers = "MIME-Version: 1.0" . "\r\n";
-        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-        $headers .= 'From: <' . get_section_content('project', 'noreply_email') . '>' . "\r\n";
-        @mail($to, $subject, $body, $headers);
-    }
-
     public function delete_account(Request $request)
     {
         $data = $request->all();

@@ -288,7 +288,7 @@
                             <h4 class="title">
                                 <i class="fas fa-camera custom_color"></i> Recent Uploaded Photos
                             </h4>
-                            <ul class="member-list">
+                            <ul class="member-list"  id="gallery">
                                 @foreach($public_photos as $public)
 
                                 @php
@@ -331,7 +331,22 @@
                             <h4 class="title">
                                 <i class="fas fa-camera custom_color"></i> Recent Uploaded Private Photos
                             </h4>
-                            <ul class="member-list @if(@$request_private_photo->status != 2) private_img @endif">
+
+                            <?php
+                            if(empty($request_private_photo)){
+                                $private_img_cls = 'private_img';
+                            }else{
+                                if($request_private_photo->status == 2){
+                                    $private_img_cls = '';
+                                }else{
+                                    $private_img_cls = 'private_img';
+                                }
+                            }
+                            ?>
+
+                            {{-- <ul class="member-list @if(@$request_private_photo->status != 2) private_img @endif" @if(@$request_private_photo->status != 2) id="gallery1" @endif> --}}
+                            <ul class="member-list {{ $private_img_cls }}" @if($private_img_cls == '') id="gallery1" @endif>
+
                                 @foreach($private_photos as $private)
                                 @php
                                 $private_liked = check_record_existing('like_images', 'user_id', $logged_id, 'photo_id', $private->id, '', '', '', '');
@@ -379,6 +394,69 @@
 <input type="hidden" name="user_id" id="user_id" value="{{$user->id}}">
 @endsection
 @push('scripts')
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.10.5/viewer.min.css" />
+<style>
+    .viewer-toolbar > ul > .viewer-large::before {
+        margin: 1px 5px 5px 5px;
+    }
+    .viewer-toolbar > ul > li::before {
+        margin: -2px 2px 2px 2px;
+    }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.10.5/viewer.min.js"></script>
+<script>
+    $(document).ready(function() {
+        const gallery = new Viewer(document.getElementById('gallery'), {
+            toolbar: {
+                zoomIn: 1,
+                zoomOut: 1,
+                oneToOne: 1,
+                reset: 1,
+                prev: 1,
+                play: {
+                    show: 1,
+                    size: 'large',
+                },
+                next: 1,
+                rotateLeft: 1,
+                rotateRight: 1,
+                flipHorizontal: 1,
+                flipVertical: 1,
+            },
+            navbar: false,
+            title: false,
+            toolbar: true,
+            rotatable: true,
+            scalable: true,
+            fullscreen: true
+        });
+        const gallery1 = new Viewer(document.getElementById('gallery1'), {
+            toolbar: {
+                zoomIn: 1,
+                zoomOut: 1,
+                oneToOne: 1,
+                reset: 1,
+                prev: 1,
+                play: {
+                    show: 1,
+                    size: 'large',
+                },
+                next: 1,
+                rotateLeft: 1,
+                rotateRight: 1,
+                flipHorizontal: 1,
+                flipVertical: 1,
+            },
+            navbar: false,
+            title: false,
+            toolbar: true,
+            rotatable: true,
+            scalable: true,
+            fullscreen: true
+        });
+    });
+</script>
 
 @if($user->id != $logged_id)
 <script>
