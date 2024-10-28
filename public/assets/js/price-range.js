@@ -5,43 +5,34 @@ function collision($div1, $div2) {
     var x2 = $div2.offset().left;
     var w2 = 40;
     var r2 = x2 + w2;
-
     if (r1 < x2 || x1 > r2)
         return false;
     return true;
 }
-// Fetch Url value 
 var getQueryString = function (parameter) {
     var href = window.location.href;
     var reg = new RegExp('[?&]' + parameter + '=([^&#]*)', 'i');
     var string = reg.exec(href);
     return string ? string[1] : null;
 };
-// End url 
-// // slider call
 $('#slider').slider({
     range: true,
-    min: 0,
-    max: 1000,
+    min: 18,
+    max: 100,
     step: 1,
-    values: [getQueryString('minval') ? getQueryString('minval') : 200, getQueryString('maxval') ? getQueryString('maxval') : 700],
-
+    values: [getQueryString('minval') ? getQueryString('minval') : 30, getQueryString('maxval') ? getQueryString('maxval') : 50],
+    disabled: true,
     slide: function (event, ui) {
-
-        $('.ui-slider-handle:eq(0) .price-range-min').html('$' + ui.values[ 0 ]);
-        $('.ui-slider-handle:eq(1) .price-range-max').html('$' + ui.values[ 1 ]);
-        $('.price-range-both').html('<i>$' + ui.values[ 0 ] + ' - </i>$' + ui.values[ 1 ]);
-
-        // get values of min and max
+        $('.ui-slider-handle:eq(0) .price-range-min').html(ui.values[ 0 ]);
+        $('.ui-slider-handle:eq(1) .price-range-max').html(ui.values[ 1 ]);
+        $('.price-range-both').html('<i>' + ui.values[ 0 ] + ' - </i>' + ui.values[ 1 ]);
         $("#minval").val(ui.values[0]);
         $("#maxval").val(ui.values[1]);
-        
         if (ui.values[0] == ui.values[1]) {
             $('.price-range-both i').css('display', 'none');
         } else {
             $('.price-range-both i').css('display', 'inline');
         }
-
         if (collision($('.price-range-min'), $('.price-range-max')) == true) {
             $('.price-range-min, .price-range-max').css('opacity', '0');
             $('.price-range-both').css('display', 'block');
@@ -49,12 +40,152 @@ $('#slider').slider({
             $('.price-range-min, .price-range-max').css('opacity', '1');
             $('.price-range-both').css('display', 'none');
         }
-
     }
 });
+$('.ui-slider-range').append('<span class="price-range-both value"><i>' + $('#slider').slider('values', 0) + ' - </i>' + $('#slider').slider('values', 1) + '</span>');
+$('.ui-slider-handle:eq(0)').append('<span class="price-range-min value">' + $('#slider').slider('values', 0) + '</span>');
+$('.ui-slider-handle:eq(1)').append('<span class="price-range-max value">' + $('#slider').slider('values', 1) + '</span>');
 
-$('.ui-slider-range').append('<span class="price-range-both value"><i>$' + $('#slider').slider('values', 0) + ' - </i>' + $('#slider').slider('values', 1) + '</span>');
 
-$('.ui-slider-handle:eq(0)').append('<span class="price-range-min value">$' + $('#slider').slider('values', 0) + '</span>');
+// Age Range Slider
+$('#age-slider').slider({
+    range: true,
+    min: 18,
+    max: 100,
+    step: 1,
+    // values: [30, 50],
+    values: [ parseInt($('#ageSlider1').val(), 10), parseInt($('#ageSlider2').val(), 10) ],
+    disabled: true,
+    slide: function (event, ui) {
+        $('#age-slider .ui-slider-handle:eq(0) .range-min').html(ui.values[0]);
+        $('#age-slider .ui-slider-handle:eq(1) .range-max').html(ui.values[1]);
+        $('#age-slider .range-both').html('<i>' + ui.values[0] + ' - </i>' + ui.values[1]);
 
-$('.ui-slider-handle:eq(1)').append('<span class="price-range-max value">$' + $('#slider').slider('values', 1) + '</span>');
+        $('#ageSlider1').val(ui.values[0]);
+        $('#ageSlider2').val(ui.values[1]);
+
+        if (ui.values[0] === ui.values[1]) {
+            $('#age-slider .range-both i').css('display', 'none');
+        } else {
+            $('#age-slider .range-both i').css('display', 'inline');
+        }
+        if (collision($('#age-slider .range-min'), $('#age-slider .range-max'))) {
+            $('#age-slider .range-min, #age-slider .range-max').css('opacity', '0');
+            $('#age-slider .range-both').css('display', 'block');
+        } else {
+            $('#age-slider .range-min, #age-slider .range-max').css('opacity', '1');
+            $('#age-slider .range-both').css('display', 'none');
+        }
+    }
+});
+$('#age-slider .ui-slider-range').append('<span class="range-both value"><i>' + $('#age-slider').slider('values', 0) + ' - </i>' + $('#age-slider').slider('values', 1) + '</span>');
+$('#age-slider .ui-slider-handle:eq(0)').append('<span class="range-min value">' + $('#age-slider').slider('values', 0) + '</span>');
+$('#age-slider .ui-slider-handle:eq(1)').append('<span class="range-max value">' + $('#age-slider').slider('values', 1) + '</span>');
+
+
+
+// Height Range Slider
+$('#height-slider').slider({
+    range: true,
+    min: 10,
+    max: 310,
+    step: 1,
+    // values: [25, 180],
+    values: [ parseInt($('#heightSlider1').val(), 10), parseInt($('#heightSlider2').val(), 10) ],
+    disabled: true,
+    slide: function (event, ui) {
+        $('#height-slider .ui-slider-handle:eq(0) .range-min').html(ui.values[0]);
+        $('#height-slider .ui-slider-handle:eq(1) .range-max').html(ui.values[1]);
+        $('#height-slider .range-both').html('<i>' + ui.values[0] + ' - </i>' + ui.values[1]);
+
+        $('#heightSlider1').val(ui.values[0]);
+        $('#heightSlider2').val(ui.values[1]);
+
+        if (ui.values[0] === ui.values[1]) {
+            $('#height-slider .range-both i').css('display', 'none');
+        } else {
+            $('#height-slider .range-both i').css('display', 'inline');
+        }
+        if (collision($('#height-slider .range-min'), $('#height-slider .range-max'))) {
+            $('#height-slider .range-min, #height-slider .range-max').css('opacity', '0');
+            $('#height-slider .range-both').css('display', 'block');
+        } else {
+            $('#height-slider .range-min, #height-slider .range-max').css('opacity', '1');
+            $('#height-slider .range-both').css('display', 'none');
+        }
+    }
+});
+$('#height-slider .ui-slider-range').append('<span class="range-both value"><i>' + $('#height-slider').slider('values', 0) + ' - </i>' + $('#height-slider').slider('values', 1) + '</span>');
+$('#height-slider .ui-slider-handle:eq(0)').append('<span class="range-min value">' + $('#height-slider').slider('values', 0) + '</span>');
+$('#height-slider .ui-slider-handle:eq(1)').append('<span class="range-max value">' + $('#height-slider').slider('values', 1) + '</span>');
+
+// Weight Range Slider
+$('#weight-slider').slider({
+    range: true,
+    min: 10,
+    max: 200,
+    step: 1,
+    // values: [30, 150],
+    values: [ parseInt($('#weightSlider1').val(), 10), parseInt($('#weightSlider2').val(), 10) ],
+    disabled: true,
+    slide: function (event, ui) {
+        $('#weight-slider .ui-slider-handle:eq(0) .range-min').html(ui.values[0]);
+        $('#weight-slider .ui-slider-handle:eq(1) .range-max').html(ui.values[1]);
+        $('#weight-slider .range-both').html('<i>' + ui.values[0] + ' - </i>' + ui.values[1]);
+
+        $('#weightSlider1').val(ui.values[0]);
+        $('#weightSlider2').val(ui.values[1]);
+
+        if (ui.values[0] === ui.values[1]) {
+            $('#weight-slider .range-both i').css('display', 'none');
+        } else {
+            $('#weight-slider .range-both i').css('display', 'inline');
+        }
+        if (collision($('#weight-slider .range-min'), $('#weight-slider .range-max'))) {
+            $('#weight-slider .range-min, #weight-slider .range-max').css('opacity', '0');
+            $('#weight-slider .range-both').css('display', 'block');
+        } else {
+            $('#weight-slider .range-min, #weight-slider .range-max').css('opacity', '1');
+            $('#weight-slider .range-both').css('display', 'none');
+        }
+    }
+});
+$('#weight-slider .ui-slider-range').append('<span class="range-both value"><i>' + $('#weight-slider').slider('values', 0) + ' - </i>' + $('#weight-slider').slider('values', 1) + '</span>');
+$('#weight-slider .ui-slider-handle:eq(0)').append('<span class="range-min value">' + $('#weight-slider').slider('values', 0) + '</span>');
+$('#weight-slider .ui-slider-handle:eq(1)').append('<span class="range-max value">' + $('#weight-slider').slider('values', 1) + '</span>');
+
+
+// Child Range Slider
+$('#child-slider').slider({
+    range: true,
+    min: 0,
+    max: 10,
+    step: 1,
+    // values: [3, 9],
+    values: [ parseInt($('#childrenSlider1').val(), 10), parseInt($('#childrenSlider2').val(), 10) ],
+    disabled: true,
+    slide: function (event, ui) {
+        $('#child-slider .ui-slider-handle:eq(0) .range-min').html(ui.values[0]);
+        $('#child-slider .ui-slider-handle:eq(1) .range-max').html(ui.values[1]);
+        $('#child-slider .range-both').html('<i>' + ui.values[0] + ' - </i>' + ui.values[1]);
+
+        $('#childrenSlider1').val(ui.values[0]);
+        $('#childrenSlider2').val(ui.values[1]);
+
+        if (ui.values[0] === ui.values[1]) {
+            $('#child-slider .range-both i').css('display', 'none');
+        } else {
+            $('#child-slider .range-both i').css('display', 'inline');
+        }
+        if (collision($('#child-slider .range-min'), $('#child-slider .range-max'))) {
+            $('#child-slider .range-min, #child-slider .range-max').css('opacity', '0');
+            $('#child-slider .range-both').css('display', 'block');
+        } else {
+            $('#child-slider .range-min, #child-slider .range-max').css('opacity', '1');
+            $('#child-slider .range-both').css('display', 'none');
+        }
+    }
+});
+$('#child-slider .ui-slider-range').append('<span class="range-both value"><i>' + $('#child-slider').slider('values', 0) + ' - </i>' + $('#child-slider').slider('values', 1) + '</span>');
+$('#child-slider .ui-slider-handle:eq(0)').append('<span class="range-min value">' + $('#child-slider').slider('values', 0) + '</span>');
+$('#child-slider .ui-slider-handle:eq(1)').append('<span class="range-max value">' + $('#child-slider').slider('values', 1) + '</span>');

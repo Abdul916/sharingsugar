@@ -6823,9 +6823,9 @@ input[type=submit] {
 
 .product-category .price-range-slider .value {
   position: absolute;
-  top: -36px;
+   top: -25px;
   left: 50%;
-  margin: 0 0 0 -20px;
+  margin: 0 0 0 -10px;
   text-align: center;
   display: block;
   font-weight: normal;
@@ -6835,7 +6835,7 @@ input[type=submit] {
   background-image: -o-linear-gradient(284deg, rgb(242, 40, 118) 0%, rgb(148, 45, 217) 100%);
   background-image: linear-gradient(166deg, rgb(242, 40, 118) 0%, rgb(148, 45, 217) 100%);
   display: block;
-  padding: 5px 8px;
+  padding: 2px 6px;
   font-size: 12px;
   line-height: 12px;
 }
