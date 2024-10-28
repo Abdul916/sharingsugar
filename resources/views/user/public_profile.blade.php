@@ -343,10 +343,7 @@
                                 }
                             }
                             ?>
-
-                            {{-- <ul class="member-list @if(@$request_private_photo->status != 2) private_img @endif" @if(@$request_private_photo->status != 2) id="gallery1" @endif> --}}
                             <ul class="member-list {{ $private_img_cls }}" @if($private_img_cls == '') id="gallery1" @endif>
-
                                 @foreach($private_photos as $private)
                                 @php
                                 $private_liked = check_record_existing('like_images', 'user_id', $logged_id, 'photo_id', $private->id, '', '', '', '');
