@@ -375,7 +375,8 @@ class UserController extends Controller
         }
 
         if($request->only_photos == 'on'){
-            $query->where('profile_image', '!=', NULL);
+            $query->where('profile_image', '!=', 'user.png')
+            ->Where('profile_image', '!=', null);
         }
         if($request->name != ''){
             $query->where('first_name', 'like', '%' . $request->name . '%')
@@ -454,7 +455,6 @@ class UserController extends Controller
                 $query->whereBetween('longitude', [$lngMin, $lngMax]);
             }
         }
-        // those blocked should not be in query
         $blocked = DB::table('user_configs')
         ->where('user_id', Auth::user()->id)
         ->where('type', 3)
