@@ -49,7 +49,7 @@
                     <span>Your recent profile image update is declined by the admin. Please, update your profile image again if needed.</span>
                 </div>
                 @endif
-                <div class="row">
+                <div class="row" style="display:none;">
                     <div class="col-lg-6">
                         <form id="upload_profile_image" method="post" enctype="multipart/form-data">
                             @csrf

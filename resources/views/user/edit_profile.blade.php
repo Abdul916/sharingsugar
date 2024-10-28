@@ -27,7 +27,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row" style="display: none;">
                     <div class="col-lg-6">
                         <form id="upload_profile_image" method="post" enctype="multipart/form-data">
                             @csrf
@@ -80,7 +80,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="input-info-box mt-30">
+                <div class="input-info-box">
                     <div class="header">About your Profile</div>
                     <form id="update_form" method="post" enctype="multipart/form-data">
                         @csrf
