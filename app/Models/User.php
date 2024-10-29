@@ -51,6 +51,7 @@ class User extends Authenticatable
         'membership_price',
         'membership_start',
         'membership_end',
+        'trial_expires_on',
         'membership_status',
         'marital_status',
         'privacy_status',
@@ -84,5 +85,6 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'trial_expires_on' => 'datetime',
     ];
 }

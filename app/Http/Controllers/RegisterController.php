@@ -71,6 +71,7 @@ class RegisterController extends Controller
             'iam' => $data['iam'],
             'interestedin' => $data['iam_interested_in'],
             'financial_support' => $data['financial_support'],
+            'trial_expires_on' => date('Y-m-d H:i:s', strtotime('+48 hours')),
             'email' => $data['email'],
             'password' => Hash::make($data['password'])
         ]);

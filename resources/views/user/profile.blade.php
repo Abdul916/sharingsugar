@@ -14,6 +14,7 @@
         </div>
     </div>
 </section>
+@include('common.trial_alert')
 <section class="profile-section user-setting-section mt-50">
     <div class="container">
         <div class="row justify-content-center">

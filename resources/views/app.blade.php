@@ -26,7 +26,7 @@
             position: relative;
         }
 
-       /* .container1 {
+        /* .container1 {
             position: relative;
             width: 100%;
             height: 0px;
