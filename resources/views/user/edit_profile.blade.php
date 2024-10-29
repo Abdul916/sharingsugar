@@ -23,6 +23,10 @@
                 <div class="page-title">
                     Profile
                     <div class="right">
+                        <a type="button" id="change_role_btn" class="accept">Change Role</a>
+                        <form action="{{url('change_role')}}" id="changeRoleForm" method="POST">
+                            @csrf
+                        </form>
                         {{-- <a href="{{ url('profile') }}" class="accept">Back to Profile</a> --}}
                     </div>
                 </div>
@@ -309,5 +313,37 @@
     }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBy2l4KGGTm4cTqoSl6h8UAOAob87sHBsA&libraries=places&callback=initMap" async defer></script>
-
+<script>
+    $('#change_role_btn').click(function() {
+        $('#change_role_btn').prop('disabled', true);
+        var formData = new FormData($("#changeRoleForm")[0]);
+        $.ajax({
+            url: '{{ url("change_role") }}',
+            type: 'POST',
+            data: formData,
+            dataType: 'json',
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(status) {
+                if (status.msg == 'success') {
+                    $('#change_role_btn').prop("disabled", false);
+                    toastr.success(status.response, "Success");
+                    setTimeout(function() {
+                        window.location.href = '{{ url("profile") }}';
+                    }, 1000);
+                    console.log("success");
+                } else if (status.msg == 'error') {
+                    toastr.error(status.response, "Error");
+                    // enable the button
+                    $('#change_role_btn').prop('disabled', false);
+                } else if (status.msg == 'lvl_error') {
+                    toastr.error(status.response, "Error");
+                    
+                    $('#change_role_btn').prop('disabled', false);
+                }
+            }
+        });
+    });
+</script>
 @endpush

@@ -14,7 +14,7 @@
                 <a href="{{ url('admin/profile_approvals') }}" title="Emails">Profile Approvals</a>
             </li>
             <li class="breadcrumb-item active">
-                <a href="{{ url('admin/profile_approvals/show/' . $approval->id ) }}" title="View Profile Change Approval<l"><strong>View Profile Change Approval<< /strong></a>
+                <a href="{{ url('admin/profile_approvals/show/' . $approval->id ) }}" title="View Profile Change Approval<l"><strong>View Profile Change Approval</strong></a>
             </li>
         </ol>
     </div>
@@ -69,12 +69,30 @@
                         </div>
                     </div>
                     <div class="form-group row offset-lg-1">
-                        <strong class="col-sm-2 col-form-label">DOB</strong>
+                        <strong class="col-sm-2 col-form-label">I am</strong>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="dob" required id="dob" value="{{$user->dob}}" readonly placeholder="dob">
+                            <input type="text" class="form-control" name="iam" required id="iam" value="{{$user->iam}}" readonly placeholder="iam">
                         </div>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" name="dob" required id="dob" value="{{$approval_data['dob']}}" readonly placeholder="dob">
+                            <input type="text" class="form-control" name="iam" required id="iam" value="{{$approval_data['iam']}}" readonly placeholder="iam">
+                        </div>
+                    </div>
+                    <div class="form-group row offset-lg-1">
+                        <strong class="col-sm-2 col-form-label">Interested In</strong>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="interestedin" required id="interestedin" value="{{$user->interestedin}}" readonly placeholder="interestedin">
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="interestedin" required id="interestedin" value="{{$approval_data['interestedin']}}" readonly placeholder="interestedin">
+                        </div>
+                    </div>
+                    <div class="form-group row offset-lg-1">
+                        <strong class="col-sm-2 col-form-label">DOB</strong>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="dob" required id="dob" value="{{$user->dob}}" readonly placeholder="">
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" name="dob" required id="dob" value="{{$approval_data['dob']}}" readonly placeholder="">
                         </div>
                     </div>
                     <div class="form-group row offset-lg-1">

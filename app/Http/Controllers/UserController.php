@@ -34,12 +34,89 @@ class UserController extends Controller
     public function edit()
     {
         $data['user'] = User::find(Auth::user()->id);
-        if(is_profile_approval_pending(Auth::user()->id)){
+        if (is_profile_approval_pending(Auth::user()->id)) {
             return redirect('profile');
         }
         return view('user/edit_profile', $data);
     }
+    public function change_role(Request $request)
+    {
+        $data = Auth::user();
+        if (Auth::user()->dob == NULL) {
+            return response()->json(array('msg' => 'error', 'response' => 'Please complete your profile first and then apply for changing roles.'));
+        }
+        $current_role = $data['iam'];
+        switch ($current_role) {
+            case 'Sugar Mommy':
+                $new_role = 'Sugar Baby (Mujer / Woman)';
+                $interested_in = 'Sugar Daddy';
+                break;
+            case 'Sugar Daddy':
+                $new_role = 'Sugar Baby (Hombre / Man)';
+                $interested_in = 'Sugar Mommy';
+                break;
+            case 'Sugar Daddy Mommy':
+                $new_role = 'Sugar Baby (Trans)';
+                $interested_in = 'Sugar Daddy Mommy';
+                break;
+            case 'Sugar Baby (Mujer / Woman)':
+                $new_role = 'Sugar Mommy';
+                $interested_in = 'Sugar Baby (Hombre / Man)';
+                break;
+            case 'Sugar Baby (Hombre / Man)':
+                $new_role = 'Sugar Daddy';
+                $interested_in = 'Sugar Baby (Mujer / Woman)';
+                break;
+            case 'Sugar Baby (Trans)':
+                $new_role = 'Sugar Daddy Mommy';
+                $interested_in = 'Sugar Baby (Trans)';
+                break;
+            default:
+                return response()->json(array('msg' => 'error', 'response' => 'Something went wrong in switching roles condition.'));
+                break;
+        }
+        $updated_data = [
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'username' => $data['username'],
+            'iam' => $new_role,
+            'interestedin' => $interested_in,
+            'dob' => null,
+            'age' => null,
+            'gender' => $data['gender'],
+            'height' => $data['height'],
+            'weight' => $data['weight'],
+            'marital_status' => $data['marital_status'],
+            'child' => $data['child'],
+            'body_type' => $data['body_type'],
+            'state' => $data['state'],
+            'zipcode' => $data['zipcode'],
+            'country' => $data['country'],
+            'city' => $data['city'],
+            'address' => $data['address'],
+            'about_me' => $data['about_me'],
+            'latitude' => $data['latitude'] ?? null,
+            'longitude' => $data['longitude'] ?? null,
+            'profile_status' => '2',
+        ];
 
+        $profile_change_log = new ProfileChangeLog();
+        $profile_change_log->user_id = $data['id'];
+        $profile_change_log->updated_data = json_encode($updated_data);
+        $profile_change_log->status  = 0;
+        $query = $profile_change_log->save();
+        if ($query > 0) {
+            $user = Auth::user();
+            $user->dob = null;
+            $user->age = null;
+            $user->save();
+            $finalResult = response()->json(array('msg' => 'success', 'response' => 'Your updated profile will be reviewed by admin. Changes would be propagated shortly after approval.'));
+            return $finalResult;
+        } else {
+            $finalResult = response()->json(array('msg' => 'error', 'response' => 'Something went wrong.'));
+            return $finalResult;
+        }
+    }
     public function update(Request $request)
     {
         $data = $request->all();
@@ -90,7 +167,7 @@ class UserController extends Controller
         //     'child' => $data['child'],
         //     'body_type' => $data['body_type'],
         //     'state' => $data['state'],
-        //     'zipcode' => $data['zip_code'],
+        //     'zipcode' => $data['zipcode'],
         //     'country' => $data['country'],
         //     'city' => $data['city'],
         //     'address' => $data['address'],
@@ -104,6 +181,8 @@ class UserController extends Controller
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'username' => $data['username'],
+            'iam' => Auth::user()->iam,
+            'interestedin' => Auth::user()->interestedin,
             'dob' => date('Y-m-d', strtotime(str_replace('/', '-', $data['dob']))),
             'age' => $age,
             'gender' => $data['gender'],
@@ -203,8 +282,8 @@ class UserController extends Controller
         // ]);
 
         $last_change_approval = PhotoChangeLog::where('user_id', $data['id'])->where('type', 0)->orderBy('created_at', 'desc')->first();
-        if($last_change_approval != null && $last_change_approval->status == 0){
-            $file_path = public_path('/assets/app_images/'.$last_change_approval->photo);
+        if ($last_change_approval != null && $last_change_approval->status == 0) {
+            $file_path = public_path('/assets/app_images/' . $last_change_approval->photo);
             // if(file_exists($file_path)){
             //     unlink($file_path);
             // }
@@ -332,26 +411,26 @@ class UserController extends Controller
         $data['user'] = User::find(Auth::user()->id);
 
         $data['blocked'] = DB::table('user_configs')
-        ->where('user_id', Auth::user()->id)
-        ->where('type', 3)
-        ->get();
+            ->where('user_id', Auth::user()->id)
+            ->where('type', 3)
+            ->get();
 
         $data['today_visitor_count'] = DB::table('visitors')
-        ->where('user_id', Auth::user()->id)
-        ->whereDate('created_at', date('Y-m-d'))
-        ->distinct()->count('visitor_user_id');
+            ->where('user_id', Auth::user()->id)
+            ->whereDate('created_at', date('Y-m-d'))
+            ->distinct()->count('visitor_user_id');
 
 
         $data['today_visitors'] = DB::table('visitors')
-        ->where('user_id', Auth::user()->id)
-        ->whereDate('created_at', date('Y-m-d'))
-        ->distinct()
-        ->get('visitor_user_id');
+            ->where('user_id', Auth::user()->id)
+            ->whereDate('created_at', date('Y-m-d'))
+            ->distinct()
+            ->get('visitor_user_id');
 
         $data['visitors'] = DB::table('visitors')
-        ->where('user_id', Auth::user()->id)
-        ->distinct()
-        ->get('visitor_user_id');
+            ->where('user_id', Auth::user()->id)
+            ->distinct()
+            ->get('visitor_user_id');
 
         return view('user/privacy_settings', $data);
     }
@@ -363,25 +442,25 @@ class UserController extends Controller
         $query->where('id', '<>', Auth::user()->id);
         if ($request->has('interestedin')) {
             $query->where('iam', $request->interestedin);
-        }else{
+        } else {
             $query->where('iam', Auth::user()->interestedin);
         }
-        if($request->sorting == 'last_login'){
+        if ($request->sorting == 'last_login') {
             $query->orderBy('last_login', 'DESC');
-        } else if ($request->sorting == 'distance'){
-            $query->orderByRaw('latitude IS NULL, longitude IS NULL, ( 3959 * acos( cos( radians('.$request->latitude.') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians('.$request->longitude.') ) + sin( radians('.$request->latitude.') ) * sin( radians( latitude ) ) ) )');
-        }else{
+        } else if ($request->sorting == 'distance') {
+            $query->orderByRaw('latitude IS NULL, longitude IS NULL, ( 3959 * acos( cos( radians(' . $request->latitude . ') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(' . $request->longitude . ') ) + sin( radians(' . $request->latitude . ') ) * sin( radians( latitude ) ) ) )');
+        } else {
             $query->orderBy('last_login', 'DESC');
         }
 
-        if($request->only_photos == 'on'){
+        if ($request->only_photos == 'on') {
             $query->where('profile_image', '!=', 'user.png')
-            ->Where('profile_image', '!=', null);
+                ->Where('profile_image', '!=', null);
         }
-        if($request->name != ''){
+        if ($request->name != '') {
             $query->where('first_name', 'like', '%' . $request->name . '%')
-            ->orWhere('last_name', 'like', '%' . $request->name . '%')
-            ->orWhere('username', 'like', '%' . $request->name . '%');
+                ->orWhere('last_name', 'like', '%' . $request->name . '%')
+                ->orWhere('username', 'like', '%' . $request->name . '%');
         }
         if ($request->has('Age')) {
             $query->where('age', '>=', $request->minAge);
@@ -457,9 +536,9 @@ class UserController extends Controller
             }
         }
         $blocked = DB::table('user_configs')
-        ->where('user_id', Auth::user()->id)
-        ->where('type', 3)
-        ->get();
+            ->where('user_id', Auth::user()->id)
+            ->where('type', 3)
+            ->get();
         $blocked_ids = [];
         foreach ($blocked as $block) {
             $blocked_ids[] = $block->config_user_id;
@@ -577,29 +656,29 @@ class UserController extends Controller
     {
         $data['user'] = User::find(Auth::user()->id);
         $data['pending'] = DB::table('user_configs')
-        ->where('user_id', Auth::user()->id)
-        ->where('type', 5)
-        ->where('status', 1)
-        ->get();
+            ->where('user_id', Auth::user()->id)
+            ->where('type', 5)
+            ->where('status', 1)
+            ->get();
 
         $data['approved'] = DB::table('user_configs')
-        ->where('user_id', Auth::user()->id)
-        ->where('type', 5)
-        ->where('status', 2)
-        ->get();
+            ->where('user_id', Auth::user()->id)
+            ->where('type', 5)
+            ->where('status', 2)
+            ->get();
 
 
         $data['my_pending'] = DB::table('user_configs')
-        ->where('config_user_id', Auth::user()->id)
-        ->where('type', 5)
-        ->where('status', 1)
-        ->get();
+            ->where('config_user_id', Auth::user()->id)
+            ->where('type', 5)
+            ->where('status', 1)
+            ->get();
 
         $data['my_approved'] = DB::table('user_configs')
-        ->where('config_user_id', Auth::user()->id)
-        ->where('type', 5)
-        ->where('status', 2)
-        ->get();
+            ->where('config_user_id', Auth::user()->id)
+            ->where('type', 5)
+            ->where('status', 2)
+            ->get();
 
         return view('user/requests', $data);
     }
@@ -711,14 +790,14 @@ class UserController extends Controller
             $user_id = $user->id;
 
             $chatted = DB::table('chatted_users')
-            ->where(function ($query1) use ($user_id) {
-                $query1->where('sender_id', '=', Auth::user()->id)
-                ->where('receiver_id', '=', $user_id);
-            })
-            ->orWhere(function ($query2) use ($user_id) {
-                $query2->where('sender_id', $user_id)
-                ->where('receiver_id', Auth::user()->id);
-            })->first();
+                ->where(function ($query1) use ($user_id) {
+                    $query1->where('sender_id', '=', Auth::user()->id)
+                        ->where('receiver_id', '=', $user_id);
+                })
+                ->orWhere(function ($query2) use ($user_id) {
+                    $query2->where('sender_id', $user_id)
+                        ->where('receiver_id', Auth::user()->id);
+                })->first();
 
             if (empty($chatted->id)) {
                 $chatted_id = DB::table('chatted_users')->insertGetId([
@@ -736,23 +815,23 @@ class UserController extends Controller
             $user_id = $user->id;
 
             $chatted = DB::table('chatted_users')
-            ->where(function ($query1) use ($user_id) {
-                $query1->where('sender_id', '=', Auth::user()->id)
-                ->where('receiver_id', '=', $user_id);
-            })
-            ->orWhere(function ($query2) use ($user_id) {
-                $query2->where('sender_id', $user_id)
-                ->where('receiver_id', Auth::user()->id);
-            })->first();
+                ->where(function ($query1) use ($user_id) {
+                    $query1->where('sender_id', '=', Auth::user()->id)
+                        ->where('receiver_id', '=', $user_id);
+                })
+                ->orWhere(function ($query2) use ($user_id) {
+                    $query2->where('sender_id', $user_id)
+                        ->where('receiver_id', Auth::user()->id);
+                })->first();
             $data['chat_id'] = $chatted->id;
             $data['receiver_id'] = $user_id;
         }
 
         $data['chatted_users'] = DB::table('chatted_users')
-        ->where(function ($query) {
-            $query->where('sender_id', Auth::user()->id)
-            ->orWhere('receiver_id', Auth::user()->id);
-        })->orderBy('id', 'ASC')->get();
+            ->where(function ($query) {
+                $query->where('sender_id', Auth::user()->id)
+                    ->orWhere('receiver_id', Auth::user()->id);
+            })->orderBy('id', 'ASC')->get();
 
         $data['user'] = User::find(Auth::user()->id);
         return view('user/chat', $data);
@@ -762,8 +841,8 @@ class UserController extends Controller
     {
         $data = $request->all();
         $data['chats'] = DB::table('chat')
-        ->where('chatted_id', $data['chat_id'])
-        ->orderBy('id', 'ASC')->get();
+            ->where('chatted_id', $data['chat_id'])
+            ->orderBy('id', 'ASC')->get();
 
         $data['chatted_id'] = $data['chat_id'];
         $row = get_single_row('chatted_users', 'id', $data['chat_id'], '', '', '', '');

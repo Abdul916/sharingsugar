@@ -52,6 +52,8 @@ class ProfileApprovalController extends Controller
             $user->first_name = $updated_data['first_name'];
             $user->last_name = $updated_data['last_name'];
             $user->username = $updated_data['username'];
+            $user->iam = $updated_data['iam'];
+            $user->interestedin = $updated_data['interestedin'];
             $user->dob = $updated_data['dob'];
             $user->age = $updated_data['age'];
             $user->gender = $updated_data['gender'];
