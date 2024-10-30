@@ -34,15 +34,15 @@ class UserController extends Controller
     public function edit()
     {
         $data['user'] = User::find(Auth::user()->id);
-        if (is_profile_approval_pending(Auth::user()->id)) {
-            return redirect('profile');
-        }
         return view('user/edit_profile', $data);
     }
     public function change_role(Request $request)
     {
         $data = Auth::user();
-        if (Auth::user()->dob == NULL) {
+        // if (Auth::user()->dob == NULL) {
+        //     return response()->json(array('msg' => 'error', 'response' => 'Please complete your profile first and then apply for changing roles.'));
+        // }
+        if (is_profile_incomplete()) {
             return response()->json(array('msg' => 'error', 'response' => 'Please complete your profile first and then apply for changing roles.'));
         }
         $current_role = $data['iam'];
@@ -75,46 +75,60 @@ class UserController extends Controller
                 return response()->json(array('msg' => 'error', 'response' => 'Something went wrong in switching roles condition.'));
                 break;
         }
-        $updated_data = [
-            'first_name' => $data['first_name'],
-            'last_name' => $data['last_name'],
-            'username' => $data['username'],
-            'iam' => $new_role,
-            'interestedin' => $interested_in,
-            'dob' => null,
-            'age' => null,
-            'gender' => $data['gender'],
-            'height' => $data['height'],
-            'weight' => $data['weight'],
-            'marital_status' => $data['marital_status'],
-            'child' => $data['child'],
-            'body_type' => $data['body_type'],
-            'state' => $data['state'],
-            'zipcode' => $data['zipcode'],
-            'country' => $data['country'],
-            'city' => $data['city'],
-            'address' => $data['address'],
-            'about_me' => $data['about_me'],
-            'latitude' => $data['latitude'] ?? null,
-            'longitude' => $data['longitude'] ?? null,
+        $user = $data;
+        $previous_data = [
+            'first_name' => $user->first_name,
+            'last_name' => $user->last_name,
+            'username' => $user->username,
+            'iam' => $user->iam,
+            'interestedin' => $user->interestedin,
+            'dob' => $user->dob,
+            'age' => $user->age,
+            'gender' => $user->gender,
+            'height' => $user->height,
+            'weight' => $user->weight,
+            'marital_status' => $user->marital_status,
+            'child' => $user->child,
+            'body_type' => $user->body_type,
+            'state' => $user->state,
+            'zipcode' => $user->zip_code,
+            'country' => $user->country,
+            'city' => $user->city,
+            'address' => $user->address,
+            'about_me' => $user->about_me,
+            'latitude' => $user->latitude ?? null,
+            'longitude' => $user->longitude ?? null,
             'profile_status' => '2',
         ];
 
-        $profile_change_log = new ProfileChangeLog();
-        $profile_change_log->user_id = $data['id'];
-        $profile_change_log->updated_data = json_encode($updated_data);
-        $profile_change_log->status  = 0;
-        $query = $profile_change_log->save();
-        if ($query > 0) {
-            $user = Auth::user();
-            $user->dob = null;
-            $user->age = null;
-            $user->save();
-            $finalResult = response()->json(array('msg' => 'success', 'response' => 'Your updated profile will be reviewed by admin. Changes would be propagated shortly after approval.'));
-            return $finalResult;
+
+        $user->iam = $new_role;
+        $user->interestedin = $interested_in;
+        $user->dob = null;
+        $user->age = null;
+        $query_update = $user->save();
+        if ($query_update) {
+            $prev_approval = ProfileChangeLog::where([
+                ['user_id', $user->id],
+                ['status', 0]
+            ])->latest()->first();
+
+            if ($prev_approval == null) {
+                $profile_change_log = new ProfileChangeLog();
+                $profile_change_log->user_id = $data['id'];
+                $profile_change_log->previous_data = json_encode($previous_data);
+                $profile_change_log->status  = 0;
+                $query = $profile_change_log->save();
+                if ($query > 0) {
+                    return response()->json(array('msg' => 'success', 'response' => 'Your profile have been switched.Please update your age for verification'), 200);
+                } else {
+                    return response()->json(array('msg' => 'error', 'response' => 'Profile switched but could not share with admin for verification.'), 422);
+                }
+            } else {
+                return response()->json(array('msg' => 'success', 'response' => 'Your profile have been switched.Please update your age for verification'), 200);
+            }
         } else {
-            $finalResult = response()->json(array('msg' => 'error', 'response' => 'Something went wrong.'));
-            return $finalResult;
+            return response()->json(array('msg' => 'error', 'response' => 'Could not switch profile.'), 422);
         }
     }
     public function update(Request $request)
@@ -148,41 +162,86 @@ class UserController extends Controller
             $finalResult = response()->json(array('msg' => 'lvl_error', 'response' => $validator->errors()->all()));
             return $finalResult;
         }
-
         $bday = new \DateTime($data['dob']);
         $today = new \Datetime(date('m/d/Y'));
         $diff = $today->diff($bday);
         $age = $diff->y;
-
-        // $status = User::where('id', $data['id'])->update([
-        //     'first_name' => $data['first_name'],
-        //     'last_name' => $data['last_name'],
-        //     'username' => $data['username'],
-        //     'dob' => date('Y-m-d', strtotime(str_replace('/', '-', $data['dob']))),
-        //     'age' => $age,
-        //     'gender' => $data['gender'],
-        //     'height' => $data['height'],
-        //     'weight' => $data['weight'],
-        //     'marital_status' => $data['marital_status'],
-        //     'child' => $data['child'],
-        //     'body_type' => $data['body_type'],
-        //     'state' => $data['state'],
-        //     'zipcode' => $data['zipcode'],
-        //     'country' => $data['country'],
-        //     'city' => $data['city'],
-        //     'address' => $data['address'],
-        //     'about_me' => $data['about_me'],
-        //     'latitude' => $data['latitude'] ?? null,
-        //     'longitude' => $data['longitude'] ?? null,
-        //     'profile_status' => '2',
-        // ]);
-
-        $updated_data = [
+        $user = Auth::user();
+        $previous_data = [
+            'first_name' => $user->first_name,
+            'last_name' => $user->last_name,
+            'username' => $user->username,
+            'iam' => $user->iam,
+            'interestedin' => $user->interestedin,
+            'dob' => $user->dob,
+            'age' => $user->age,
+            'gender' => $user->gender,
+            'height' => $user->height,
+            'weight' => $user->weight,
+            'marital_status' => $user->marital_status,
+            'child' => $user->child,
+            'body_type' => $user->body_type,
+            'state' => $user->state,
+            'zipcode' => $user->zip_code,
+            'country' => $user->country,
+            'city' => $user->city,
+            'address' => $user->address,
+            'about_me' => $user->about_me,
+            'latitude' => $user->latitude ?? null,
+            'longitude' => $user->longitude ?? null,
+            'profile_status' => '2',
+        ];
+        if ($data['gender'] != $user->gender) {
+            if ($age != null) {
+                if ($age < 25) {
+                    switch ($data['gender']) {
+                        case 1:
+                            $new_role = 'Sugar Baby (Hombre / Man)';
+                            $interested_in = 'Sugar Mommy';
+                            break;
+                        case 2:
+                            $new_role = 'Sugar Baby (Mujer / Woman)';
+                            $interested_in = 'Sugar Daddy';
+                            break;
+                        case 3:
+                            $new_role = 'Sugar Baby (Trans)';
+                            $interested_in = 'Sugar Daddy Mommy';
+                            break;
+                        default:
+                            $new_role = $user->iam;
+                            $interested_in = $user->interestedin;
+                            break;
+                    }
+                } else {
+                    switch ($data['gender']) {
+                        case 1:
+                            $new_role = 'Sugar Daddy';
+                            $interested_in = 'Sugar Baby (Mujer / Woman)';
+                            break;
+                        case 2:
+                            $new_role = 'Sugar Mommy';
+                            $interested_in = 'Sugar Baby (Hombre / Man)';
+                            break;
+                        case 3:
+                            $new_role = 'Sugar Daddy Mommy';
+                            $interested_in = 'Sugar Baby (Trans)';
+                            break;
+                        default:
+                            $new_role = $user->iam;
+                            $interested_in = $user->interestedin;
+                            break;
+                    }
+                }
+            } else {
+                return response()->json(array('msg' => 'error', 'response' => 'Please set your date of birth first.'), 422);
+            }
+        }
+        $query_update = User::where('id', $data['id'])->update([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'username' => $data['username'],
-            'iam' => Auth::user()->iam,
-            'interestedin' => Auth::user()->interestedin,
+            'iam' => $new_role ?? $user->iam,
+            'interestedin' => $interested_in ?? $user->interestedin,
             'dob' => date('Y-m-d', strtotime(str_replace('/', '-', $data['dob']))),
             'age' => $age,
             'gender' => $data['gender'],
@@ -200,19 +259,29 @@ class UserController extends Controller
             'latitude' => $data['latitude'] ?? null,
             'longitude' => $data['longitude'] ?? null,
             'profile_status' => '2',
-        ];
+        ]);
+        if ($query_update) {
+            $prev_approval = ProfileChangeLog::where([
+                ['user_id', $user->id],
+                ['status', 0]
+            ])->latest()->first();
 
-        $profile_change_log = new ProfileChangeLog();
-        $profile_change_log->user_id = $data['id'];
-        $profile_change_log->updated_data = json_encode($updated_data);
-        $profile_change_log->status  = 0;
-        $query = $profile_change_log->save();
-        if ($query > 0) {
-            $finalResult = response()->json(array('msg' => 'success', 'response' => 'Your updated profile will be reviewed by admin. Changes would be propagated shortly after approval.'));
-            return $finalResult;
+            if ($prev_approval == null) {
+                $profile_change_log = new ProfileChangeLog();
+                $profile_change_log->user_id = $data['id'];
+                $profile_change_log->previous_data = json_encode($previous_data);
+                $profile_change_log->status  = 0;
+                $query = $profile_change_log->save();
+                if ($query > 0) {
+                    return response()->json(array('msg' => 'success', 'response' => 'Your profile has been updated and a copy of your profile has been shared with the admin (SharingSugar) for verification'), 200);
+                } else {
+                    return response()->json(array('msg' => 'error', 'response' => 'Profile updated but could not share with admin for verification.'), 422);
+                }
+            } else {
+                return response()->json(array('msg' => 'success', 'response' => 'Your profile has been updated and a copy of your profile has been shared with the admin (SharingSugar) for verification'), 200);
+            }
         } else {
-            $finalResult = response()->json(array('msg' => 'error', 'response' => 'Something went wrong.'));
-            return $finalResult;
+            return response()->json(array('msg' => 'error', 'response' => 'Could not update profile.'), 422);
         }
     }
 

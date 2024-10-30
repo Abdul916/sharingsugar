@@ -125,9 +125,9 @@
                                     <div class="my-input-box">
                                         <label for="">Gender</label>
                                         <select name="gender" id="wrap_gender">
-                                            <option value="2" @if($user->gender == 1) selected @endif>Female</option>
-                                            <option value="1" @if($user->gender == 2) selected @endif>Male</option>
-                                            <option value="3" @if($user->gender == 3) selected @endif>Trams</option>
+                                            <option value="1" @if($user->gender == 1) selected @endif>Male</option>
+                                            <option value="2" @if($user->gender == 2) selected @endif>Female</option>
+                                            <option value="3" @if($user->gender == 3) selected @endif>Trans</option>
                                         </select>
                                     </div>
                                 </div>
@@ -261,22 +261,16 @@
                     toastr.success(status.response, "Success");
                     setTimeout(function() {
                         window.location.href = '{{ url("profile") }}';
-                    }, 1000);
+                    }, 2000);
                     console.log("success");
                 } else if (status.msg == 'error') {
-                    // $(".btn_update").prop('disabled', false);
-                    // $(".btn_update").text('Save Changes');
-                    // toastr.error(status.response, "Error");
-                    console.log("error from server");
+                    $('.btn_update').prop("disabled", false);
+                    $(".btn_update").text('Save Changes');
+                    toastr.error(status.response, "Error");
                 } else if (status.msg == 'lvl_error') {
-                    // $(".btn_update").prop('disabled', false);
-                    // $(".btn_update").text('Save Changes');
-                    // var message = "";
-                    // $.each(status.response, function(key, value) {
-                    //     message += value + "<br>";
-                    // });
-                    // toastr.error(message, "Error");
-                    console.log("error from validation");
+                    $('.btn_update').prop("disabled", false);
+                    $(".btn_update").text('Save Changes');
+                    toastr.error(status.response, "Error");
                 }
             }
         });

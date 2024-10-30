@@ -24,32 +24,9 @@
                     Profile
                     <div class="right">
                         {{-- <a href="{{ url('public_profile') }}/{{$user->unique_id}}" class="accept">View Profile</a> --}}
-                        @if(!is_profile_approval_pending($user->id))
                         <a href="{{ url('edit_profile') }}" class="accept">Edit Profile</a>
-                        @endif
                     </div>
                 </div>
-                @if(is_profile_approval_pending($user->id))
-                <div class="alert alert-warning mt-4" role="alert">
-                    <span>Your recent profile update is under review. Your profile changes would be propagated once it is approved by the admin.</span>
-                </div>
-                @endif
-                @if(is_profile_image_approval_pending($user->id))
-                <div class="alert alert-warning mt-4" role="alert">
-                    <span>Your recent profile image update is under review. Your new profile image would be propagated once it is approved by the admin.</span>
-                </div>
-                @endif
-                
-                @if(is_profile_approval_declined($user->id) == true)
-                <div class="alert alert-danger mt-4" role="alert">
-                    <span>Your recent profile update is declined by the admin. Please, update your profile again.</span>
-                </div>
-                @endif
-                @if(is_profile_image_approval_declined($user->id) == true)
-                <div class="alert alert-danger mt-4" role="alert">
-                    <span>Your recent profile image update is declined by the admin. Please, update your profile image again if needed.</span>
-                </div>
-                @endif
                 <div class="row" style="display:none;">
                     <div class="col-lg-6">
                         <form id="upload_profile_image" method="post" enctype="multipart/form-data">
@@ -233,28 +210,28 @@
 @endsection
 @push('scripts')
 <script>
-    $(document).on("change" , "#upload_image" , function() {
-        var formData =  new FormData($("#upload_profile_image")[0]);
+    $(document).on("change", "#upload_image", function() {
+        var formData = new FormData($("#upload_profile_image")[0]);
         $.ajax({
-            url:"{{ url('upload_profile_image') }}",
+            url: "{{ url('upload_profile_image') }}",
             type: 'POST',
             data: formData,
-            dataType:'json',
+            dataType: 'json',
             cache: false,
             contentType: false,
             processData: false,
-            success:function(status){
-                if(status.msg=='success') {
-                    toastr.success(status.response,"Success");
-                    setTimeout(function(){
+            success: function(status) {
+                if (status.msg == 'success') {
+                    toastr.success(status.response, "Success");
+                    setTimeout(function() {
                         location.reload(true);
                     }, 2000);
-                } else if(status.msg == 'error') {
-                    toastr.error(status.response,"Error");
-                } else if(status.msg == 'lvl_error') {
+                } else if (status.msg == 'error') {
+                    toastr.error(status.response, "Error");
+                } else if (status.msg == 'lvl_error') {
                     var message = "";
-                    $.each(status.response, function (key, value) {
-                        message += value+"<br>";
+                    $.each(status.response, function(key, value) {
+                        message += value + "<br>";
                     });
                     toastr.error(message, "Error");
                 }

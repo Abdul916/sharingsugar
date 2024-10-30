@@ -619,3 +619,37 @@ if (! function_exists('trial_checker')) {
 		}
 	}
 }
+if (! function_exists('is_profile_incomplete')) {
+	function is_profile_incomplete(): bool
+	{
+		$user = Auth::user();
+
+		$fieldsToCheck = [
+			'first_name',
+			'last_name',
+			'username',
+			'financial_support',
+			'dob',
+			'height',
+			'weight',
+			'body_type',
+			'child',
+			'city',
+			'state',
+			'zipcode',
+			'country',
+			'address',
+			'gender',
+			'marital_status',
+			'about_me'
+		];
+
+		foreach ($fieldsToCheck as $field) {
+			if (is_null($user->$field)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+}
