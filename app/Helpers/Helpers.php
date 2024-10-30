@@ -653,3 +653,17 @@ if (! function_exists('is_profile_incomplete')) {
 		return false;
 	}
 }
+if (! function_exists('change_to_text')) {
+	function change_to_text()
+	{
+		$user = Auth::user();
+
+		$role = $user->iam;
+		if($role == 'Sugar Daddy' || $role == 'Sugar Mommy' || $role == 'Sugar Daddy Mommy'){
+			return 'Baby';
+		} else {
+			return 'Parent';
+		}
+		
+	}
+}

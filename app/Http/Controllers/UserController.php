@@ -91,7 +91,7 @@ class UserController extends Controller
             'child' => $user->child,
             'body_type' => $user->body_type,
             'state' => $user->state,
-            'zipcode' => $user->zip_code,
+            'zipcode' => $user->zipcode,
             'country' => $user->country,
             'city' => $user->city,
             'address' => $user->address,

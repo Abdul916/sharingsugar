@@ -62,9 +62,8 @@ class ProfileApprovalController extends Controller
         if (!$approval) {
             return response()->json(['status' => 'error', 'message' => 'Approval not found']);
         }
-
-        $user = Auth::user();
-        dd($user, $previous_data);
+        // dd($previous_data);
+        $user = User::find($approval->user_id);
         $user->first_name = $previous_data['first_name'];
         $user->last_name = $previous_data['last_name'];
         $user->username = $previous_data['username'];
@@ -86,7 +85,7 @@ class ProfileApprovalController extends Controller
         $user->about_me = $previous_data['about_me'];
         $user->latitude = $previous_data['latitude'];
         $user->longitude = $previous_data['longitude'];
-        $user->profile_status = 1;
+        $user->profile_status = 2;
 
         $query = $user->save();
 

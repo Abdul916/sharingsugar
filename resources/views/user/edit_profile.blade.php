@@ -23,7 +23,7 @@
                 <div class="page-title">
                     Profile
                     <div class="right">
-                        <a type="button" id="change_role_btn" class="accept">Change Role</a>
+                        <a type="button" id="change_role_btn" class="accept">Switch to {{change_to_text()}}</a>
                         <form action="{{url('change_role')}}" id="changeRoleForm" method="POST">
                             @csrf
                         </form>

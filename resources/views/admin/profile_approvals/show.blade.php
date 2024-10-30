@@ -221,6 +221,8 @@
 
 <script>
     $('#btn_approve').click(function() {
+        // disable the button
+        $(this).attr('disabled', true);
         var id = $(this).data('id');
         var url = '{{url("admin/profile_approvals/approve")}}';
         $.ajaxSetup({
@@ -248,6 +250,7 @@
     });
 
     $('#btn_decline').click(function() {
+        $(this).attr('disabled', true);
         var id = $(this).data('id');
         var url = '{{url("admin/profile_approvals/decline")}}';
         $.ajaxSetup({
