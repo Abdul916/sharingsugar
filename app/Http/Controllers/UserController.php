@@ -969,9 +969,12 @@ class UserController extends Controller
             'updated_at' => date('Y-m-d H:i:s'),
             'updated_by' => Auth::user()->id,
         ]);
-
+        $receiver = User::where('id', $data['receiver_id'])->first();
         if ($status > 0) {
             add_notifications(Auth::user()->id, $data['receiver_id'], 'sent a text message', '4');
+            $email_subject = $email_subject = get_section_content('project', 'site_title') . '(New Chat Message Received)';
+            $email_text = 'Your received a new message from ' . Auth::user()->first_name . ' ' . Auth::user()->last_name . '. Please login to your account to view the message.';
+            send_notification_email($receiver, $email_subject, $email_text);
             $finalResult = response()->json(array('msg' => 'success', 'response' => 'Message sent successfully.'));
             return $finalResult;
         } else {
