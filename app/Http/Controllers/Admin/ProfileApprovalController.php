@@ -43,12 +43,16 @@ class ProfileApprovalController extends Controller
     public function approve(Request $request)
     {
         $approval = ProfileChangeLog::find($request->id);
+        $user = User::find($approval->user_id);
         if (!$approval) {
             return response()->json(['status' => 'error', 'message' => 'Approval not found']);
         }
 
         $query = $approval->delete();
         if ($query) {
+            $email_subject = $email_subject = get_section_content('project', 'site_title') . '(Profile approval)';
+            $email_text = 'Your recent profile changes have been approved by admin at Sharing Sugar.';
+            send_notification_email($user, $email_subject, $email_text);
             return response()->json(['status' => 'success', 'message' => 'Changes approved successfully']);
         }
 
@@ -62,7 +66,6 @@ class ProfileApprovalController extends Controller
         if (!$approval) {
             return response()->json(['status' => 'error', 'message' => 'Approval not found']);
         }
-        // dd($previous_data);
         $user = User::find($approval->user_id);
         $user->first_name = $previous_data['first_name'];
         $user->last_name = $previous_data['last_name'];
@@ -91,6 +94,9 @@ class ProfileApprovalController extends Controller
 
         if ($query) {
             $approval->delete();
+            $email_subject = $email_subject = get_section_content('project', 'site_title') . '(Profile declined)';
+            $email_text = 'Your recent profile changes have been rejected by admin at Sharing Sugar. Please contact admin for more details by filling contact form at our website.';
+            send_notification_email($user, $email_subject, $email_text);
             return response()->json(['status' => 'success', 'message' => 'Changes declined successfully']);
         } else {
             return response()->json(['status' => 'error', 'message' => 'Something went wrong']);
