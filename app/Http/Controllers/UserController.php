@@ -331,6 +331,7 @@ class UserController extends Controller
             $finalResult = response()->json(array('msg' => 'lvl_error', 'response' => $validator->errors()->all()));
             return $finalResult;
         }
+        $previous_profile_image = User::find(Auth::user()->id)->profile_image;
 
         if ($request->hasFile('profile_pic')) {
             $image = $request->file('profile_pic');
@@ -346,32 +347,52 @@ class UserController extends Controller
         //     'created_at' => date('Y-m-d H:i:s'),
         // ]);
 
-        // $status = User::where('id', $data['id'])->update([
-        //     'profile_image' => $data['profile_image']
-        // ]);
+        $status = User::where('id', $data['id'])->update([
+            'profile_image' => $data['profile_image']
+        ]);
 
-        $last_change_approval = PhotoChangeLog::where('user_id', $data['id'])->where('type', 0)->orderBy('created_at', 'desc')->first();
-        if ($last_change_approval != null && $last_change_approval->status == 0) {
-            $file_path = public_path('/assets/app_images/' . $last_change_approval->photo);
-            // if(file_exists($file_path)){
-            //     unlink($file_path);
-            // }
-            $last_change_approval->delete();
-        }
-        $photo_change_log = new PhotoChangeLog();
-        $photo_change_log->user_id = $data['id'];
-        $photo_change_log->photo = $data['profile_image'];
-        $photo_change_log->type = 0;
-        $photo_change_log->status  = 0;
-        $query = $photo_change_log->save();
-
-        if ($query > 0) {
-            $finalResult = response()->json(array('msg' => 'success', 'response' => 'Profile Image update request has been sent to admin. Changes would be propagated shortly after approval.'));
-            return $finalResult;
+        if ($status > 0) {
+            $last_change_approval = PhotoChangeLog::where('user_id', $data['id'])->where('type', 0)->orderBy('created_at', 'desc')->first();
+            if ($last_change_approval == null) {
+                $photo_change_log = new PhotoChangeLog();
+                $photo_change_log->user_id = $data['id'];
+                $photo_change_log->photo = $previous_profile_image;
+                $photo_change_log->type = 0;
+                $photo_change_log->status  = 0;
+                $query = $photo_change_log->save();
+                if ($query > 0) {
+                    return response()->json(array('msg' => 'success', 'response' => 'Profile Picture updated successfully. A copy of your profile has been shared with the admin (SharingSugar) for verification. '));
+                } else {
+                    return response()->json(array('msg' => 'error', 'response' => 'Profile Image updated, but not sent to admin for approval.'));
+                }
+            }
         } else {
-            $finalResult = response()->json(array('msg' => 'error', 'response' => 'Something went wrong.'));
-            return $finalResult;
+            return response()->json(array('msg' => 'error', 'response' => 'Something went wrong.'));
         }
+
+
+        // $last_change_approval = PhotoChangeLog::where('user_id', $data['id'])->where('type', 0)->orderBy('created_at', 'desc')->first();
+        // if ($last_change_approval != null && $last_change_approval->status == 0) {
+        //     $file_path = public_path('/assets/app_images/' . $last_change_approval->photo);
+        //     // if(file_exists($file_path)){
+        //     //     unlink($file_path);
+        //     // }
+        //     $last_change_approval->delete();
+        // }
+        // $photo_change_log = new PhotoChangeLog();
+        // $photo_change_log->user_id = $data['id'];
+        // $photo_change_log->photo = $data['profile_image'];
+        // $photo_change_log->type = 0;
+        // $photo_change_log->status  = 0;
+        // $query = $photo_change_log->save();
+
+        // if ($query > 0) {
+        //     $finalResult = response()->json(array('msg' => 'success', 'response' => 'Profile Image update request has been sent to admin. Changes would be propagated shortly after approval.'));
+        //     return $finalResult;
+        // } else {
+        //     $finalResult = response()->json(array('msg' => 'error', 'response' => 'Something went wrong.'));
+        //     return $finalResult;
+        // }
     }
 
     public function my_photos()
@@ -392,6 +413,8 @@ class UserController extends Controller
             return $finalResult;
         }
 
+        // dd($request->all());
+        $new_photos = [];
         if ($request->hasFile('my_photos')) {
             foreach ($data['my_photos'] as $image) {
                 $file_name = explode('.', $image->getClientOriginalName())[0];
@@ -399,24 +422,24 @@ class UserController extends Controller
                 $destinationPath = public_path('/assets/app_images/user_photos');
                 $image->move($destinationPath, $photo_name);
 
-                // $status = DB::table('user_photos')->insertGetId([
-                //     'user_id' => $data['id'],
-                //     'photo' => $photo_name,
-                //     'type' => $data['type'],
-                //     'created_at' => date('Y-m-d H:i:s'),
-                // ]);
+                $status = DB::table('user_photos')->insertGetId([
+                    'user_id' => $data['id'],
+                    'photo' => $photo_name,
+                    'type' => $data['type'],
+                    'created_at' => date('Y-m-d H:i:s'),
+                ]);
+                $new_photos[] = $photo_name;
             }
         }
-
         $photo_change_log = new PhotoChangeLog();
         $photo_change_log->user_id = $data['id'];
-        $photo_change_log->photo = $photo_name;
+        $photo_change_log->photo = json_encode($new_photos);
         $photo_change_log->type = $data['type'];
         $photo_change_log->status  = 0;
         $query = $photo_change_log->save();
 
         if ($query > 0) {
-            $finalResult = response()->json(array('msg' => 'success', 'response' => 'Photos uploaded successfully. Changes would be propagated shortly after approval.'));
+            $finalResult = response()->json(array('msg' => 'success', 'response' => 'Photos updated successfully. A copy of your profile has been shared with the admin (SharingSugar) for verification. '));
             return $finalResult;
         } else {
             $finalResult = response()->json(array('msg' => 'error', 'response' => 'Something went wrong.'));
