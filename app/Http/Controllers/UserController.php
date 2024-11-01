@@ -120,15 +120,15 @@ class UserController extends Controller
                 $profile_change_log->status  = 0;
                 $query = $profile_change_log->save();
                 if ($query > 0) {
-                    return response()->json(array('msg' => 'success', 'response' => 'Your profile have been switched.Please update your age for verification'), 200);
+                    return response()->json(array('msg' => 'success', 'response' => 'Your profile have been switched.Please update your age for verification'));
                 } else {
-                    return response()->json(array('msg' => 'error', 'response' => 'Profile switched but could not share with admin for verification.'), 422);
+                    return response()->json(array('msg' => 'error', 'response' => 'Profile switched but could not share with admin for verification.'));
                 }
             } else {
-                return response()->json(array('msg' => 'success', 'response' => 'Your profile have been switched.Please update your age for verification'), 200);
+                return response()->json(array('msg' => 'success', 'response' => 'Your profile have been switched.Please update your age for verification'));
             }
         } else {
-            return response()->json(array('msg' => 'error', 'response' => 'Could not switch profile.'), 422);
+            return response()->json(array('msg' => 'error', 'response' => 'Could not switch profile.'));
         }
     }
     public function update(Request $request)
@@ -233,7 +233,7 @@ class UserController extends Controller
                     }
                 }
             } else {
-                return response()->json(array('msg' => 'error', 'response' => 'Please set your date of birth first.'), 422);
+                return response()->json(array('msg' => 'error', 'response' => 'Please set your date of birth first.'));
             }
         }
         $query_update = User::where('id', $data['id'])->update([
@@ -273,15 +273,15 @@ class UserController extends Controller
                 $profile_change_log->status  = 0;
                 $query = $profile_change_log->save();
                 if ($query > 0) {
-                    return response()->json(array('msg' => 'success', 'response' => 'Your profile has been updated and a copy of your profile has been shared with the admin (SharingSugar) for verification'), 200);
+                    return response()->json(array('msg' => 'success', 'response' => 'Your profile has been updated and a copy of your profile has been shared with the admin (SharingSugar) for verification'));
                 } else {
-                    return response()->json(array('msg' => 'error', 'response' => 'Profile updated but could not share with admin for verification.'), 422);
+                    return response()->json(array('msg' => 'error', 'response' => 'Profile updated but could not share with admin for verification.'));
                 }
             } else {
-                return response()->json(array('msg' => 'success', 'response' => 'Your profile has been updated and a copy of your profile has been shared with the admin (SharingSugar) for verification'), 200);
+                return response()->json(array('msg' => 'success', 'response' => 'Your profile has been updated and a copy of your profile has been shared with the admin (SharingSugar) for verification'));
             }
         } else {
-            return response()->json(array('msg' => 'error', 'response' => 'Could not update profile.'), 422);
+            return response()->json(array('msg' => 'error', 'response' => 'Could not update profile.'));
         }
     }
 
