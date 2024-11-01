@@ -11,6 +11,10 @@
     <i class="fas fa-angle-up"></i>
 </a>
 <header class="header-section">
+    @guest
+    @else
+    <p style="margin-top: -10px; text-align: center; color: red; background-color: #fff3cd;">@include('common.trial_alert')</p>
+    @endguest
     <div class="container">
         <div class="header-wrapper">
             <div class="logo">

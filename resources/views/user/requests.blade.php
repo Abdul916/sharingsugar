@@ -4,7 +4,7 @@
 <section class="breadcrumb-area profile-bc-area">
     <div class="container">
         <div class="content">
-            <h2 class="title extra-padding">Requests</h2>
+            {{-- <h2 class="title extra-padding">Requests</h2> --}}
             <ul class="breadcrumb-list extra-padding">
                 <li>
                     <a href="{{ url('home') }}">Home</a>
