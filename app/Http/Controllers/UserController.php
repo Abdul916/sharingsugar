@@ -48,32 +48,32 @@ class UserController extends Controller
         $current_role = $data['iam'];
         switch ($current_role) {
             case 'Sugar Mommy':
-                $new_role = 'Sugar Baby (Mujer / Woman)';
-                $interested_in = 'Sugar Daddy';
-                break;
+            $new_role = 'Sugar Baby (Mujer / Woman)';
+            $interested_in = 'Sugar Daddy';
+            break;
             case 'Sugar Daddy':
-                $new_role = 'Sugar Baby (Hombre / Man)';
-                $interested_in = 'Sugar Mommy';
-                break;
+            $new_role = 'Sugar Baby (Hombre / Man)';
+            $interested_in = 'Sugar Mommy';
+            break;
             case 'Sugar Daddy Mommy':
-                $new_role = 'Sugar Baby (Trans)';
-                $interested_in = 'Sugar Daddy Mommy';
-                break;
+            $new_role = 'Sugar Baby (Trans)';
+            $interested_in = 'Sugar Daddy Mommy';
+            break;
             case 'Sugar Baby (Mujer / Woman)':
-                $new_role = 'Sugar Mommy';
-                $interested_in = 'Sugar Baby (Hombre / Man)';
-                break;
+            $new_role = 'Sugar Mommy';
+            $interested_in = 'Sugar Baby (Hombre / Man)';
+            break;
             case 'Sugar Baby (Hombre / Man)':
-                $new_role = 'Sugar Daddy';
-                $interested_in = 'Sugar Baby (Mujer / Woman)';
-                break;
+            $new_role = 'Sugar Daddy';
+            $interested_in = 'Sugar Baby (Mujer / Woman)';
+            break;
             case 'Sugar Baby (Trans)':
-                $new_role = 'Sugar Daddy Mommy';
-                $interested_in = 'Sugar Baby (Trans)';
-                break;
+            $new_role = 'Sugar Daddy Mommy';
+            $interested_in = 'Sugar Baby (Trans)';
+            break;
             default:
-                return response()->json(array('msg' => 'error', 'response' => 'Something went wrong in switching roles condition.'));
-                break;
+            return response()->json(array('msg' => 'error', 'response' => 'Something went wrong in switching roles condition.'));
+            break;
         }
         $user = $data;
         $previous_data = [
@@ -196,40 +196,40 @@ class UserController extends Controller
                 if ($age < 25) {
                     switch ($data['gender']) {
                         case 1:
-                            $new_role = 'Sugar Baby (Hombre / Man)';
-                            $interested_in = 'Sugar Mommy';
-                            break;
+                        $new_role = 'Sugar Baby (Hombre / Man)';
+                        $interested_in = 'Sugar Mommy';
+                        break;
                         case 2:
-                            $new_role = 'Sugar Baby (Mujer / Woman)';
-                            $interested_in = 'Sugar Daddy';
-                            break;
+                        $new_role = 'Sugar Baby (Mujer / Woman)';
+                        $interested_in = 'Sugar Daddy';
+                        break;
                         case 3:
-                            $new_role = 'Sugar Baby (Trans)';
-                            $interested_in = 'Sugar Daddy Mommy';
-                            break;
+                        $new_role = 'Sugar Baby (Trans)';
+                        $interested_in = 'Sugar Daddy Mommy';
+                        break;
                         default:
-                            $new_role = $user->iam;
-                            $interested_in = $user->interestedin;
-                            break;
+                        $new_role = $user->iam;
+                        $interested_in = $user->interestedin;
+                        break;
                     }
                 } else {
                     switch ($data['gender']) {
                         case 1:
-                            $new_role = 'Sugar Daddy';
-                            $interested_in = 'Sugar Baby (Mujer / Woman)';
-                            break;
+                        $new_role = 'Sugar Daddy';
+                        $interested_in = 'Sugar Baby (Mujer / Woman)';
+                        break;
                         case 2:
-                            $new_role = 'Sugar Mommy';
-                            $interested_in = 'Sugar Baby (Hombre / Man)';
-                            break;
+                        $new_role = 'Sugar Mommy';
+                        $interested_in = 'Sugar Baby (Hombre / Man)';
+                        break;
                         case 3:
-                            $new_role = 'Sugar Daddy Mommy';
-                            $interested_in = 'Sugar Baby (Trans)';
-                            break;
+                        $new_role = 'Sugar Daddy Mommy';
+                        $interested_in = 'Sugar Baby (Trans)';
+                        break;
                         default:
-                            $new_role = $user->iam;
-                            $interested_in = $user->interestedin;
-                            break;
+                        $new_role = $user->iam;
+                        $interested_in = $user->interestedin;
+                        break;
                     }
                 }
             } else {
@@ -503,26 +503,26 @@ class UserController extends Controller
         $data['user'] = User::find(Auth::user()->id);
 
         $data['blocked'] = DB::table('user_configs')
-            ->where('user_id', Auth::user()->id)
-            ->where('type', 3)
-            ->get();
+        ->where('user_id', Auth::user()->id)
+        ->where('type', 3)
+        ->get();
 
         $data['today_visitor_count'] = DB::table('visitors')
-            ->where('user_id', Auth::user()->id)
-            ->whereDate('created_at', date('Y-m-d'))
-            ->distinct()->count('visitor_user_id');
+        ->where('user_id', Auth::user()->id)
+        ->whereDate('created_at', date('Y-m-d'))
+        ->distinct()->count('visitor_user_id');
 
 
         $data['today_visitors'] = DB::table('visitors')
-            ->where('user_id', Auth::user()->id)
-            ->whereDate('created_at', date('Y-m-d'))
-            ->distinct()
-            ->get('visitor_user_id');
+        ->where('user_id', Auth::user()->id)
+        ->whereDate('created_at', date('Y-m-d'))
+        ->distinct()
+        ->get('visitor_user_id');
 
         $data['visitors'] = DB::table('visitors')
-            ->where('user_id', Auth::user()->id)
-            ->distinct()
-            ->get('visitor_user_id');
+        ->where('user_id', Auth::user()->id)
+        ->distinct()
+        ->get('visitor_user_id');
 
         return view('user/privacy_settings', $data);
     }
@@ -547,12 +547,12 @@ class UserController extends Controller
 
         if ($request->only_photos == 'on') {
             $query->where('profile_image', '!=', 'user.png')
-                ->Where('profile_image', '!=', null);
+            ->Where('profile_image', '!=', null);
         }
         if ($request->name != '') {
             $query->where('first_name', 'like', '%' . $request->name . '%')
-                ->orWhere('last_name', 'like', '%' . $request->name . '%')
-                ->orWhere('username', 'like', '%' . $request->name . '%');
+            ->orWhere('last_name', 'like', '%' . $request->name . '%')
+            ->orWhere('username', 'like', '%' . $request->name . '%');
         }
         if ($request->has('Age')) {
             $query->where('age', '>=', $request->minAge);
@@ -628,9 +628,9 @@ class UserController extends Controller
             }
         }
         $blocked = DB::table('user_configs')
-            ->where('user_id', Auth::user()->id)
-            ->where('type', 3)
-            ->get();
+        ->where('user_id', Auth::user()->id)
+        ->where('type', 3)
+        ->get();
         $blocked_ids = [];
         foreach ($blocked as $block) {
             $blocked_ids[] = $block->config_user_id;
@@ -748,29 +748,29 @@ class UserController extends Controller
     {
         $data['user'] = User::find(Auth::user()->id);
         $data['pending'] = DB::table('user_configs')
-            ->where('user_id', Auth::user()->id)
-            ->where('type', 5)
-            ->where('status', 1)
-            ->get();
+        ->where('user_id', Auth::user()->id)
+        ->where('type', 5)
+        ->where('status', 1)
+        ->get();
 
         $data['approved'] = DB::table('user_configs')
-            ->where('user_id', Auth::user()->id)
-            ->where('type', 5)
-            ->where('status', 2)
-            ->get();
+        ->where('user_id', Auth::user()->id)
+        ->where('type', 5)
+        ->where('status', 2)
+        ->get();
 
 
         $data['my_pending'] = DB::table('user_configs')
-            ->where('config_user_id', Auth::user()->id)
-            ->where('type', 5)
-            ->where('status', 1)
-            ->get();
+        ->where('config_user_id', Auth::user()->id)
+        ->where('type', 5)
+        ->where('status', 1)
+        ->get();
 
         $data['my_approved'] = DB::table('user_configs')
-            ->where('config_user_id', Auth::user()->id)
-            ->where('type', 5)
-            ->where('status', 2)
-            ->get();
+        ->where('config_user_id', Auth::user()->id)
+        ->where('type', 5)
+        ->where('status', 2)
+        ->get();
 
         return view('user/requests', $data);
     }
@@ -882,14 +882,14 @@ class UserController extends Controller
             $user_id = $user->id;
 
             $chatted = DB::table('chatted_users')
-                ->where(function ($query1) use ($user_id) {
-                    $query1->where('sender_id', '=', Auth::user()->id)
-                        ->where('receiver_id', '=', $user_id);
-                })
-                ->orWhere(function ($query2) use ($user_id) {
-                    $query2->where('sender_id', $user_id)
-                        ->where('receiver_id', Auth::user()->id);
-                })->first();
+            ->where(function ($query1) use ($user_id) {
+                $query1->where('sender_id', '=', Auth::user()->id)
+                ->where('receiver_id', '=', $user_id);
+            })
+            ->orWhere(function ($query2) use ($user_id) {
+                $query2->where('sender_id', $user_id)
+                ->where('receiver_id', Auth::user()->id);
+            })->first();
 
             if (empty($chatted->id)) {
                 $chatted_id = DB::table('chatted_users')->insertGetId([
@@ -907,23 +907,23 @@ class UserController extends Controller
             $user_id = $user->id;
 
             $chatted = DB::table('chatted_users')
-                ->where(function ($query1) use ($user_id) {
-                    $query1->where('sender_id', '=', Auth::user()->id)
-                        ->where('receiver_id', '=', $user_id);
-                })
-                ->orWhere(function ($query2) use ($user_id) {
-                    $query2->where('sender_id', $user_id)
-                        ->where('receiver_id', Auth::user()->id);
-                })->first();
+            ->where(function ($query1) use ($user_id) {
+                $query1->where('sender_id', '=', Auth::user()->id)
+                ->where('receiver_id', '=', $user_id);
+            })
+            ->orWhere(function ($query2) use ($user_id) {
+                $query2->where('sender_id', $user_id)
+                ->where('receiver_id', Auth::user()->id);
+            })->first();
             $data['chat_id'] = $chatted->id;
             $data['receiver_id'] = $user_id;
         }
 
         $data['chatted_users'] = DB::table('chatted_users')
-            ->where(function ($query) {
-                $query->where('sender_id', Auth::user()->id)
-                    ->orWhere('receiver_id', Auth::user()->id);
-            })->orderBy('id', 'ASC')->get();
+        ->where(function ($query) {
+            $query->where('sender_id', Auth::user()->id)
+            ->orWhere('receiver_id', Auth::user()->id);
+        })->orderBy('id', 'ASC')->get();
 
         $data['user'] = User::find(Auth::user()->id);
         return view('user/chat', $data);
@@ -933,8 +933,8 @@ class UserController extends Controller
     {
         $data = $request->all();
         $data['chats'] = DB::table('chat')
-            ->where('chatted_id', $data['chat_id'])
-            ->orderBy('id', 'ASC')->get();
+        ->where('chatted_id', $data['chat_id'])
+        ->orderBy('id', 'ASC')->get();
 
         $data['chatted_id'] = $data['chat_id'];
         $row = get_single_row('chatted_users', 'id', $data['chat_id'], '', '', '', '');
@@ -972,8 +972,8 @@ class UserController extends Controller
         $receiver = User::where('id', $data['receiver_id'])->first();
         if ($status > 0) {
             add_notifications(Auth::user()->id, $data['receiver_id'], 'sent a text message', '4');
-            $email_subject = $email_subject = get_section_content('project', 'site_title') . '(New Chat Message Received)';
-            $email_text = 'Your received a new message from ' . Auth::user()->first_name . ' ' . Auth::user()->last_name . '. Please login to your account to view the message.';
+            $email_subject = get_section_content('project', 'site_title') . '(Notification)';
+            $email_text = Auth::user()->username .' sent a text message.';
             send_notification_email($receiver, $email_subject, $email_text);
             $finalResult = response()->json(array('msg' => 'success', 'response' => 'Message sent successfully.'));
             return $finalResult;
