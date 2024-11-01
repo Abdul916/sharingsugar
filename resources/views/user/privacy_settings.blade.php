@@ -53,7 +53,7 @@
                                                 <i class="fas fa-ban"></i>
                                             </div>
                                             <h5>
-                                                Who can text you?
+                                                Who can texting you?
                                             </h5>
                                         </div>
                                     </div>

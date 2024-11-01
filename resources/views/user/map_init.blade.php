@@ -2,17 +2,22 @@
     const latlongs = {!! $cordinates !!};
     console.log(latlongs);
 
+    const center = latlongs.reduce((acc, curr) => {
+        acc.lat += curr.lat;
+        acc.lng += curr.lng;
+        return acc;
+    }, { lat: 0, lng: 0 });
+
+    center.lat /= latlongs.length;
+    center.lng /= latlongs.length;
+    console.log("Center of the map:", center);
+
+
     function initMap() {
-        // 1. Initialize the map
-        const myLatlng = {
-            lat: 33.0,
-            lng: 78.0
-        };
         const map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 4,
-            center: myLatlng,
+            zoom: 2,
+            center: center,
         });
-        // 2. Set up autocomplete for address input
         const input = document.getElementById('address');
         const autocomplete = new google.maps.places.Autocomplete(input);
         autocomplete.setFields(['geometry', 'formatted_address', 'address_components']);
@@ -27,20 +32,17 @@
             const country = getAddressComponent(place, 'country');
             const latitude = place.geometry.location.lat();
             const longitude = place.geometry.location.lng();
-            // Update the input fields
             document.getElementById('address').value = address;
             document.getElementById('city').value = city;
             document.getElementById('state').value = state;
             document.getElementById('country').value = country;
             document.getElementById('latitude').value = latitude;
             document.getElementById('longitude').value = longitude;
-            // Center the map on the selected location
             map.setCenter({
                 lat: latitude,
                 lng: longitude
             });
         });
-        // 3. Add markers for users
         latlongs.forEach((location, index) => {
             const marker = new google.maps.Marker({
                 position: location,
@@ -55,10 +57,10 @@
                 }
             });
             const infoWindowContent = `
-                <div>
-                    <strong>${location.name}</strong> <br>
-                    <a href="${location.profile_link}" target="_blank">View Profile</a>
-                </div>
+            <div>
+            <strong>${location.name}</strong> <br>
+            <a href="${location.profile_link}" target="_blank">View Profile</a>
+            </div>
             `;
             const infoWindow = new google.maps.InfoWindow({
                 content: infoWindowContent

@@ -151,7 +151,13 @@
                             <ul class="infolist">
                                 <li>
                                     <span>last Login</span>
-                                    <span class="text_align">{{ time_elapsed_string($user->last_login) }}</span>
+                                    <span class="text_align">
+                                        <?php if($user->show_last_login == 1) { ?>
+                                            {{ time_elapsed_string($user->last_login) }}
+                                        <?php } else {
+                                            echo "Hidden";
+                                        } ?>
+                                    </span>
                                 </li>
                                 <li>
                                     <span>Name</span>
