@@ -59,11 +59,17 @@
                                 @endif
                             </label>
                         </div>
+
                         <div class="hr-line-dashed"></div>
                         <div class="row">
                             <div class="col-sm-12">
+                                @if($approval->type == 0)
+                                <h4>Old Profile Image</h4>
+                                <img src="{{ asset('assets/app_images/' . $approval->photo) }}" class="img-thumbnail" alt="Profile Photo" style="width: 100px; height: 100px;">
+                                @else
                                 <h4>Profile Image</h4>
                                 <img src="{{ asset('assets/app_images/' . $approval->user->profile_image) }}" class="img-thumbnail" alt="Profile Photo" style="width: 100px; height: 100px;">
+                                @endif
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
@@ -89,9 +95,11 @@
                             <div class="col-sm-12">
                                 <h4>Image that need approval</h4>
                                 @if($approval->type != 0)
-                                <img src="{{ asset('assets/app_images/user_photos/' . $approval->photo) }}" class="img-thumbnail" alt="New Photo" style="width: 300px; height: 300px;">
+                                @foreach($photos as $photo)
+                                <img src="{{ asset('assets/app_images/user_photos/' . $photo) }}" class="img-thumbnail" alt="New Photo" style="width: 300px; height: 300px;">
+                                @endforeach
                                 @else
-                                <img src="{{ asset('assets/app_images/' . $approval->photo) }}" class="img-thumbnail" alt="New Photo" style="width: 300px; height: 300px;">
+                                <img src="{{ asset('assets/app_images/' . $approval->user->profile_image) }}" class="img-thumbnail" alt="New Photo" style="width: 300px; height: 300px;">
                                 @endif
                             </div>
                         </div>
