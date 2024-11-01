@@ -177,8 +177,8 @@
                                     <div class="col-md-8">
                                         <div class="age-range-slider mt-3">
                                             <div id="age-slider"></div>
-                                            <input type="hidden" value="{{isset($parameters['age']) ? $parameters['minAge'] : '18'}}" id="ageSlider1" name="minAge" disabled>
-                                            <input type="hidden" value="{{isset($parameters['age']) ? $parameters['maxAge'] : '50'}}" id="ageSlider2" name="maxAge" disabled>
+                                            <input type="hidden" value="{{isset($parameters['Age']) ? $parameters['minAge'] : '18'}}" id="ageSlider1" name="minAge" disabled>
+                                            <input type="hidden" value="{{isset($parameters['Age']) ? $parameters['maxAge'] : '50'}}" id="ageSlider2" name="maxAge" disabled>
                                         </div>
                                     </div>
                                 </div>
@@ -334,34 +334,35 @@
         $('#childrenSlider1').prop('disabled', false);
         $('#childrenSlider2').prop('disabled', false);
         $('#child-slider').slider("option", "disabled", !ischild_slider);
-    });
-    $('#toggle_age_slider').change(function() {
-        let isChecked = $(this).is(':checked');
-        $('#age-slider').slider("option", "disabled", !isChecked);
-        $('#ageSlider1').prop('disabled', !isChecked);
-        $('#ageSlider2').prop('disabled', !isChecked);
-        localStorage.setItem('age_slider', isChecked);
-    });
-    $('#toggle_height_slider').change(function() {
-        let isChecked = $(this).is(':checked');
-        $('#height-slider').slider("option", "disabled", !isChecked);
-        $('#heightSlider1').prop('disabled', !isChecked);
-        $('#heightSlider2').prop('disabled', !isChecked);
-        localStorage.setItem('height_slider', isChecked);
-    });
-    $('#toggle_weight_slider').change(function() {
-        let isChecked = $(this).is(':checked');
-        $('#weight-slider').slider("option", "disabled", !isChecked);
-        $('#weightSlider1').prop('disabled', !isChecked);
-        $('#weightSlider2').prop('disabled', !isChecked);
-        localStorage.setItem('weight_slider', isChecked);
-    });
-    $('#toggle_child_slider').change(function() {
-        let isChecked = $(this).is(':checked');
-        $('#child-slider').slider("option", "disabled", !isChecked);
-        $('#childrenSlider1').prop('disabled', !isChecked);
-        $('#childrenSlider2').prop('disabled', !isChecked);
-        localStorage.setItem('child_slider', isChecked);
+
+        $('#toggle_age_slider').change(function() {
+            let isChecked = $(this).is(':checked');
+            $('#age-slider').slider("option", "disabled", !isChecked);
+            $('#ageSlider1').prop('disabled', !isChecked);
+            $('#ageSlider2').prop('disabled', !isChecked);
+            localStorage.setItem('age_slider', isChecked);
+        });
+        $('#toggle_height_slider').change(function() {
+            let isChecked = $(this).is(':checked');
+            $('#height-slider').slider("option", "disabled", !isChecked);
+            $('#heightSlider1').prop('disabled', !isChecked);
+            $('#heightSlider2').prop('disabled', !isChecked);
+            localStorage.setItem('height_slider', isChecked);
+        });
+        $('#toggle_weight_slider').change(function() {
+            let isChecked = $(this).is(':checked');
+            $('#weight-slider').slider("option", "disabled", !isChecked);
+            $('#weightSlider1').prop('disabled', !isChecked);
+            $('#weightSlider2').prop('disabled', !isChecked);
+            localStorage.setItem('weight_slider', isChecked);
+        });
+        $('#toggle_child_slider').change(function() {
+            let isChecked = $(this).is(':checked');
+            $('#child-slider').slider("option", "disabled", !isChecked);
+            $('#childrenSlider1').prop('disabled', !isChecked);
+            $('#childrenSlider2').prop('disabled', !isChecked);
+            localStorage.setItem('child_slider', isChecked);
+        });
     });
     function showLocationSection(elm) {
         if (elm.checked) {

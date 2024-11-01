@@ -529,6 +529,7 @@ class UserController extends Controller
 
     public function members(Request $request)
     {
+        // dd($request->all());
         $query = User::query();
         $query->where('id', '<>', Auth::user()->id);
         if ($request->has('interestedin')) {
@@ -539,74 +540,119 @@ class UserController extends Controller
         if ($request->sorting == 'last_login') {
             $query->orderBy('last_login', 'DESC');
         } else if ($request->sorting == 'distance') {
-            $query->orderByRaw('latitude IS NULL, longitude IS NULL, (3959 * acos( cos( radians(?) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(?) ) + sin( radians(?) ) * sin( radians( latitude ) ) ))', [Auth::user()->latitude, Auth::user()->longitude, Auth::user()->latitude]);
+            $query->orderByRaw('latitude IS NULL, longitude IS NULL, ( 3959 * acos( cos( radians(' . $request->latitude . ') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(' . $request->longitude . ') ) + sin( radians(' . $request->latitude . ') ) * sin( radians( latitude ) ) ) )');
         } else {
             $query->orderBy('last_login', 'DESC');
         }
+
         if ($request->only_photos == 'on') {
             $query->where('profile_image', '!=', 'user.png')
             ->Where('profile_image', '!=', null);
         }
-        if (!empty($request->name)) {
-            $query->where(function($q) use ($request) {
-                $q->where('first_name', 'like', '%' . $request->name . '%')
-                ->orWhere('last_name', 'like', '%' . $request->name . '%')
-                ->orWhere('username', 'like', '%' . $request->name . '%');
-            });
+        if ($request->name != '') {
+            $query->where('first_name', 'like', '%' . $request->name . '%')
+            ->orWhere('last_name', 'like', '%' . $request->name . '%')
+            ->orWhere('username', 'like', '%' . $request->name . '%');
         }
         if ($request->has('Age')) {
-            $query->whereBetween('age', [$request->minAge, $request->maxAge]);
+            $query->where('age', '>=', $request->minAge);
+            $query->where('age', '<=', $request->maxAge);
         }
         if ($request->has('Height')) {
-            $query->whereBetween('height', [$request->minHeight, $request->maxHeight]);
+            $query->where('height', '>=', $request->minHeight);
+            $query->where('height', '<=', $request->maxHeight);
         }
         if ($request->has('Weight')) {
-            $query->whereBetween('weight', [$request->minWeight, $request->maxWeight]);
+            $query->where('weight', '>=', $request->minWeight);
+            $query->where('weight', '<=', $request->maxWeight);
         }
         if ($request->has('Children')) {
-            $query->whereBetween('child', [$request->minChildren, $request->maxChildren]);
+            $query->where('child', '>=', $request->minChildren);
+            $query->where('child', '<=', $request->maxChildren);
         }
         $body_types = [];
-        foreach (['Skinny' => 1, 'Tiny' => 2, 'Median' => 3, 'Athletic' => 4, 'Curvilinear' => 5, 'Full_Height' => 6] as $type => $value) {
-            if ($request->has($type)) $body_types[] = $value;
+        if ($request->has('Skinny')) {
+            $body_types[] = 1;
         }
-        if (!empty($body_types)) {
+        if ($request->has('Tiny')) {
+            $body_types[] = 2;
+        }
+        if ($request->has('Median')) {
+            $body_types[] = 3;
+        }
+        if ($request->has('Athletic')) {
+            $body_types[] = 4;
+        }
+
+        if ($request->has('Curvilinear')) {
+            $body_types[] = 5;
+        }
+        if ($request->has('Full_Height')) {
+            $body_types[] = 6;
+        }
+        if (count($body_types) > 0) {
             $query->whereIn('body_type', $body_types);
         }
+
         if ($request->has('locationsec')) {
-            if (!empty($request->city)) $query->where('city', 'like', '%' . $request->city . '%');
-            if (!empty($request->state)) $query->where('state', 'like', '%' . $request->state . '%');
-            if (!empty($request->country)) $query->where('country', 'like', '%' . $request->country . '%');
-            if (!empty($request->address)) {
+            if ($request->has('city') && $request->city != '') {
+                $query->where('city', 'like', '%' . $request->city . '%');
+            }
+            if ($request->has('state') && $request->state != '') {
+                $query->where('state', 'like', '%' . $request->state . '%');
+            }
+            if ($request->has('country') && $request->country != '') {
+                $query->where('country', 'like', '%' . $request->country . '%');
+            }
+            if ($request->has('address') && $request->address != '') {
                 $distance = $request->distance;
                 $latitude = $request->latitude;
                 $longitude = $request->longitude;
                 $radius = 6371;
-                $query->whereRaw("
-                    (6371 * acos(cos(radians(?)) * cos(radians(latitude)) * cos(radians(longitude) - radians(?)) + sin(radians(?)) * sin(radians(latitude)))) <= ?
-                    ", [$latitude, $longitude, $latitude, $distance]);
+
+                $latRadians = deg2rad($latitude);
+                $lngRadians = deg2rad($longitude);
+
+                $angularDistance = $distance / $radius;
+
+                $lngMinRadians = $lngRadians - $angularDistance / cos($latRadians);
+                $lngMaxRadians = $lngRadians + $angularDistance / cos($latRadians);
+
+                $latMin = rad2deg($latRadians - $angularDistance);
+                $latMax = rad2deg($latRadians + $angularDistance);
+                $lngMin = rad2deg($lngMinRadians);
+                $lngMax = rad2deg($lngMaxRadians);
+
+                $query->whereBetween('latitude', [$latMin, $latMax]);
+                $query->whereBetween('longitude', [$lngMin, $lngMax]);
             }
         }
-        $blocked_ids = DB::table('user_configs')
+        $blocked = DB::table('user_configs')
         ->where('user_id', Auth::user()->id)
         ->where('type', 3)
-        ->pluck('config_user_id')
-        ->toArray();
+        ->get();
+        $blocked_ids = [];
+        foreach ($blocked as $block) {
+            $blocked_ids[] = $block->config_user_id;
+        }
         $query->whereNotIn('id', $blocked_ids);
+        // $users = $query->paginate(3);
         $users = $query->paginate(51);
         $users->appends($request->except('page'));
-        $data = [
-            'users' => $users,
-            'parameters' => $request->all(),
-            'cordinates' => $users->map(function ($user) {
-                return [
+        $data['users'] = $users;
+        $data['parameters'] = $request->all();
+        $data['cordinates'] = [];
+        foreach ($data['users'] as $user) {
+            if ($user->latitude != null && $user->longitude != null) {
+                $data['cordinates'][] = [
                     'lat' => (float)$user->latitude,
                     'lng' => (float)$user->longitude,
                     'name' => $user->first_name . ' ' . $user->last_name,
                     'profile_link' => url('public_profile/' . $user->unique_id),
                 ];
-            })->filter()->toJson()
-        ];
+            }
+        }
+        $data['cordinates'] = json_encode($data['cordinates']);
         return view('user/members', $data);
     }
 
