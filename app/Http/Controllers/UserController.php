@@ -529,6 +529,9 @@ class UserController extends Controller
 
     public function members(Request $request)
     {
+        if(is_not_premium() == true){
+            return redirect('membership');
+        }
         $query = User::query();
         $query->where('id', '<>', Auth::user()->id);
         if ($request->has('interestedin')) {
@@ -828,6 +831,9 @@ class UserController extends Controller
 
     public function chat(Request $request)
     {
+        if(is_not_premium() == true){
+            return redirect('membership');
+        }
         $data['chat_id'] = '';
         $data['receiver_id'] = '';
         if (isset($_GET['q'])) {
