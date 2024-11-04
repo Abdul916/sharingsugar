@@ -620,20 +620,26 @@ class UserController extends Controller
             add_notifications(Auth::user()->id, $data['id'], 'added your profile to favorites list', '3');
             $status = add_user_configuration(Auth::user()->id, $data['id'], '1', '', '', '1', '');
             $response = 'User successfully added in favorite list.';
+            send_notification_email_to_users(Auth::user()->id, $data['id'], 'favorite');
         } elseif ($data['action'] == 'like') {
             add_notifications(Auth::user()->id, $data['id'], 'liked your profile', '1');
             $status = add_user_configuration(Auth::user()->id, $data['id'], '2', '', '', '1', '');
             $response = 'User liked successfully.';
+            send_notification_email_to_users(Auth::user()->id, $data['id'], 'like_profile');
         } elseif ($data['action'] == 'block') {
             $status = add_user_configuration(Auth::user()->id, $data['id'], '3', '', '', '1', '');
             $response = 'User blocked successfully.';
+            send_notification_email_to_users(Auth::user()->id, $data['id'], 'block');
         } elseif ($data['action'] == 'allow_private_photos') {
             add_notifications(Auth::user()->id, $data['id'], 'allow you to view private photos', '5');
             $status = add_user_configuration(Auth::user()->id, $data['id'], '5', '', '', '2', $data['requested_id']);
             $response = 'User successfully allow to view your private photos.';
+            send_notification_email_to_users(Auth::user()->id, $data['id'], 'allow_private_photos');
         } elseif ($data['action'] == 'request_private_photos') {
+            add_notifications(Auth::user()->id, $data['id'], 'want to see your private photos', '5');
             $status = add_user_configuration($data['id'], Auth::user()->id, '5', '', '', '1', '');
             $response = 'Your request was successfully submitted.';
+            send_notification_email_to_users(Auth::user()->id, $data['id'], 'request_private_photos');
         } elseif ($data['action'] == 'report') {
 
             $validator = Validator::make($data, [
@@ -661,12 +667,14 @@ class UserController extends Controller
         } elseif ($data['action'] == 'unfavorite') {
             $status = remove_user_configuration(Auth::user()->id, $data['id'], '1');
             $response = 'User successfully removed from favorites.';
+            send_notification_email_to_users(Auth::user()->id, $data['id'], 'unfavorite');
         } elseif ($data['action'] == 'unblock') {
             $status = remove_user_configuration(Auth::user()->id, $data['id'], '3');
             $response = 'User successfully unblocked.';
         } elseif ($data['action'] == 'block_private_photos') {
             $status = remove_user_configuration(Auth::user()->id, $data['id'], '5');
             $response = 'User successfully blocked to view your private photos.';
+            send_notification_email_to_users(Auth::user()->id, $data['id'], 'block_private_photos');
         } elseif ($data['action'] == 'delete_request') {
             $status = remove_user_configuration($data['id'], Auth::user()->id, '5');
             $response = 'Your request successfully deleted.';
@@ -688,6 +696,7 @@ class UserController extends Controller
             add_notifications(Auth::user()->id, $data['photo_user_id'], 'liked your photo', '2');
             $status = like_photos($data['user_id'], $data['photo_user_id'], $data['id']);
             $response = 'Photo liked successfully.';
+            send_notification_email_to_users(Auth::user()->id, $data['photo_user_id'], 'like_image');
         } elseif ($data['action'] == 'unlike') {
             $status = unlike_photos($data['user_id'], $data['photo_user_id'], $data['id']);
             $response = 'Photo unliked successfully.';
@@ -781,16 +790,24 @@ class UserController extends Controller
     public function visit_profile(Request $request)
     {
         $data = $request->all();
-        $status = DB::table('visitors')->insertGetId([
-            'user_id' => $data['user_id'],
-            'visitor_user_id' => $data['visitor_user_id'],
-            'ip' => request()->ip(),
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s')
-        ]);
-        if ($status > 0) {
-            $this->visit_email_to_user($data);
+        $lastEmail = DB::table('visitors')
+        ->where('user_id', $data['user_id'])
+        ->where('visitor_user_id', $data['visitor_user_id'])
+        ->whereDate('created_at', '=', date('Y-m-d'))
+        ->first();
+        if (!$lastEmail) {
+            $status = DB::table('visitors')->insertGetId([
+                'user_id' => $data['user_id'],
+                'visitor_user_id' => $data['visitor_user_id'],
+                'ip' => request()->ip(),
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s')
+            ]);
+            if ($status > 0) {
+                $this->visit_email_to_user($data);
+            }
         }
+
     }
 
     public function visit_email_to_user($data)

@@ -30,7 +30,7 @@
 				<div class="image image-log"></div>
 				<div class="col-lg-7">
 					<div class="log-reg-inner">
-						<div class="mb-lg-0 mb-5" style="text-align: center;">
+						<div class="mb-lg-5 mb-5" style="text-align: center;">
 							<a href="{{ url('/') }}">
 								<div class="logo">
 									<img src="{{ asset('assets/images/logo2.png') }}" alt="logo" style="width: 200px;">
