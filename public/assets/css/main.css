@@ -8564,7 +8564,7 @@ input[type=submit] {
 .log-reg .log-reg-inner .section-header.inloginp {
   text-align: center;
   margin-bottom: 30px;
-  padding-top: 80px;
+/*  padding-top: 80px;*/
 }
 
 .log-reg .log-reg-inner .section-header.inloginp .title {

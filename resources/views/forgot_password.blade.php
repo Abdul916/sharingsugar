@@ -20,20 +20,23 @@
 					<div class="col-lg-5">
 						<a href="{{ url('/') }}" class="backto-home"><i class="fas fa-chevron-left"></i> Back to {{ get_section_content('project', 'site_title') }}</a>
 					</div>
-					<div class="col-lg-7 ">
-						<div class="logo">
-							<img src="{{ asset('assets/images/logo2.png') }}" alt="logo">
-						</div>
+					<div class="col-lg-7">
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="container">
 			<div class="row justify-content-end">
-				<div class="image image-log">
-				</div>
+				<div class="image image-log"></div>
 				<div class="col-lg-7">
 					<div class="log-reg-inner">
+						<div class="mb-lg-0 mb-5" style="text-align: center;">
+							<a href="{{ url('/') }}">
+								<div class="logo">
+									<img src="{{ asset('assets/images/logo2.png') }}" alt="logo" style="width: 200px;">
+								</div>
+							</a>
+						</div>
 						<div class="section-header inloginp">
 							<h2 class="title">
 								Welcome to {{ get_section_content('project', 'site_title') }}

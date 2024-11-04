@@ -20,10 +20,8 @@
 					<div class="col-lg-5">
 						<a href="{{ url('/') }}" class="backto-home"><i class="fas fa-chevron-left"></i> Back to {{ get_section_content('project', 'site_title') }}</a>
 					</div>
-					<div class="col-lg-7 ">
-						<div class="logo">
-							<img src="{{ asset('assets/images/logo2.png') }}" alt="logo">
-						</div>
+					<div class="col-lg-7">
+
 					</div>
 				</div>
 			</div>
@@ -34,6 +32,13 @@
 				</div>
 				<div class="col-lg-7">
 					<div class="log-reg-inner">
+						<div class="mb-lg-0 mb-5" style="text-align: center;">
+							<a href="{{ url('/') }}">
+								<div class="logo">
+									<img src="{{ asset('assets/images/logo2.png') }}" alt="logo" style="width: 200px;">
+								</div>
+							</a>
+						</div>
 						<div class="section-header inloginp">
 							<h2 class="title">
 								Welcome to {{ get_section_content('project', 'site_title') }}
@@ -62,10 +67,10 @@
 									<label for="">Interested in*</label>
 									<div class="option">
 										<div class="s-input mr-3">
-											<input type="radio" name="interested_in" id="males" value="1" checked><label for="males">Male</label>
+											<input type="radio" name="interested_in" id="females" value="2" checked><label for="females">Female</label>
 										</div>
 										<div class="s-input mr-3">
-											<input type="radio" name="interested_in" id="females" value="2"><label for="females">Female</label>
+											<input type="radio" name="interested_in" id="males" value="1"><label for="males">Male</label>
 										</div>
 										<div class="s-input">
 											<input type="radio" name="interested_in" id="trans" value="3"><label for="trans">Trans</label>
