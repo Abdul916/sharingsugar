@@ -559,54 +559,52 @@ if (! function_exists('send_notification_email_to_users')) {
 	function send_notification_email_to_users($logged_user_id, $other_user_id, $type)
 	{
 		$allow_mails = 1;
+		$subject = get_section_content('project', 'site_title') . '(Notification)';
 		if($type == 'request_private_photos'){
 			$to = Auth::user()->email;
 			$allow_mails = Auth::user()->block_like_favorite_email;
-			$subject = get_section_content('project', 'site_title') . '(Notification)';
 			$user['username'] = Auth::user()->username;
 			$user['inner_text'] = 'Your request has been sent to ' .get_single_value('users', 'username', $other_user_id).', we will notify you as soon as ' .get_single_value('users', 'username', $other_user_id). ' allows it.';
 		} elseif ($type == 'block_private_photos'){
 			$to = get_single_value('users', 'email', $other_user_id);
 			$allow_mails = get_single_value('users', 'block_like_favorite_email', $other_user_id);
-			$subject = get_section_content('project', 'site_title') . '(Notification)';
 			$user['username'] = get_single_value('users', 'username', $other_user_id);
 			$user['inner_text'] = 'The request has been rejected by ' .Auth::user()->username.'.';
 		} elseif ($type == 'allow_private_photos'){
 			$to = get_single_value('users', 'email', $other_user_id);
 			$allow_mails = get_single_value('users', 'block_like_favorite_email', $other_user_id);
-			$subject = get_section_content('project', 'site_title') . '(Notification)';
 			$user['username'] = get_single_value('users', 'username', $other_user_id);
 			$user['inner_text'] = 'The request had been accepted successfully by ' .Auth::user()->username.'.';
 		} elseif ($type == 'like_profile'){
 			$to = get_single_value('users', 'email', $other_user_id);
 			$allow_mails = get_single_value('users', 'block_like_favorite_email', $other_user_id);
-			$subject = get_section_content('project', 'site_title') . '(Notification)';
 			$user['username'] = get_single_value('users', 'username', $other_user_id);
 			$user['inner_text'] = Auth::user()->username.' liked your profile.';
 		} elseif ($type == 'block'){
 			$to = get_single_value('users', 'email', $other_user_id);
 			$allow_mails = get_single_value('users', 'block_like_favorite_email', $other_user_id);
-			$subject = get_section_content('project', 'site_title') . '(Notification)';
 			$user['username'] = get_single_value('users', 'username', $other_user_id);
 			$user['inner_text'] = Auth::user()->username.' blocked you.';
 		} elseif ($type == 'like_image'){
 			$to = get_single_value('users', 'email', $other_user_id);
 			$allow_mails = get_single_value('users', 'block_like_favorite_email', $other_user_id);
-			$subject = get_section_content('project', 'site_title') . '(Notification)';
 			$user['username'] = get_single_value('users', 'username', $other_user_id);
 			$user['inner_text'] = Auth::user()->username.' like your image.';
 		} elseif ($type == 'favorite'){
 			$to = get_single_value('users', 'email', $other_user_id);
 			$allow_mails = get_single_value('users', 'block_like_favorite_email', $other_user_id);
-			$subject = get_section_content('project', 'site_title') . '(Notification)';
 			$user['username'] = get_single_value('users', 'username', $other_user_id);
 			$user['inner_text'] = Auth::user()->username.' added your profile to their favorite list.';
 		} elseif ($type == 'unfavorite'){
 			$to = get_single_value('users', 'email', $other_user_id);
 			$allow_mails = get_single_value('users', 'block_like_favorite_email', $other_user_id);
-			$subject = get_section_content('project', 'site_title') . '(Notification)';
 			$user['username'] = get_single_value('users', 'username', $other_user_id);
 			$user['inner_text'] = Auth::user()->username.' removed your profile from their favorite list.';
+		} elseif ($type == 'chat_message_not_send'){
+			$to = get_single_value('users', 'email', $other_user_id);
+			$allow_mails = 1;
+			$user['username'] = get_single_value('users', 'username', $other_user_id);
+			$user['inner_text'] = Auth::user()->username.' try to sent you a text message but you put privacy so the request could not be completed.';
 		}
 		if($allow_mails == 1){
 			$email_body = view('emails/notification_emails', compact("user"));

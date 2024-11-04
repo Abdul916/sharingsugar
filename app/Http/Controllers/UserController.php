@@ -665,6 +665,7 @@ class UserController extends Controller
             $status = remove_user_configuration(Auth::user()->id, $data['id'], '2');
             $response = 'User successfully removed from liked.';
         } elseif ($data['action'] == 'unfavorite') {
+            add_notifications(Auth::user()->id, $data['id'], 'removed your profile from their favorite list', '3');
             $status = remove_user_configuration(Auth::user()->id, $data['id'], '1');
             $response = 'User successfully removed from favorites.';
             send_notification_email_to_users(Auth::user()->id, $data['id'], 'unfavorite');
@@ -672,6 +673,7 @@ class UserController extends Controller
             $status = remove_user_configuration(Auth::user()->id, $data['id'], '3');
             $response = 'User successfully unblocked.';
         } elseif ($data['action'] == 'block_private_photos') {
+            add_notifications(Auth::user()->id, $data['id'], 'block you from viewing their private images', '5');
             $status = remove_user_configuration(Auth::user()->id, $data['id'], '5');
             $response = 'User successfully blocked to view your private photos.';
             send_notification_email_to_users(Auth::user()->id, $data['id'], 'block_private_photos');
@@ -935,28 +937,36 @@ class UserController extends Controller
             $finalResult = response()->json(array('msg' => 'lvl_error', 'response' => $validator->errors()->all()));
             return $finalResult;
         }
-
-        $status = DB::table('chat')->insertGetId([
-            'chatted_id' => $data['chat_id'],
-            'sender_id' => Auth::user()->id,
-            'receiver_id' => $data['receiver_id'],
-            'message' => $data['message'],
-            'created_at' => date('Y-m-d H:i:s'),
-            'created_by' => Auth::user()->id,
-            'updated_at' => date('Y-m-d H:i:s'),
-            'updated_by' => Auth::user()->id,
-        ]);
+        $auth_gender = Auth::user()->gender;
         $receiver = User::where('id', $data['receiver_id'])->first();
-        if ($status > 0) {
-            add_notifications(Auth::user()->id, $data['receiver_id'], 'sent a text message', '4');
-            $email_subject = get_section_content('project', 'site_title') . '(Notification)';
-            $email_text = Auth::user()->username .' sent a text message.';
-            send_notification_email($receiver, $email_subject, $email_text);
-            $finalResult = response()->json(array('msg' => 'success', 'response' => 'Message sent successfully.'));
+        if (($auth_gender == '1' && $receiver->block_male_msg == 0) || ($auth_gender == '2' && $receiver->block_female_msg == 0) || ($auth_gender == '3' && $receiver->block_trans_msg == 0)) {
+            send_notification_email_to_users(Auth::user()->id, $data['receiver_id'], 'chat_message_not_send');
+            $finalResult = response()->json(array('msg' => 'error', 'response' => 'This account is private, you are not allowed to send messages to this user.'));
             return $finalResult;
         } else {
-            $finalResult = response()->json(array('msg' => 'error', 'response' => 'Something went wrong.'));
-            return $finalResult;
+            $status = DB::table('chat')->insertGetId([
+                'chatted_id' => $data['chat_id'],
+                'sender_id' => Auth::user()->id,
+                'receiver_id' => $data['receiver_id'],
+                'message' => $data['message'],
+                'created_at' => date('Y-m-d H:i:s'),
+                'created_by' => Auth::user()->id,
+                'updated_at' => date('Y-m-d H:i:s'),
+                'updated_by' => Auth::user()->id,
+            ]);
+            if ($status > 0) {
+                add_notifications(Auth::user()->id, $data['receiver_id'], 'sent a text message', '4');
+                if($receiver->block_like_favorite_email == 1){
+                    $email_subject = get_section_content('project', 'site_title') . '(Notification)';
+                    $email_text = Auth::user()->username .' sent a text message.';
+                    send_notification_email($receiver, $email_subject, $email_text);
+                }
+                $finalResult = response()->json(array('msg' => 'success', 'response' => 'Message sent successfully.'));
+                return $finalResult;
+            } else {
+                $finalResult = response()->json(array('msg' => 'error', 'response' => 'Something went wrong.'));
+                return $finalResult;
+            }
         }
     }
 
