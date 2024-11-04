@@ -66,13 +66,14 @@ class UsersController extends Controller
         permanently_deleted('membership_logs', 'user_id', $data['id']);
         permanently_deleted('notifications', 'user_id', $data['id']);
         permanently_deleted('notifications', 'notify_user_id', $data['id']);
-        permanently_deleted('profile_images_logs', 'user_id', $data['id']);
         permanently_deleted('user_configs', 'user_id', $data['id']);
         permanently_deleted('user_configs', 'config_user_id', $data['id']);
         permanently_deleted('user_login_logs', 'user_id', $data['id']);
         permanently_deleted('user_photos', 'user_id', $data['id']);
         permanently_deleted('visitors', 'user_id', $data['id']);
         permanently_deleted('visitors', 'visitor_user_id', $data['id']);
+        permanently_deleted('photo_change_logs', 'user_id', $data['id']);
+        permanently_deleted('profile_change_logs', 'user_id', $data['id']);
         $response_status = permanently_deleted('users', 'id', $data['id']);
         if($response_status > 0) {
             $finalResult = response()->json(['msg' => 'success', 'response'=>'User permanently deleted.']);

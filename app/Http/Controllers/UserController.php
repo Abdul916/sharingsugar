@@ -829,13 +829,26 @@ class UserController extends Controller
     {
         $data = $request->all();
         if (Hash::check($data['password'], Auth::user()->password)) {
-            $status = User::where('id', Auth::user()->id)->update([
-                'status' => 3
-            ]);
-            if ($status > 0) {
-                update_login_logs(Auth::user()->id);
-                Session::flush();
-                Auth::logout();
+            $user_id = Auth::user()->id;
+            permanently_deleted('chat', 'sender_id', $user_id);
+            permanently_deleted('chat', 'receiver_id', $user_id);
+            permanently_deleted('chatted_users', 'sender_id', $user_id);
+            permanently_deleted('chatted_users', 'receiver_id', $user_id);
+            permanently_deleted('like_images', 'user_id', $user_id);
+            permanently_deleted('like_images', 'photo_user_id', $user_id);
+            permanently_deleted('membership_logs', 'user_id', $user_id);
+            permanently_deleted('notifications', 'user_id', $user_id);
+            permanently_deleted('notifications', 'notify_user_id', $user_id);
+            permanently_deleted('user_configs', 'user_id', $user_id);
+            permanently_deleted('user_configs', 'config_user_id', $user_id);
+            permanently_deleted('user_login_logs', 'user_id', $user_id);
+            permanently_deleted('user_photos', 'user_id', $user_id);
+            permanently_deleted('visitors', 'user_id', $user_id);
+            permanently_deleted('visitors', 'visitor_user_id', $user_id);
+            permanently_deleted('photo_change_logs', 'user_id', $user_id);
+            permanently_deleted('profile_change_logs', 'user_id', $user_id);
+            $response_status = permanently_deleted('users', 'id', $user_id);
+            if ($response_status) {
                 $finalResult = response()->json(array('msg' => 'success', 'response' => 'Your Account successfully deleted.'));
                 return $finalResult;
             } else {
