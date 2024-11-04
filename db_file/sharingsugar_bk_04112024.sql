@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Oct 28, 2024 at 06:16 AM
+-- Generation Time: Nov 04, 2024 at 02:17 PM
 -- Server version: 8.2.0
 -- PHP Version: 8.2.14
 
@@ -96,7 +96,7 @@ CREATE TABLE IF NOT EXISTS `chat` (
   `updated_by` int DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `chat`
@@ -104,7 +104,6 @@ CREATE TABLE IF NOT EXISTS `chat` (
 
 INSERT INTO `chat` (`id`, `chatted_id`, `sender_id`, `receiver_id`, `message`, `status`, `created_by`, `created_at`, `updated_by`, `updated_at`) VALUES
 (47, 28, 1, 2, 'Hi,', 1, 1, '2022-11-23 09:56:45', 1, '2022-11-23 09:56:45'),
-(48, 29, 1, 3, 'hi', 1, 1, '2022-11-23 10:37:42', 1, '2022-11-23 10:37:42'),
 (49, 30, 1, 7, 'sd', 1, 1, '2022-11-23 10:37:55', 1, '2022-11-23 10:37:55'),
 (50, 28, 1, 2, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', 1, 1, '2022-11-23 13:35:53', 1, '2022-11-23 13:35:53'),
 (51, 28, 1, 2, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', 1, 1, '2022-11-23 13:35:55', 1, '2022-11-23 13:35:55'),
@@ -119,19 +118,9 @@ INSERT INTO `chat` (`id`, `chatted_id`, `sender_id`, `receiver_id`, `message`, `
 (60, 28, 1, 2, 'ab ok hai', 1, 1, '2022-11-23 14:08:25', 1, '2022-11-23 14:08:25'),
 (61, 28, 1, 2, 'yes', 1, 1, '2022-11-23 14:15:45', 1, '2022-11-23 14:15:45'),
 (62, 28, 2, 1, 'hi', 1, 2, '2022-11-28 05:52:09', 2, '2022-11-28 05:52:09'),
-(63, 31, 2, 3, 'Hello', 1, 2, '2022-11-28 06:37:57', 2, '2022-11-28 06:37:57'),
-(64, 32, 2, 7, 'hi', 1, 2, '2022-11-28 06:40:26', 2, '2022-11-28 06:40:26'),
-(65, 33, 2, 10, 'hello', 1, 2, '2022-11-28 06:50:06', 2, '2022-11-28 06:50:06'),
-(66, 33, 10, 2, 'Hi', 1, 10, '2022-11-28 07:02:45', 10, '2022-11-28 07:02:45'),
-(67, 33, 2, 10, 'lorem ipsum testting messages', 1, 2, '2022-11-28 07:03:29', 2, '2022-11-28 07:03:29'),
-(68, 33, 10, 2, 'lorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messages', 1, 10, '2022-11-28 07:03:58', 10, '2022-11-28 07:03:58'),
-(69, 33, 2, 10, 'lorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messageslorem ipsum testting messages', 1, 2, '2022-11-28 07:05:11', 2, '2022-11-28 07:05:11'),
-(70, 33, 2, 10, 'after block msg', 1, 2, '2022-11-28 08:05:11', 2, '2022-11-28 08:05:11'),
-(71, 33, 10, 2, 'why are you msging me', 1, 10, '2022-11-28 08:06:14', 10, '2022-11-28 08:06:14'),
-(73, 31, 2, 3, 'hi', 1, 2, '2023-01-26 08:55:02', 2, '2023-01-26 08:55:02'),
-(74, 35, 2, 4, 'hi', 1, 2, '2023-04-12 05:13:50', 2, '2023-04-12 05:13:50'),
-(75, 35, 2, 4, 'hi', 1, 2, '2024-08-19 14:11:02', 2, '2024-08-19 14:11:02'),
-(76, 32, 2, 7, 'jdfk', 1, 2, '2024-09-19 07:57:20', 2, '2024-09-19 07:57:20');
+(84, 44, 3, 2, 'hi', 1, 3, '2024-11-04 13:54:36', 3, '2024-11-04 13:54:36'),
+(85, 44, 3, 2, 'ery', 1, 3, '2024-11-04 13:57:47', 3, '2024-11-04 13:57:47'),
+(86, 45, 3, 43, 'hi', 1, 3, '2024-11-04 14:00:15', 3, '2024-11-04 14:00:15');
 
 -- --------------------------------------------------------
 
@@ -148,7 +137,7 @@ CREATE TABLE IF NOT EXISTS `chatted_users` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `chatted_users`
@@ -156,14 +145,10 @@ CREATE TABLE IF NOT EXISTS `chatted_users` (
 
 INSERT INTO `chatted_users` (`id`, `sender_id`, `receiver_id`, `status`, `created_at`, `updated_at`) VALUES
 (28, 1, 2, 1, '2022-11-23 09:56:13', '2022-11-23 09:56:13'),
-(29, 1, 3, 1, '2022-11-23 10:37:23', '2022-11-23 10:37:23'),
 (30, 1, 7, 1, '2022-11-23 10:37:28', '2022-11-23 10:37:28'),
-(31, 2, 3, 1, '2022-11-28 06:37:48', '2022-11-28 06:37:48'),
-(32, 2, 7, 1, '2022-11-28 06:40:17', '2022-11-28 06:40:17'),
-(33, 2, 10, 1, '2022-11-28 06:49:44', '2022-11-28 06:49:44'),
-(34, 2, 6, 1, '2022-12-01 06:56:04', '2022-12-01 06:56:04'),
-(35, 2, 4, 1, '2023-01-25 08:23:02', '2023-01-25 08:23:02'),
-(36, 2, 20, 1, '2024-10-24 10:10:50', '2024-10-24 10:10:50');
+(41, 43, 20, 1, '2024-11-04 06:51:43', '2024-11-04 06:51:43'),
+(44, 3, 2, 1, '2024-11-04 13:54:27', '2024-11-04 13:54:27'),
+(45, 3, 43, 1, '2024-11-04 14:00:08', '2024-11-04 14:00:08');
 
 -- --------------------------------------------------------
 
@@ -242,7 +227,7 @@ CREATE TABLE IF NOT EXISTS `like_images` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `like_images`
@@ -279,7 +264,7 @@ CREATE TABLE IF NOT EXISTS `membership_logs` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `membership_logs`
@@ -288,7 +273,9 @@ CREATE TABLE IF NOT EXISTS `membership_logs` (
 INSERT INTO `membership_logs` (`id`, `user_id`, `stripe_charge_id`, `plan_id`, `membership_type`, `membership_price`, `membership_start`, `membership_end`, `status`, `created_at`, `updated_at`) VALUES
 (1, 42, NULL, 1, 1, '5.00', '2024-10-25', '2024-11-24', 2, '2024-10-25 11:30:15', '2024-10-25 11:30:15'),
 (2, 40, NULL, 1, 1, '5.00', '2024-10-25', '2024-11-24', 2, '2024-10-25 11:32:33', '2024-10-25 11:32:33'),
-(3, 35, NULL, 1, 1, '0.00', '2024-10-25', '2024-11-24', 2, '2024-10-25 11:37:19', '2024-10-25 11:37:19');
+(3, 35, NULL, 1, 1, '0.00', '2024-10-25', '2024-11-24', 2, '2024-10-25 11:37:19', '2024-10-25 11:37:19'),
+(4, 2, NULL, 1, 1, '0.00', '2025-10-31', '2025-10-31', 2, '2024-10-25 11:37:19', '2024-10-25 11:37:19'),
+(5, 3, NULL, 1, 1, '0.00', '2025-10-31', '2025-10-31', 2, '2024-10-25 11:37:19', '2024-10-25 11:37:19');
 
 -- --------------------------------------------------------
 
@@ -332,7 +319,7 @@ CREATE TABLE IF NOT EXISTS `notifications` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=85 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
 -- Dumping data for table `notifications`
@@ -349,13 +336,18 @@ INSERT INTO `notifications` (`id`, `user_id`, `notify_user_id`, `message`, `type
 (34, 2, 7, 'sent a text message', 4, 1, '2022-11-28 06:40:26', NULL),
 (15, 2, 1, 'sent a text message', 4, 2, '2022-11-22 13:09:20', '2022-11-22 14:29:02'),
 (14, 1, 8, 'sent a text message', 4, 1, '2022-11-22 12:52:03', NULL),
-(33, 2, 3, 'sent a text message', 4, 1, '2022-11-28 06:37:57', NULL),
 (13, 2, 1, 'sent a text message', 4, 2, '2022-11-22 12:38:54', '2022-11-22 12:55:40'),
-(18, 1, 3, 'sent a text message', 4, 1, '2022-11-23 10:37:42', NULL),
+(76, 3, 2, 'allow you to view private photos', 5, 2, '2024-11-04 12:51:20', '2024-11-04 12:51:56'),
 (19, 1, 7, 'sent a text message', 4, 1, '2022-11-23 10:37:55', NULL),
+(82, 3, 2, 'sent a text message', 4, 2, '2024-11-04 13:54:36', '2024-11-04 13:55:16'),
+(79, 3, 2, 'sent a text message', 4, 2, '2024-11-04 12:56:47', '2024-11-04 12:56:56'),
+(80, 3, 2, 'sent a text message', 4, 2, '2024-11-04 13:05:56', '2024-11-04 13:55:16'),
+(81, 3, 2, 'sent a text message', 4, 2, '2024-11-04 13:53:54', '2024-11-04 13:55:16'),
+(78, 3, 2, 'block you from viewing their private images', 5, 2, '2024-11-04 12:53:02', '2024-11-04 12:53:18'),
 (35, 2, 10, 'sent a text message', 4, 2, '2022-11-28 06:50:06', '2022-11-28 07:02:35'),
 (32, 2, 1, 'sent a text message', 4, 1, '2022-11-28 05:52:09', NULL),
 (37, 2, 10, 'sent a text message', 4, 2, '2022-11-28 07:03:29', '2022-11-28 07:05:44'),
+(77, 3, 2, 'allow you to view private photos', 5, 2, '2024-11-04 12:52:58', '2024-11-04 12:53:18'),
 (39, 2, 10, 'sent a text message', 4, 2, '2022-11-28 07:05:11', '2022-11-28 07:05:37'),
 (40, 2, 10, 'liked your photo', 2, 2, '2022-11-28 07:10:23', '2022-11-28 07:11:06'),
 (42, 2, 10, 'allow you to view private photos', 5, 2, '2022-11-28 07:16:31', '2022-11-28 07:19:57'),
@@ -364,11 +356,13 @@ INSERT INTO `notifications` (`id`, `user_id`, `notify_user_id`, `message`, `type
 (45, 2, 10, 'sent a text message', 4, 2, '2022-11-28 08:05:11', '2022-11-28 08:05:23'),
 (49, 2, 4, 'sent a text message', 4, 1, '2023-04-12 05:13:50', NULL),
 (47, 2, 8, 'sent a text message', 4, 1, '2023-01-25 08:26:22', NULL),
-(48, 2, 3, 'sent a text message', 4, 1, '2023-01-26 08:55:02', NULL),
+(83, 3, 2, 'sent a text message', 4, 2, '2024-11-04 13:57:48', '2024-11-04 14:11:04'),
 (50, 2, 6, 'liked your profile', 1, 1, '2023-05-02 18:13:07', NULL),
+(84, 3, 43, 'sent a text message', 4, 1, '2024-11-04 14:00:15', NULL),
 (52, 2, 4, 'sent a text message', 4, 1, '2024-08-19 14:11:02', NULL),
 (53, 2, 8, 'liked your profile', 1, 1, '2024-08-19 14:12:12', NULL),
-(54, 2, 7, 'sent a text message', 4, 2, '2024-09-19 07:57:20', '2024-09-30 14:02:15');
+(54, 2, 7, 'sent a text message', 4, 2, '2024-09-19 07:57:20', '2024-09-30 14:02:15'),
+(58, 3, 1, 'sent a text message', 4, 1, '2024-11-01 09:40:01', NULL);
 
 -- --------------------------------------------------------
 
@@ -380,13 +374,13 @@ DROP TABLE IF EXISTS `photo_change_logs`;
 CREATE TABLE IF NOT EXISTS `photo_change_logs` (
   `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
   `user_id` int UNSIGNED NOT NULL,
-  `photo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `photo` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `type` tinyint NOT NULL DEFAULT '0' COMMENT '0: profile, 1: gallery',
   `status` tinyint NOT NULL DEFAULT '0' COMMENT '0: pending, 1: approved, 2: rejected',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -477,12 +471,19 @@ DROP TABLE IF EXISTS `profile_change_logs`;
 CREATE TABLE IF NOT EXISTS `profile_change_logs` (
   `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
   `user_id` bigint UNSIGNED NOT NULL,
-  `updated_data` longtext COLLATE utf8mb4_unicode_ci,
+  `previous_data` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `status` tinyint NOT NULL DEFAULT '0' COMMENT '0 = Pending, 1 = Approved, 2 = Declined',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `profile_change_logs`
+--
+
+INSERT INTO `profile_change_logs` (`id`, `user_id`, `previous_data`, `status`, `created_at`, `updated_at`) VALUES
+(20, 2, '{\"first_name\":\"Test\",\"last_name\":\"User\",\"username\":\"testuserxl\",\"iam\":\"Sugar Baby (Hombre \\/ Man)\",\"interestedin\":\"Sugar Mommy\",\"dob\":\"1949-04-06\",\"age\":\"75.00\",\"gender\":2,\"height\":\"173.00\",\"weight\":\"70.00\",\"marital_status\":2,\"child\":2,\"body_type\":1,\"state\":\"Punjab\",\"zipcode\":null,\"country\":\"Pakistan\",\"city\":\"Lahore\",\"address\":\"Lahore \\u2013 Kasur Rd, Shershah Colony Ichhra, Lahore, Punjab, Pakistan\",\"about_me\":\"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\",\"latitude\":\"31.5370115\",\"longitude\":\"74.3198811\",\"profile_status\":\"2\"}', 0, '2024-11-04 08:02:22', '2024-11-04 08:02:22');
 
 -- --------------------------------------------------------
 
@@ -551,6 +552,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `membership_price` decimal(10,2) DEFAULT NULL,
   `membership_start` date DEFAULT NULL,
   `membership_end` date DEFAULT NULL,
+  `trial_expires_on` timestamp NULL DEFAULT NULL,
   `membership_status` tinyint NOT NULL DEFAULT '1' COMMENT '1=Null, 2=pending, 3=over, 4=monthly, 5=half_yearly, 6=yearly, 7=active',
   `marital_status` tinyint DEFAULT '1' COMMENT '1=single, 2=married, 3=widowed, 4=divorced',
   `privacy_status` tinyint NOT NULL DEFAULT '1' COMMENT '1=everyone, 2=requested',
@@ -568,51 +570,52 @@ CREATE TABLE IF NOT EXISTS `users` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `unique_id`, `first_name`, `last_name`, `username`, `email`, `password`, `iam`, `interestedin`, `financial_support`, `dob`, `age`, `height`, `weight`, `body_type`, `child`, `city`, `state`, `zipcode`, `country`, `address`, `timezone`, `gender`, `about_me`, `latitude`, `longitude`, `profile_image`, `last_login`, `membership_type`, `plan_id`, `membership_price`, `membership_start`, `membership_end`, `membership_status`, `marital_status`, `privacy_status`, `verify_status`, `profile_status`, `status`, `show_last_login`, `block_male_msg`, `block_female_msg`, `block_trans_msg`, `block_all_email`, `block_money_making_opp_email`, `block_local_event_meet_up_email`, `block_like_favorite_email`, `created_at`, `updated_at`) VALUES
-(1, 'testing54564654', 'Test', 'User', 'testing', 'testing@gmail.com', '$2y$10$GEDrB4abkRZeA3zyKAcf0emffhOjKnCEzoOKT6zr.Vg8VW.pvV7Ue', 'Sugar Mommy', 'Sugar Baby (Hombre / Man)', 1, '1991-03-07', '31.00', '185.00', '65.00', 1, 0, 'lahore', 'punjab', '54000', 'pakistan', 'lahore, pakistan', NULL, 1, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '31', '74.11', 'user.png', '2022-11-25 13:28:36', 1, NULL, NULL, NULL, NULL, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2022-10-18 12:14:23', '2022-11-24 16:27:53'),
-(2, 'test545646546', 'Test', 'User', 'testuserxl', 'test@gmail.com', '$2y$10$GEDrB4abkRZeA3zyKAcf0emffhOjKnCEzoOKT6zr.Vg8VW.pvV7Ue', 'Sugar Daddy', 'Sugar Baby (Mujer / Woman)', 1, '1997-09-24', '27.00', '173.00', '70.00', 1, 2, 'Lahore', 'Punjab', '54792', 'Pakistan', 'Lahore – Kasur Rd, Shershah Colony Ichhra, Lahore, Punjab, Pakistan', NULL, 2, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '31.5370115', '74.3198811', 'team-member-1_1729862720.jpg', '2024-10-28 05:54:16', 1, NULL, NULL, NULL, NULL, 1, 2, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 0, '2022-10-18 12:16:35', '2024-10-28 06:07:01'),
-(3, '34534dffghfgh', 'gapagyd', 'zacoloje', 'musygypupo', 'test2@gmail.com', '$2y$10$GEDrB4abkRZeA3zyKAcf0emffhOjKnCEzoOKT6zr.Vg8VW.pvV7Ue', 'Sugar Mommy', 'Sugar Baby (Hombre / Man)', 1, '2000-01-25', '22.00', '122.00', '120.00', 2, 1, 'lahore', 'pun', 'lhr', 'pakistan', 'lahore', NULL, 2, 'Magna sunt dolor ver', '31.29', '74', 'user.png', '2022-10-25 07:18:09', 1, NULL, NULL, NULL, NULL, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2022-10-18 12:20:43', '2022-10-25 07:19:41'),
-(4, '345345345', 'pynexi', 'jyzega', 'pegaguxeka', 'test3@gmail.com', '$2y$10$GEDrB4abkRZeA3zyKAcf0emffhOjKnCEzoOKT6zr.Vg8VW.pvV7Ue', 'Sugar Baby (Mujer / Woman)', 'Sugar Daddy', 2, '1992-04-22', '30.00', '125.00', '100.00', 4, 0, 'LHR', 'PUN', '54000', 'pk', 'LHR', NULL, 1, 'Explicabo Ipsum di', NULL, NULL, 'user.png', '2020-12-23 07:20:48', 1, NULL, NULL, NULL, NULL, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, '2022-10-18 12:26:34', '2022-10-27 13:36:41'),
-(5, '34345dfdgdfg', 'paluzusy', 'mevyc', 'jatejovyq', 'test4@gmail.com', '$2y$10$GEDrB4abkRZeA3zyKAcf0emffhOjKnCEzoOKT6zr.Vg8VW.pvV7Ue', 'Sugar Baby (Hombre / Man)', 'Sugar Mommy', 2, '1992-11-11', '29.00', '98912.00', '14594.00', 1, 0, 'lhr', 'pun', '5400', 'PK', 'PK', NULL, 3, 'PK', NULL, NULL, 'user.png', '2022-10-25 07:23:04', 1, NULL, NULL, NULL, NULL, 1, 4, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, '2022-10-18 12:27:34', '2022-10-27 13:36:28'),
-(6, '4534534eret', NULL, NULL, 'test919996', 'test919996@gmail.com', '$2y$10$GEDrB4abkRZeA3zyKAcf0emffhOjKnCEzoOKT6zr.Vg8VW.pvV7Ue', 'Sugar Mommy', 'Sugar Baby (Hombre / Man)', 1, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, 'user.png', '2022-10-28 11:21:45', 1, NULL, NULL, NULL, NULL, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2022-10-28 11:20:13', '2022-10-28 11:20:13'),
-(7, 'test91654544', 'Test', '916', 'test916', 'test916@gmail.com', '$2y$10$GEDrB4abkRZeA3zyKAcf0emffhOjKnCEzoOKT6zr.Vg8VW.pvV7Ue', 'Sugar Daddy', 'Sugar Baby (Mujer / Woman)', 1, '1992-12-12', '29.00', '615.00', '541.00', 1, 0, 'lahr', 'punjab', '54000', 'pk', 'pak', NULL, 1, 'ok', '31.3916', '73.9644', 'user.png', '2024-09-30 14:01:52', 1, NULL, NULL, NULL, NULL, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2022-10-28 11:26:47', '2022-12-13 06:29:39'),
-(8, 'dgdfg34535345', 'test', '917', 'test917', 'test917@gmail.com', '$2y$10$GEDrB4abkRZeA3zyKAcf0emffhOjKnCEzoOKT6zr.Vg8VW.pvV7Ue', 'Sugar Daddy', 'Sugar Baby (Mujer / Woman)', 1, '2022-11-18', '0.00', '5.00', '4.00', 1, 4, 'Lahore', 'PK', '454', 'pk', 'lahore, pakistan', NULL, 2, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', NULL, NULL, 'user.png', '2024-09-30 13:56:30', 1, NULL, NULL, NULL, NULL, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2022-10-28 11:30:01', '2022-11-25 12:34:36'),
-(10, 'muhammadishtiaqamjad63845879b2667', 'Ishtiaq', 'Amjad', 'iamishtiaq98', 'muhammadishtiaqamjad@gmail.com', '$2y$10$6MLTDMcMqzsB99cjShHJPurzWTPcEuwD67j27snnujxHkoSB1r9RO', 'Sugar Mommy', 'Sugar Baby (Hombre / Man)', 1, '1998-06-05', '24.00', '182.56', '70.00', 4, 0, 'Minchinabad', 'Bahawalpur', '62230', 'Pakistan', 'Mcleod Gunj, MInchinabad, Punjab, Pakistan', NULL, 1, 'Loving', NULL, NULL, 'user.png', '2022-11-28 06:58:56', 1, NULL, NULL, NULL, NULL, 1, 1, 1, 1, 2, 2, 1, 0, 1, 0, 1, 1, 1, 1, '2022-11-28 06:43:05', '2023-05-22 13:28:34'),
-(14, 'alarmingcivil166fb8e27c7c14', NULL, NULL, 'alarmingcivil1', 'alarmingcivil1@gmail.com', '$2y$10$Ao0vjzwOpbCwiPTvnOW1Pe9WcI9EFLRaTDNrhykp8wbBkN3I5a7k2', 'Sugar Mommy', 'Sugar Baby (Hombre / Man)', 1, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, 'user.png', NULL, 1, NULL, NULL, NULL, NULL, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 05:52:40', '2024-10-01 05:52:40'),
-(15, 'testuser67179e891510d', 'Test', 'User', 'testuser9995', 'testuser@gmail.com', '$2y$10$FNAWYV4VjNcvq5/MChQilu4ClAsDn86HMoZ2C1CUFhU9aa0x7uky.', 'Sugar Mommy', 'Sugar Baby (Hombre / Man)', 1, '1998-08-26', '26.00', '135.00', '120.00', 4, 0, 'Lahore', 'punjab', '540000', 'Pakistan', 'Lahore-Islamabad Mtwy, Block E Sabzazar Housing Scheme Phase 1 & 2 Sabzazar, Lahore, Punjab, Pakistan', NULL, 1, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '31.52980299999999', '74.2591272', 'user.png', '2024-10-22 12:47:08', 1, NULL, NULL, NULL, NULL, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-22 12:46:01', '2024-10-22 13:14:56'),
-(16, '12345', 'John', 'Doe', 'johndoe', 'john.doe@example.com', 'password123', 'Sugar Daddy', 'Sugar Baby (Mujer / Woman)', 1, '1990-01-01', '27.00', '173.00', '70.00', 1, NULL, 'New York', 'NY', '10001', 'USA', '123 Main St', NULL, 1, NULL, '40.712776', '-74.005974', 'user.png', '2024-10-24 10:00:00', 1, NULL, NULL, NULL, NULL, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 08:30:00', '2024-10-24 10:00:00'),
-(17, '12346', 'Alice', 'Smith', 'alicesmith', 'alice.smith@example.com', 'password123', 'Sugar Mommy', 'Sugar Baby (Hombre / Man)', 1, '1997-06-15', '27.00', '173.00', '70.00', 1, NULL, 'Los Angeles', 'CA', '90001', 'USA', '456 Elm St', NULL, 1, NULL, '34.052235', '-118.243683', 'user.png', '2024-10-23 09:00:00', 1, NULL, NULL, NULL, NULL, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 08:00:00', '2024-10-23 09:00:00'),
-(18, '12347', 'John', 'Doe', 'johndoe', 'john.doe@example.com', 'password123', 'Sugar Daddy', 'Sugar Baby (Mujer / Woman)', 1, '1995-05-10', '29.00', '180.00', '75.00', 1, NULL, 'New York', 'NY', '10001', 'USA', '789 Pine St', NULL, 1, NULL, '40.712776', '-74.005974', 'user.png', '2024-10-23 10:00:00', 1, NULL, NULL, NULL, NULL, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-02 09:00:00', '2024-10-23 10:00:00'),
-(19, '12348', 'Emily', 'Johnson', 'emilyj', 'emily.johnson@example.com', 'password123', 'Sugar Daddy Mommy', 'Sugar Baby (Trans)', 1, '1992-03-22', '32.00', '170.00', '68.00', 1, NULL, 'Chicago', 'IL', '60601', 'USA', '123 Oak St', NULL, 1, NULL, '41.878113', '-87.629799', 'user.png', '2024-10-23 11:00:00', 1, NULL, NULL, NULL, NULL, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-03 10:00:00', '2024-10-23 11:00:00'),
-(20, '12349', 'Sophia', 'Brown', 'sophiabrown', 'sophia.brown@example.com', 'password123', 'Sugar Baby (Mujer / Woman)', 'Sugar Daddy', 1, '1999-11-11', '25.00', '165.00', '60.00', 1, NULL, 'Miami', 'FL', '33101', 'USA', '234 Maple St', NULL, 1, NULL, '25.761680', '-80.191790', 'user.png', '2024-10-23 12:00:00', 1, NULL, NULL, NULL, NULL, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-04 11:00:00', '2024-10-23 12:00:00'),
-(21, '12350', 'Michael', 'Taylor', 'michaeltaylor', 'michael.taylor@example.com', 'password123', 'Sugar Baby (Hombre / Man)', 'Sugar Mommy', 1, '1990-02-14', '34.00', '175.00', '72.00', 1, NULL, 'Houston', 'TX', '77001', 'USA', '567 Cedar St', NULL, 1, NULL, '29.760427', '-95.369804', 'user.png', '2024-10-23 13:00:00', 1, NULL, NULL, NULL, NULL, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-05 12:00:00', '2024-10-23 13:00:00'),
-(22, '12351', 'Jacob', 'White', 'jacobwhite', 'jacob.white@example.com', 'password123', 'Sugar Daddy', 'Sugar Baby (Mujer / Woman)', 1, '1990-08-25', '34.00', '180.00', '75.00', 1, NULL, 'New York', 'NY', '10001', 'USA', '123 Main St', NULL, 1, NULL, '40.712776', '-74.005974', 'user.png', '2024-10-23 09:00:00', 1, NULL, NULL, NULL, NULL, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 08:00:00', '2024-10-23 09:00:00'),
-(23, '12352', 'Emma', 'Johnson', 'emmajohnson', 'emma.johnson@example.com', 'password123', 'Sugar Mommy', 'Sugar Baby (Hombre / Man)', 1, '1995-02-10', '29.00', '165.00', '60.00', 1, NULL, 'Los Angeles', 'CA', '90001', 'USA', '456 Elm St', NULL, 1, NULL, '34.052235', '-118.243683', 'user.png', '2024-10-23 09:10:00', 1, NULL, NULL, NULL, NULL, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 08:10:00', '2024-10-23 09:10:00'),
-(24, '12353', 'Michael', 'Brown', 'michaelbrown', 'michael.brown@example.com', 'password123', 'Sugar Baby (Hombre / Man)', 'Sugar Mommy', 1, '1997-12-12', '27.00', '173.00', '70.00', 1, NULL, 'Chicago', 'IL', '60601', 'USA', '789 Pine St', NULL, 1, NULL, '41.878113', '-87.629799', 'user.png', '2024-10-23 09:20:00', 1, NULL, NULL, NULL, NULL, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 08:20:00', '2024-10-23 09:20:00'),
-(25, '12354', 'Olivia', 'Garcia', 'oliviagarcia', 'olivia.garcia@example.com', 'password123', 'Sugar Baby (Mujer / Woman)', 'Sugar Daddy', 1, '1999-07-07', '25.00', '170.00', '65.00', 1, NULL, 'Houston', 'TX', '77001', 'USA', '234 Maple St', NULL, 1, NULL, '29.760427', '-95.369804', 'user.png', '2024-10-23 09:30:00', 1, NULL, NULL, NULL, NULL, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 08:30:00', '2024-10-23 09:30:00'),
-(26, '12355', 'William', 'Davis', 'williamdavis', 'william.davis@example.com', 'password123', 'Sugar Daddy Mommy', 'Sugar Baby (Trans)', 1, '1990-11-11', '34.00', '178.00', '80.00', 1, NULL, 'Phoenix', 'AZ', '85001', 'USA', '567 Cedar St', NULL, 1, NULL, '33.448376', '-112.074036', 'user.png', '2024-10-23 09:40:00', 1, NULL, NULL, NULL, NULL, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 08:40:00', '2024-10-23 09:40:00'),
-(27, '12356', 'Isabella', 'Martinez', 'isabellamartinez', 'isabella.martinez@example.com', 'password123', 'Sugar Daddy', 'Sugar Baby (Mujer / Woman)', 1, '1993-03-15', '31.00', '172.00', '68.00', 1, NULL, 'San Antonio', 'TX', '78201', 'USA', '123 Main St', NULL, 1, NULL, '29.424122', '-98.493629', 'user.png', '2024-10-23 09:50:00', 1, NULL, NULL, NULL, NULL, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 08:50:00', '2024-10-23 09:50:00'),
-(28, '12357', 'James', 'Taylor', 'jamestaylor', 'james.taylor@example.com', 'password123', 'Sugar Baby (Trans)', 'Sugar Daddy Mommy', 1, '1995-05-20', '29.00', '175.00', '72.00', 1, NULL, 'San Diego', 'CA', '92101', 'USA', '456 Elm St', NULL, 1, NULL, '32.715736', '-117.161087', 'user.png', '2024-10-23 10:00:00', 1, NULL, NULL, NULL, NULL, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 09:00:00', '2024-10-23 10:00:00'),
-(29, '12358', 'Mia', 'Hernandez', 'miahernandez', 'mia.hernandez@example.com', 'password123', 'Sugar Baby (Mujer / Woman)', 'Sugar Daddy', 1, '1997-09-09', '27.00', '168.00', '64.00', 1, NULL, 'Dallas', 'TX', '75201', 'USA', '789 Pine St', NULL, 1, NULL, '32.776665', '-96.796989', 'user.png', '2024-10-23 10:10:00', 1, NULL, NULL, NULL, NULL, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 09:10:00', '2024-10-23 10:10:00'),
-(30, '12359', 'Benjamin', 'Moore', 'benjaminmoore', 'benjamin.moore@example.com', 'password123', 'Sugar Daddy', 'Sugar Baby (Mujer / Woman)', 1, '1992-04-04', '32.00', '180.00', '75.00', 1, NULL, 'Austin', 'TX', '73301', 'USA', '234 Maple St', NULL, 1, NULL, '30.267153', '-97.743057', 'user.png', '2024-10-23 10:20:00', 1, NULL, NULL, NULL, NULL, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 09:20:00', '2024-10-23 10:20:00'),
-(31, '12360', 'Charlotte', 'Wilson', 'charlottewilson', 'charlotte.wilson@example.com', 'password123', 'Sugar Mommy', 'Sugar Baby (Hombre / Man)', 1, '1996-06-06', '28.00', '165.00', '60.00', 1, NULL, 'San Francisco', 'CA', '94101', 'USA', '567 Cedar St', NULL, 1, NULL, '37.774929', '-122.419418', 'user.png', '2024-10-23 10:30:00', 1, NULL, NULL, NULL, NULL, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 09:30:00', '2024-10-23 10:30:00'),
-(32, '12361', 'Ethan', 'Anderson', 'ethananderson', 'ethan.anderson@example.com', 'password123', 'Sugar Daddy', 'Sugar Baby (Mujer / Woman)', 1, '1994-10-10', '30.00', '177.00', '73.00', 1, NULL, 'Las Vegas', 'NV', '89101', 'USA', '123 Main St', NULL, 1, NULL, '36.169941', '-115.139832', 'user.png', '2024-10-23 10:40:00', 1, NULL, NULL, NULL, NULL, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 09:40:00', '2024-10-23 10:40:00'),
-(33, '12362', 'Amelia', 'Thomas', 'ameliathomas', 'amelia.thomas@example.com', 'password123', 'Sugar Baby (Mujer / Woman)', 'Sugar Daddy', 1, '1998-01-01', '26.00', '165.00', '62.00', 1, NULL, 'Seattle', 'WA', '98101', 'USA', '456 Elm St', NULL, 1, NULL, '47.606209', '-122.332069', 'user.png', '2024-10-23 10:50:00', 1, NULL, NULL, NULL, NULL, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 09:50:00', '2024-10-23 10:50:00'),
-(34, '12363', 'Lucas', 'Jackson', 'lucasjackson', 'lucas.jackson@example.com', 'password123', 'Sugar Daddy Mommy', 'Sugar Baby (Trans)', 1, '1991-02-20', '33.00', '180.00', '75.00', 1, NULL, 'Denver', 'CO', '80201', 'USA', '789 Pine St', NULL, 1, NULL, '39.739236', '-104.990251', 'user.png', '2024-10-23 11:00:00', 1, NULL, NULL, NULL, NULL, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 10:00:00', '2024-10-23 11:00:00'),
-(35, '12364', 'Harper', 'Martinez', 'harpermartinez', 'harper.martinez@example.com', 'password123', 'Sugar Baby (Trans)', 'Sugar Daddy Mommy', 1, '1993-07-15', '31.00', '172.00', '68.00', 1, NULL, 'Portland', 'OR', '97201', 'USA', '234 Maple St', NULL, 1, NULL, '45.512794', '-122.679565', 'user.png', '2024-10-23 11:10:00', 1, 1, '0.00', '2024-10-25', '2024-11-24', 7, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 10:10:00', '2024-10-23 11:10:00'),
-(36, '12365', 'Sophia', 'Lopez', 'sophialopez', 'sophia.lopez@example.com', 'password123', 'Sugar Baby (Mujer / Woman)', 'Sugar Daddy', 1, '1999-11-20', '25.00', '167.00', '63.00', 1, NULL, 'Sacramento', 'CA', '94203', 'USA', '567 Cedar St', NULL, 1, NULL, '38.581573', '-121.494400', 'user.png', '2024-10-23 11:20:00', 1, NULL, NULL, NULL, NULL, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 10:20:00', '2024-10-23 11:20:00'),
-(37, '12366', 'Alexander', 'Gonzalez', 'alexandergonzalez', 'alexander.gonzalez@example.com', 'password123', 'Sugar Daddy', 'Sugar Baby (Mujer / Woman)', 1, '1995-03-03', '29.00', '178.00', '70.00', 1, NULL, 'Boston', 'MA', '02101', 'USA', '123 Main St', NULL, 1, NULL, '42.360081', '-71.058884', 'user.png', '2024-10-23 11:30:00', 1, NULL, NULL, NULL, NULL, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 10:30:00', '2024-10-23 11:30:00'),
-(38, '12367', 'Mason', 'Clark', 'masonclark', 'mason.clark@example.com', 'password123', 'Sugar Daddy Mommy', 'Sugar Baby (Trans)', 1, '1990-05-25', '34.00', '180.00', '75.00', 1, NULL, 'Washington', 'DC', '20001', 'USA', '456 Elm St', NULL, 1, NULL, '38.907192', '-77.036873', 'user.png', '2024-10-23 11:40:00', 1, NULL, NULL, NULL, NULL, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 10:40:00', '2024-10-23 11:40:00'),
-(39, '12368', 'Liam', 'Lewis', 'liamlewis', 'liam.lewis@example.com', 'password123', 'Sugar Daddy', 'Sugar Baby (Mujer / Woman)', 1, '1992-08-15', '32.00', '177.00', '72.00', 1, NULL, 'Philadelphia', 'PA', '19101', 'USA', '789 Pine St', NULL, 1, NULL, '39.952583', '-75.165222', 'user.png', '2024-10-23 11:50:00', 1, NULL, NULL, NULL, NULL, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 10:50:00', '2024-10-23 11:50:00'),
-(40, '12369', 'Abigail', 'Hall', 'abigailhall', 'abigail.hall@example.com', 'password123', 'Sugar Baby (Mujer / Woman)', 'Sugar Daddy', 1, '1997-10-05', '27.00', '165.00', '62.00', 1, NULL, 'San Jose', 'CA', '95101', 'USA', '234 Maple St', NULL, 1, NULL, '37.338207', '-121.886330', 'user.png', '2024-10-23 12:00:00', 1, 1, '5.00', '2024-10-25', '2024-11-24', 7, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 11:00:00', '2024-10-23 12:00:00'),
-(41, '12370', 'Elijah', 'Allen', 'elijahallen', 'elijah.allen@example.com', 'password123', 'Sugar Daddy Mommy', 'Sugar Baby (Trans)', 1, '1991-12-22', '33.00', '180.00', '75.00', 1, NULL, 'Detroit', 'MI', '48201', 'USA', '567 Cedar St', NULL, 1, NULL, '42.331427', '-83.045753', 'user.png', '2024-10-23 12:10:00', 1, NULL, NULL, NULL, NULL, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 11:10:00', '2024-10-23 12:10:00'),
-(42, '12371', 'Charlotte', 'King', 'charlotteking', 'charlotte.king@example.com', '$2y$10$tJfgB30cVkgqPrAztlaFTO57HWyvNxJvCkThlHONevLQ9xExFxuS6', 'Sugar Mommy', 'Sugar Baby (Hombre / Man)', 1, '1995-04-04', '29.00', '165.00', '60.00', 1, NULL, 'San Antonio', 'TX', '78201', 'USA', '789 Pine St', NULL, 1, NULL, '29.424122', '-98.493629', 'user.png', '2024-10-23 12:20:00', 1, 1, '5.00', '2024-10-25', '2024-11-24', 7, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 11:20:00', '2024-10-25 07:35:30');
+INSERT INTO `users` (`id`, `unique_id`, `first_name`, `last_name`, `username`, `email`, `password`, `iam`, `interestedin`, `financial_support`, `dob`, `age`, `height`, `weight`, `body_type`, `child`, `city`, `state`, `zipcode`, `country`, `address`, `timezone`, `gender`, `about_me`, `latitude`, `longitude`, `profile_image`, `last_login`, `membership_type`, `plan_id`, `membership_price`, `membership_start`, `membership_end`, `trial_expires_on`, `membership_status`, `marital_status`, `privacy_status`, `verify_status`, `profile_status`, `status`, `show_last_login`, `block_male_msg`, `block_female_msg`, `block_trans_msg`, `block_all_email`, `block_money_making_opp_email`, `block_local_event_meet_up_email`, `block_like_favorite_email`, `created_at`, `updated_at`) VALUES
+(1, 'testing54564654', 'Test', 'User', 'testing', 'testing@gmail.com', '$2y$10$GEDrB4abkRZeA3zyKAcf0emffhOjKnCEzoOKT6zr.Vg8VW.pvV7Ue', 'Sugar Mommy', 'Sugar Baby (Hombre / Man)', 1, '1991-03-07', '31.00', '185.00', '65.00', 1, 0, 'lahore', 'punjab', '54000', 'pakistan', 'lahore, pakistan', NULL, 1, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '31', '74.11', 'user.png', '2022-11-25 13:28:36', 1, NULL, NULL, NULL, NULL, '2022-10-18 07:14:23', 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2022-10-18 12:14:23', '2022-11-24 16:27:53'),
+(2, 'test545646546', 'Test', 'User', 'testuserxl', 'test@gmail.com', '$2y$10$GEDrB4abkRZeA3zyKAcf0emffhOjKnCEzoOKT6zr.Vg8VW.pvV7Ue', 'Sugar Daddy', 'Sugar Baby (Mujer / Woman)', 1, '1949-04-06', '75.00', '173.00', '70.00', 1, 2, 'Lahore', 'Punjab', '54792', 'Pakistan', 'Lahore – Kasur Rd, Shershah Colony Ichhra, Lahore, Punjab, Pakistan', NULL, 1, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '31.5370115', '74.3198811', 'team-member-1_1729862720.jpg', '2024-11-04 09:59:11', 1, NULL, NULL, NULL, '2025-10-31', '2022-10-18 07:16:35', 1, 2, 1, 1, 2, 1, 1, 0, 0, 1, 1, 1, 1, 0, '2022-10-18 12:16:35', '2024-11-04 13:02:22'),
+(3, '34534dffghfgh', 'dev', 'user', 'devuser', 'test2@gmail.com', '$2y$10$GEDrB4abkRZeA3zyKAcf0emffhOjKnCEzoOKT6zr.Vg8VW.pvV7Ue', 'Sugar Baby (Mujer / Woman)', 'Sugar Daddy', 1, NULL, NULL, '122.00', '120.00', 2, 1, 'Wiyung', 'Babatan', '60227', 'Indonesia', 'Jl. Mayjend. Jonosewojo No.2, Babatan, Kec. Wiyung, Surabaya, Jawa Timur 60227, Indonesia', NULL, 2, 'Jl. Mayjend. Jonosewojo No.2, Babatan, Kec. Wiyung, Surabaya, Jawa Timur 60227, Indonesia', '-7.289141399999999', '112.6757233', 'user.png', '2024-11-04 10:42:55', 1, NULL, NULL, NULL, '2025-11-29', '2022-10-18 07:20:43', 1, 1, 1, 1, 2, 1, 0, 0, 1, 0, 1, 1, 1, 0, '2022-10-18 12:20:43', '2024-11-04 13:00:25'),
+(4, '345345345', 'pynexi', 'jyzega', 'pegaguxeka', 'test3@gmail.com', '$2y$10$GEDrB4abkRZeA3zyKAcf0emffhOjKnCEzoOKT6zr.Vg8VW.pvV7Ue', 'Sugar Baby (Mujer / Woman)', 'Sugar Daddy', 2, '1992-04-22', '30.00', '125.00', '100.00', 4, 0, 'LHR', 'PUN', '54000', 'pk', 'LHR', NULL, 1, 'Explicabo Ipsum di', '31', '74', 'user.png', '2020-12-23 07:20:48', 1, NULL, NULL, NULL, NULL, '2022-10-18 07:26:34', 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, '2022-10-18 12:26:34', '2022-10-27 13:36:41'),
+(5, '34345dfdgdfg', 'paluzusy', 'mevyc', 'jatejovyq', 'test4@gmail.com', '$2y$10$GEDrB4abkRZeA3zyKAcf0emffhOjKnCEzoOKT6zr.Vg8VW.pvV7Ue', 'Sugar Baby (Hombre / Man)', 'Sugar Mommy', 2, '1992-11-11', '29.00', '98912.00', '14594.00', 1, 0, 'lhr', 'pun', '5400', 'PK', 'PK', NULL, 3, 'PK', '31.5370115', '74.3198811', 'user.png', '2022-10-25 07:23:04', 1, NULL, NULL, NULL, NULL, '2022-10-18 07:27:34', 1, 4, 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, '2022-10-18 12:27:34', '2022-10-27 13:36:28'),
+(6, '4534534eret', NULL, NULL, 'test919996', 'test919996@gmail.com', '$2y$10$GEDrB4abkRZeA3zyKAcf0emffhOjKnCEzoOKT6zr.Vg8VW.pvV7Ue', 'Sugar Mommy', 'Sugar Baby (Hombre / Man)', 1, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '31.5370115', '74.3198811', 'user.png', '2022-10-28 11:21:45', 1, NULL, NULL, NULL, NULL, '2022-10-28 06:20:13', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2022-10-28 11:20:13', '2022-10-28 11:20:13'),
+(7, 'test91654544', 'Test', '916', 'test916', 'test916@gmail.com', '$2y$10$GEDrB4abkRZeA3zyKAcf0emffhOjKnCEzoOKT6zr.Vg8VW.pvV7Ue', 'Sugar Daddy', 'Sugar Baby (Mujer / Woman)', 1, '1992-12-12', '29.00', '615.00', '541.00', 1, 0, 'lahr', 'punjab', '54000', 'pk', 'pak', NULL, 1, 'ok', '31.3916', '73.9644', 'user.png', '2024-09-30 14:01:52', 1, NULL, NULL, NULL, NULL, '2022-10-28 06:26:47', 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2022-10-28 11:26:47', '2022-12-13 06:29:39'),
+(8, 'dgdfg34535345', 'test', '917', 'test917', 'test917@gmail.com', '$2y$10$GEDrB4abkRZeA3zyKAcf0emffhOjKnCEzoOKT6zr.Vg8VW.pvV7Ue', 'Sugar Daddy', 'Sugar Baby (Mujer / Woman)', 1, '2022-11-18', '0.00', '5.00', '4.00', 1, 4, 'Lahore', 'PK', '454', 'pk', 'lahore, pakistan', NULL, 2, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', '31.5370115', '74.3198811', 'user.png', '2024-09-30 13:56:30', 1, NULL, NULL, NULL, NULL, '2022-10-28 06:30:01', 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2022-10-28 11:30:01', '2022-11-25 12:34:36'),
+(10, 'muhammadishtiaqamjad63845879b2667', 'Ishtiaq', 'Amjad', 'iamishtiaq98', 'muhammadishtiaqamjad@gmail.com', '$2y$10$6MLTDMcMqzsB99cjShHJPurzWTPcEuwD67j27snnujxHkoSB1r9RO', 'Sugar Mommy', 'Sugar Baby (Hombre / Man)', 1, '1998-06-05', '24.00', '182.56', '70.00', 4, 0, 'Minchinabad', 'Bahawalpur', '62230', 'Pakistan', 'Mcleod Gunj, MInchinabad, Punjab, Pakistan', NULL, 1, 'Loving', '31.5370115', '74.3198811', 'user.png', '2022-11-28 06:58:56', 1, NULL, NULL, NULL, NULL, '2022-11-28 01:43:05', 1, 1, 1, 1, 2, 2, 1, 0, 1, 0, 1, 1, 1, 1, '2022-11-28 06:43:05', '2023-05-22 13:28:34'),
+(14, 'alarmingcivil166fb8e27c7c14', NULL, NULL, 'alarmingcivil1', 'alarmingcivil1@gmail.com', '$2y$10$Ao0vjzwOpbCwiPTvnOW1Pe9WcI9EFLRaTDNrhykp8wbBkN3I5a7k2', 'Sugar Mommy', 'Sugar Baby (Hombre / Man)', 1, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '31.5370115', '74.3198811', 'user.png', NULL, 1, NULL, NULL, NULL, NULL, '2024-10-01 00:52:40', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 05:52:40', '2024-10-01 05:52:40'),
+(15, 'testuser67179e891510d', 'Test', 'User', 'testuser9995', 'testuser@gmail.com', '$2y$10$FNAWYV4VjNcvq5/MChQilu4ClAsDn86HMoZ2C1CUFhU9aa0x7uky.', 'Sugar Mommy', 'Sugar Baby (Hombre / Man)', 1, '1998-08-26', '26.00', '135.00', '120.00', 4, 0, 'Lahore', 'punjab', '540000', 'Pakistan', 'Lahore-Islamabad Mtwy, Block E Sabzazar Housing Scheme Phase 1 & 2 Sabzazar, Lahore, Punjab, Pakistan', NULL, 1, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '31.52980299999999', '74.2591272', 'user.png', '2024-10-22 12:47:08', 1, NULL, NULL, NULL, NULL, '2024-10-22 07:46:01', 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-22 12:46:01', '2024-10-22 13:14:56'),
+(16, '12345', 'John', 'Doe', 'johndoe', 'john.doe@example.com', 'password123', 'Sugar Daddy', 'Sugar Baby (Mujer / Woman)', 1, '1990-01-01', '27.00', '173.00', '70.00', 1, NULL, 'New York', 'NY', '10001', 'USA', '123 Main St', NULL, 1, NULL, '40.712776', '-74.005974', 'user.png', '2024-10-24 10:00:00', 1, NULL, NULL, NULL, NULL, '2024-10-01 03:30:00', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 08:30:00', '2024-10-24 10:00:00'),
+(17, '12346', 'Alice', 'Smith', 'alicesmith', 'alice.smith@example.com', 'password123', 'Sugar Mommy', 'Sugar Baby (Hombre / Man)', 1, '1997-06-15', '27.00', '173.00', '70.00', 1, NULL, 'Los Angeles', 'CA', '90001', 'USA', '456 Elm St', NULL, 1, NULL, '34.052235', '-118.243683', 'user.png', '2024-10-23 09:00:00', 1, NULL, NULL, NULL, NULL, '2024-10-01 03:00:00', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 08:00:00', '2024-10-23 09:00:00'),
+(18, '12347', 'John', 'Doe', 'johndoe', 'john.doe@example.com', 'password123', 'Sugar Daddy', 'Sugar Baby (Mujer / Woman)', 1, '1995-05-10', '29.00', '180.00', '75.00', 1, NULL, 'New York', 'NY', '10001', 'USA', '789 Pine St', NULL, 1, NULL, '40.712776', '-74.005974', 'user.png', '2024-10-23 10:00:00', 1, NULL, NULL, NULL, NULL, '2024-10-02 04:00:00', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-02 09:00:00', '2024-10-23 10:00:00'),
+(19, '12348', 'Emily', 'Johnson', 'emilyj', 'emily.johnson@example.com', 'password123', 'Sugar Daddy Mommy', 'Sugar Baby (Trans)', 1, '1992-03-22', '32.00', '170.00', '68.00', 1, NULL, 'Chicago', 'IL', '60601', 'USA', '123 Oak St', NULL, 1, NULL, '41.878113', '-87.629799', 'user.png', '2024-10-23 11:00:00', 1, NULL, NULL, NULL, NULL, '2024-10-03 05:00:00', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-03 10:00:00', '2024-10-23 11:00:00'),
+(20, '12349', 'Sophia', 'Brown', 'sophiabrown', 'sophia.brown@example.com', 'password123', 'Sugar Baby (Mujer / Woman)', 'Sugar Daddy', 1, '1999-11-11', '25.00', '165.00', '60.00', 1, NULL, 'Miami', 'FL', '33101', 'USA', '234 Maple St', NULL, 1, NULL, '25.761680', '-80.191790', 'user.png', '2024-10-23 12:00:00', 1, NULL, NULL, NULL, NULL, '2024-10-04 06:00:00', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-04 11:00:00', '2024-10-23 12:00:00'),
+(21, '12350', 'Michael', 'Taylor', 'michaeltaylor', 'michael.taylor@example.com', 'password123', 'Sugar Baby (Hombre / Man)', 'Sugar Mommy', 1, '1990-02-14', '34.00', '175.00', '72.00', 1, NULL, 'Houston', 'TX', '77001', 'USA', '567 Cedar St', NULL, 1, NULL, '29.760427', '-95.369804', 'user.png', '2024-10-23 13:00:00', 1, NULL, NULL, NULL, NULL, '2024-10-05 07:00:00', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-05 12:00:00', '2024-10-23 13:00:00'),
+(22, '12351', 'Jacob', 'White', 'jacobwhite', 'jacob.white@example.com', 'password123', 'Sugar Daddy', 'Sugar Baby (Mujer / Woman)', 1, '1990-08-25', '34.00', '180.00', '75.00', 1, NULL, 'New York', 'NY', '10001', 'USA', '123 Main St', NULL, 1, NULL, '40.712776', '-74.005974', 'user.png', '2024-10-23 09:00:00', 1, NULL, NULL, NULL, NULL, '2024-10-01 03:00:00', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 08:00:00', '2024-10-23 09:00:00'),
+(23, '12352', 'Emma', 'Johnson', 'emmajohnson', 'emma.johnson@example.com', 'password123', 'Sugar Mommy', 'Sugar Baby (Hombre / Man)', 1, '1995-02-10', '29.00', '165.00', '60.00', 1, NULL, 'Los Angeles', 'CA', '90001', 'USA', '456 Elm St', NULL, 1, NULL, '34.052235', '-118.243683', 'user.png', '2024-10-23 09:10:00', 1, NULL, NULL, NULL, NULL, '2024-10-01 03:10:00', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 08:10:00', '2024-10-23 09:10:00'),
+(24, '12353', 'Michael', 'Brown', 'michaelbrown', 'michael.brown@example.com', 'password123', 'Sugar Baby (Hombre / Man)', 'Sugar Mommy', 1, '1997-12-12', '27.00', '173.00', '70.00', 1, NULL, 'Chicago', 'IL', '60601', 'USA', '789 Pine St', NULL, 1, NULL, '41.878113', '-87.629799', 'user.png', '2024-10-23 09:20:00', 1, NULL, NULL, NULL, NULL, '2024-10-01 03:20:00', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 08:20:00', '2024-10-23 09:20:00'),
+(25, '12354', 'Olivia', 'Garcia', 'oliviagarcia', 'olivia.garcia@example.com', 'password123', 'Sugar Baby (Mujer / Woman)', 'Sugar Daddy', 1, '1999-07-07', '25.00', '170.00', '65.00', 1, NULL, 'Houston', 'TX', '77001', 'USA', '234 Maple St', NULL, 1, NULL, '29.760427', '-95.369804', 'user.png', '2024-10-23 09:30:00', 1, NULL, NULL, NULL, NULL, '2024-10-01 03:30:00', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 08:30:00', '2024-10-23 09:30:00'),
+(26, '12355', 'William', 'Davis', 'williamdavis', 'william.davis@example.com', 'password123', 'Sugar Daddy Mommy', 'Sugar Baby (Trans)', 1, '1990-11-11', '34.00', '178.00', '80.00', 1, NULL, 'Phoenix', 'AZ', '85001', 'USA', '567 Cedar St', NULL, 1, NULL, '33.448376', '-112.074036', 'user.png', '2024-10-23 09:40:00', 1, NULL, NULL, NULL, NULL, '2024-10-01 03:40:00', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 08:40:00', '2024-10-23 09:40:00'),
+(27, '12356', 'Isabella', 'Martinez', 'isabellamartinez', 'isabella.martinez@example.com', 'password123', 'Sugar Daddy', 'Sugar Baby (Mujer / Woman)', 1, '1993-03-15', '31.00', '172.00', '68.00', 1, NULL, 'San Antonio', 'TX', '78201', 'USA', '123 Main St', NULL, 1, NULL, '29.424122', '-98.493629', 'user.png', '2024-10-23 09:50:00', 1, NULL, NULL, NULL, NULL, '2024-10-01 03:50:00', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 08:50:00', '2024-10-23 09:50:00'),
+(28, '12357', 'James', 'Taylor', 'jamestaylor', 'james.taylor@example.com', 'password123', 'Sugar Baby (Trans)', 'Sugar Daddy Mommy', 1, '1995-05-20', '29.00', '175.00', '72.00', 1, NULL, 'San Diego', 'CA', '92101', 'USA', '456 Elm St', NULL, 1, NULL, '32.715736', '-117.161087', 'user.png', '2024-10-23 10:00:00', 1, NULL, NULL, NULL, NULL, '2024-10-01 04:00:00', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 09:00:00', '2024-10-23 10:00:00'),
+(29, '12358', 'Mia', 'Hernandez', 'miahernandez', 'mia.hernandez@example.com', 'password123', 'Sugar Baby (Mujer / Woman)', 'Sugar Daddy', 1, '1997-09-09', '27.00', '168.00', '64.00', 1, NULL, 'Dallas', 'TX', '75201', 'USA', '789 Pine St', NULL, 1, NULL, '32.776665', '-96.796989', 'user.png', '2024-10-23 10:10:00', 1, NULL, NULL, NULL, NULL, '2024-10-01 04:10:00', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 09:10:00', '2024-10-23 10:10:00'),
+(30, '12359', 'Benjamin', 'Moore', 'benjaminmoore', 'benjamin.moore@example.com', 'password123', 'Sugar Daddy', 'Sugar Baby (Mujer / Woman)', 1, '1992-04-04', '32.00', '180.00', '75.00', 1, NULL, 'Austin', 'TX', '73301', 'USA', '234 Maple St', NULL, 1, NULL, '30.267153', '-97.743057', 'user.png', '2024-10-23 10:20:00', 1, NULL, NULL, NULL, NULL, '2024-10-01 04:20:00', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 09:20:00', '2024-10-23 10:20:00'),
+(31, '12360', 'Charlotte', 'Wilson', 'charlottewilson', 'charlotte.wilson@example.com', 'password123', 'Sugar Mommy', 'Sugar Baby (Hombre / Man)', 1, '1996-06-06', '28.00', '165.00', '60.00', 1, NULL, 'San Francisco', 'CA', '94101', 'USA', '567 Cedar St', NULL, 1, NULL, '37.774929', '-122.419418', 'user.png', '2024-10-23 10:30:00', 1, NULL, NULL, NULL, NULL, '2024-10-01 04:30:00', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 09:30:00', '2024-10-23 10:30:00'),
+(32, '12361', 'Ethan', 'Anderson', 'ethananderson', 'ethan.anderson@example.com', 'password123', 'Sugar Daddy', 'Sugar Baby (Mujer / Woman)', 1, '1994-10-10', '30.00', '177.00', '73.00', 1, NULL, 'Las Vegas', 'NV', '89101', 'USA', '123 Main St', NULL, 1, NULL, '36.169941', '-115.139832', 'user.png', '2024-10-23 10:40:00', 1, NULL, NULL, NULL, NULL, '2024-10-01 04:40:00', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 09:40:00', '2024-10-23 10:40:00'),
+(33, '12362', 'Amelia', 'Thomas', 'ameliathomas', 'amelia.thomas@example.com', 'password123', 'Sugar Baby (Mujer / Woman)', 'Sugar Daddy', 1, '1998-01-01', '26.00', '165.00', '62.00', 1, NULL, 'Seattle', 'WA', '98101', 'USA', '456 Elm St', NULL, 1, NULL, '47.606209', '-122.332069', 'user.png', '2024-10-23 10:50:00', 1, NULL, NULL, NULL, NULL, '2024-10-01 04:50:00', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 09:50:00', '2024-10-23 10:50:00'),
+(34, '12363', 'Lucas', 'Jackson', 'lucasjackson', 'lucas.jackson@example.com', 'password123', 'Sugar Daddy Mommy', 'Sugar Baby (Trans)', 1, '1991-02-20', '33.00', '180.00', '75.00', 1, NULL, 'Denver', 'CO', '80201', 'USA', '789 Pine St', NULL, 1, NULL, '39.739236', '-104.990251', 'user.png', '2024-10-23 11:00:00', 1, NULL, NULL, NULL, NULL, '2024-10-01 05:00:00', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 10:00:00', '2024-10-23 11:00:00'),
+(35, '12364', 'Harper', 'Martinez', 'harpermartinez', 'harper.martinez@example.com', 'password123', 'Sugar Baby (Trans)', 'Sugar Daddy Mommy', 1, '1993-07-15', '31.00', '172.00', '68.00', 1, NULL, 'Portland', 'OR', '97201', 'USA', '234 Maple St', NULL, 1, NULL, '45.512794', '-122.679565', 'user.png', '2024-10-23 11:10:00', 1, 1, '0.00', '2024-10-25', '2024-11-24', '2024-10-01 05:10:00', 7, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 10:10:00', '2024-10-23 11:10:00'),
+(36, '12365', 'Sophia', 'Lopez', 'sophialopez', 'sophia.lopez@example.com', 'password123', 'Sugar Baby (Mujer / Woman)', 'Sugar Daddy', 1, '1999-11-20', '25.00', '167.00', '63.00', 1, NULL, 'Sacramento', 'CA', '94203', 'USA', '567 Cedar St', NULL, 1, NULL, '38.581573', '-121.494400', 'user.png', '2024-10-23 11:20:00', 1, NULL, NULL, NULL, NULL, '2024-10-01 05:20:00', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 10:20:00', '2024-10-23 11:20:00'),
+(37, '12366', 'Alexander', 'Gonzalez', 'alexandergonzalez', 'alexander.gonzalez@example.com', 'password123', 'Sugar Daddy', 'Sugar Baby (Mujer / Woman)', 1, '1995-03-03', '29.00', '178.00', '70.00', 1, NULL, 'Boston', 'MA', '02101', 'USA', '123 Main St', NULL, 1, NULL, '42.360081', '-71.058884', 'user.png', '2024-10-23 11:30:00', 1, NULL, NULL, NULL, NULL, '2024-10-01 05:30:00', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 10:30:00', '2024-10-23 11:30:00'),
+(38, '12367', 'Mason', 'Clark', 'masonclark', 'mason.clark@example.com', 'password123', 'Sugar Daddy Mommy', 'Sugar Baby (Trans)', 1, '1990-05-25', '34.00', '180.00', '75.00', 1, NULL, 'Washington', 'DC', '20001', 'USA', '456 Elm St', NULL, 1, NULL, '38.907192', '-77.036873', 'user.png', '2024-10-23 11:40:00', 1, NULL, NULL, NULL, NULL, '2024-10-01 05:40:00', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 10:40:00', '2024-10-23 11:40:00'),
+(39, '12368', 'Liam', 'Lewis', 'liamlewis', 'liam.lewis@example.com', 'password123', 'Sugar Daddy', 'Sugar Baby (Mujer / Woman)', 1, '1992-08-15', '32.00', '177.00', '72.00', 1, NULL, 'Philadelphia', 'PA', '19101', 'USA', '789 Pine St', NULL, 1, NULL, '39.952583', '-75.165222', 'user.png', '2024-10-23 11:50:00', 1, NULL, NULL, NULL, NULL, '2024-10-01 05:50:00', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 10:50:00', '2024-10-23 11:50:00'),
+(40, '12369', 'Abigail', 'Hall', 'abigailhall', 'abigail.hall@example.com', 'password123', 'Sugar Baby (Mujer / Woman)', 'Sugar Daddy', 1, '1997-10-05', '27.00', '165.00', '62.00', 1, NULL, 'San Jose', 'CA', '95101', 'USA', '234 Maple St', NULL, 1, NULL, '37.338207', '-121.886330', 'user.png', '2024-10-23 12:00:00', 1, 1, '5.00', '2024-10-25', '2024-11-24', '2024-10-01 06:00:00', 7, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 11:00:00', '2024-10-23 12:00:00'),
+(41, '12370', 'Elijah', 'Allen', 'elijahallen', 'elijah.allen@example.com', 'password123', 'Sugar Daddy Mommy', 'Sugar Baby (Trans)', 1, '1991-12-22', '33.00', '180.00', '75.00', 1, NULL, 'Detroit', 'MI', '48201', 'USA', '567 Cedar St', NULL, 1, NULL, '42.331427', '-83.045753', 'user.png', '2024-10-23 12:10:00', 1, NULL, NULL, NULL, NULL, '2024-10-01 06:10:00', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 11:10:00', '2024-10-23 12:10:00'),
+(42, '12371', 'Charlotte', 'King', 'charlotteking', 'charlotte.king@example.com', '$2y$10$tJfgB30cVkgqPrAztlaFTO57HWyvNxJvCkThlHONevLQ9xExFxuS6', 'Sugar Mommy', 'Sugar Baby (Hombre / Man)', 1, '1995-04-04', '29.00', '165.00', '60.00', 1, NULL, 'San Antonio', 'TX', '78201', 'USA', '789 Pine St', NULL, 1, NULL, '29.424122', '-98.493629', 'user.png', '2024-10-23 12:20:00', 1, 1, '5.00', '2024-10-25', '2024-11-24', '2024-10-01 06:20:00', 7, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, '2024-10-01 11:20:00', '2024-10-25 07:35:30'),
+(43, 'i9043039067286aaa6a317', NULL, NULL, 'i90430390', 'i90430390@gmail.com', '$2y$10$AVbFGc4Q7hO9KeINAv94ZeZasVnMqqqSAjL7SgfSI2GURPYsmQpei', 'Sugar Daddy', 'Sugar Baby (Mujer / Woman)', 1, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, 'user.png', '2024-11-04 06:36:36', 1, NULL, NULL, NULL, NULL, '2024-11-04 01:33:14', 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, '2024-11-04 06:33:14', '2024-11-04 06:37:04');
 
 -- --------------------------------------------------------
 
@@ -632,7 +635,7 @@ CREATE TABLE IF NOT EXISTS `user_configs` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=85 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=107 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user_configs`
@@ -656,18 +659,12 @@ INSERT INTO `user_configs` (`id`, `user_id`, `config_user_id`, `description`, `i
 (47, 7, 1, '', '', 5, 1, '2022-11-02 10:43:06', NULL),
 (49, 4, 1, NULL, NULL, 5, 2, '2022-11-02 10:43:06', NULL),
 (53, 2, 1, '', '', 2, 1, '2022-11-07 08:09:12', NULL),
-(79, 2, 6, '', '', 3, 1, '2024-10-03 08:42:01', NULL),
 (70, 2, 10, '', '', 5, 2, '2022-11-28 07:22:44', NULL),
 (75, 2, 6, '', '', 2, 1, '2023-05-02 18:13:07', NULL),
-(71, 2, 10, '', '', 3, 1, '2022-11-28 07:23:52', NULL),
 (72, 2, 10, '', '', 1, 1, '2022-11-28 07:48:59', NULL),
 (73, 2, 10, 'irritatting', 'Dell-inspirn-3511_1669621815.jpeg', 4, 1, '2022-11-28 07:50:15', NULL),
 (77, 8, 2, '', '', 5, 1, '2024-09-30 13:57:20', NULL),
 (78, 7, 2, '', '', 5, 2, '2024-09-30 14:00:56', NULL),
-(80, 2, 6, '', '', 3, 1, '2024-10-03 08:42:55', NULL),
-(81, 2, 6, '', '', 3, 1, '2024-10-03 08:43:06', NULL),
-(82, 2, 6, '', '', 3, 1, '2024-10-07 12:19:13', NULL),
-(83, 2, 1, NULL, NULL, 3, 1, NULL, NULL),
 (84, 2, 20, NULL, '', 4, 1, '2024-10-24 10:11:08', NULL);
 
 -- --------------------------------------------------------
@@ -687,7 +684,7 @@ CREATE TABLE IF NOT EXISTS `user_login_logs` (
   `updated_at` datetime DEFAULT NULL,
   `ip` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=141 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=160 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user_login_logs`
@@ -832,7 +829,26 @@ INSERT INTO `user_login_logs` (`id`, `user_id`, `login_time`, `logout_time`, `st
 (137, 2, '2024-10-25 11:53:06', NULL, 1, '2024-10-25 11:53:06', NULL, '127.0.0.1'),
 (138, 2, '2024-10-25 13:14:26', NULL, 1, '2024-10-25 13:14:26', NULL, '127.0.0.1'),
 (139, 2, '2024-10-28 05:34:15', NULL, 1, '2024-10-28 05:34:15', NULL, '::1'),
-(140, 2, '2024-10-28 05:54:16', NULL, 1, '2024-10-28 05:54:16', NULL, '127.0.0.1');
+(140, 2, '2024-10-28 05:54:16', '2024-10-28 13:34:36', 1, '2024-10-28 05:54:16', '2024-10-28 13:34:36', '127.0.0.1'),
+(141, 3, '2024-10-28 13:35:36', NULL, 1, '2024-10-28 13:35:36', NULL, '::1'),
+(142, 2, '2024-10-29 13:12:18', NULL, 1, '2024-10-29 13:12:18', NULL, '127.0.0.1'),
+(143, 2, '2024-11-01 06:01:04', '2024-11-01 07:37:11', 1, '2024-11-01 06:01:04', '2024-11-01 07:37:11', '127.0.0.1'),
+(144, 2, '2024-11-01 07:37:26', '2024-11-01 09:22:47', 1, '2024-11-01 07:37:26', '2024-11-01 09:22:47', '127.0.0.1'),
+(145, 2, '2024-11-01 09:23:13', '2024-11-01 09:23:32', 1, '2024-11-01 09:23:13', '2024-11-01 09:23:32', '127.0.0.1'),
+(146, 2, '2024-11-01 09:27:08', '2024-11-01 09:27:24', 1, '2024-11-01 09:27:08', '2024-11-01 09:27:24', '127.0.0.1'),
+(147, 2, '2024-11-01 09:28:34', '2024-11-01 09:28:38', 1, '2024-11-01 09:28:34', '2024-11-01 09:28:38', '127.0.0.1'),
+(148, 3, '2024-11-01 09:39:13', '2024-11-01 09:42:17', 1, '2024-11-01 09:39:13', '2024-11-01 09:42:17', '127.0.0.1'),
+(149, 3, '2024-11-01 09:42:44', NULL, 1, '2024-11-01 09:42:44', NULL, '127.0.0.1'),
+(150, 3, '2024-11-01 09:45:19', '2024-11-01 09:45:45', 1, '2024-11-01 09:45:19', '2024-11-01 09:45:45', '::1'),
+(151, 2, '2024-11-01 09:45:56', '2024-11-01 12:59:29', 1, '2024-11-01 09:45:56', '2024-11-01 12:59:29', '127.0.0.1'),
+(152, 2, '2024-11-01 13:13:01', '2024-11-01 13:19:35', 1, '2024-11-01 13:13:01', '2024-11-01 13:19:35', '127.0.0.1'),
+(153, 2, '2024-11-01 13:31:30', NULL, 1, '2024-11-01 13:31:30', NULL, '127.0.0.1'),
+(154, 43, '2024-11-04 06:33:59', '2024-11-04 06:35:34', 1, '2024-11-04 06:33:59', '2024-11-04 06:35:34', '127.0.0.1'),
+(155, 2, '2024-11-04 06:35:54', '2024-11-04 06:36:14', 1, '2024-11-04 06:35:54', '2024-11-04 06:36:14', '127.0.0.1'),
+(156, 43, '2024-11-04 06:36:36', NULL, 1, '2024-11-04 06:36:36', NULL, '127.0.0.1'),
+(157, 2, '2024-11-04 09:53:54', '2024-11-04 09:53:57', 1, '2024-11-04 09:53:54', '2024-11-04 09:53:57', '127.0.0.1'),
+(158, 2, '2024-11-04 09:59:11', NULL, 1, '2024-11-04 09:59:11', NULL, '127.0.0.1'),
+(159, 3, '2024-11-04 10:42:55', NULL, 1, '2024-11-04 10:42:55', NULL, '::1');
 
 -- --------------------------------------------------------
 
@@ -850,7 +866,7 @@ CREATE TABLE IF NOT EXISTS `user_photos` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=51 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=54 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user_photos`
@@ -896,7 +912,10 @@ INSERT INTO `user_photos` (`id`, `user_id`, `photo`, `type`, `status`, `created_
 (47, 2, 'magazine-min_17295203202697.jpg', 2, 1, '2024-10-21 14:19:20', NULL),
 (48, 2, 'blog-post-8-640x500_17295203105402.jpg', 1, 1, '2024-10-21 14:19:22', NULL),
 (49, 2, 'team-member-3_17298404889909.jpg', 2, 1, '2024-10-25 07:19:30', NULL),
-(50, 2, 'team-member-2_17298404404062.jpg', 1, 3, '2024-10-25 07:21:12', NULL);
+(50, 2, 'team-member-2_17298404404062.jpg', 1, 3, '2024-10-25 07:21:12', NULL),
+(51, 3, 'testimonial-3-min_17301227206393.png', 2, 1, '2024-10-28 13:40:11', NULL),
+(52, 3, 'team-member-1_17301226829125.jpg', 2, 1, '2024-10-28 13:40:13', NULL),
+(53, 3, 'blog-post-2-1-640x500_17301226629879.jpg', 1, 1, '2024-10-28 13:40:15', NULL);
 
 -- --------------------------------------------------------
 
@@ -914,7 +933,7 @@ CREATE TABLE IF NOT EXISTS `visitors` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=75 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 --
 -- Dumping data for table `visitors`
@@ -931,7 +950,70 @@ INSERT INTO `visitors` (`id`, `user_id`, `visitor_user_id`, `ip`, `status`, `cre
 (8, 20, 2, '127.0.0.1', 1, '2024-10-24 10:10:58', '2024-10-24 10:10:58'),
 (9, 20, 2, '127.0.0.1', 1, '2024-10-24 10:11:10', '2024-10-24 10:11:10'),
 (10, 20, 2, '127.0.0.1', 1, '2024-10-24 10:11:23', '2024-10-24 10:11:23'),
-(11, 20, 2, '127.0.0.1', 1, '2024-10-24 10:14:11', '2024-10-24 10:14:11');
+(11, 20, 2, '127.0.0.1', 1, '2024-10-24 10:14:11', '2024-10-24 10:14:11'),
+(12, 3, 2, '::1', 1, '2024-10-28 12:04:01', '2024-10-28 12:04:01'),
+(13, 20, 2, '127.0.0.1', 1, '2024-10-28 12:25:55', '2024-10-28 12:25:55'),
+(14, 20, 2, '127.0.0.1', 1, '2024-10-28 13:31:29', '2024-10-28 13:31:29'),
+(15, 40, 2, '127.0.0.1', 1, '2024-10-28 13:31:30', '2024-10-28 13:31:30'),
+(16, 25, 2, '127.0.0.1', 1, '2024-10-28 13:31:31', '2024-10-28 13:31:31'),
+(17, 36, 2, '127.0.0.1', 1, '2024-10-28 13:31:32', '2024-10-28 13:31:32'),
+(18, 29, 2, '127.0.0.1', 1, '2024-10-28 13:31:32', '2024-10-28 13:31:32'),
+(19, 33, 2, '127.0.0.1', 1, '2024-10-28 13:31:32', '2024-10-28 13:31:32'),
+(20, 4, 2, '127.0.0.1', 1, '2024-10-28 13:31:33', '2024-10-28 13:31:33'),
+(21, 5, 2, '127.0.0.1', 1, '2024-10-28 13:31:59', '2024-10-28 13:31:59'),
+(22, 24, 2, '127.0.0.1', 1, '2024-10-28 13:32:03', '2024-10-28 13:32:03'),
+(23, 21, 2, '127.0.0.1', 1, '2024-10-28 13:32:05', '2024-10-28 13:32:05'),
+(24, 8, 2, '127.0.0.1', 1, '2024-10-28 13:32:18', '2024-10-28 13:32:18'),
+(25, 3, 2, '127.0.0.1', 1, '2024-10-28 13:32:40', '2024-10-28 13:32:40'),
+(26, 14, 2, '127.0.0.1', 1, '2024-10-28 13:32:45', '2024-10-28 13:32:45'),
+(27, 4, 2, '127.0.0.1', 1, '2024-10-28 13:33:06', '2024-10-28 13:33:06'),
+(28, 4, 2, '127.0.0.1', 1, '2024-10-28 13:41:12', '2024-10-28 13:41:12'),
+(29, 3, 2, '127.0.0.1', 1, '2024-10-28 13:41:16', '2024-10-28 13:41:16'),
+(30, 8, 2, '127.0.0.1', 1, '2024-10-28 13:41:17', '2024-10-28 13:41:17'),
+(31, 8, 2, '127.0.0.1', 1, '2024-10-28 13:41:22', '2024-10-28 13:41:22'),
+(32, 3, 2, '127.0.0.1', 1, '2024-10-28 13:43:35', '2024-10-28 13:43:35'),
+(33, 2, 3, '::1', 1, '2024-10-28 13:47:32', '2024-10-28 13:47:32'),
+(34, 3, 2, '127.0.0.1', 1, '2024-10-28 13:50:33', '2024-10-28 13:50:33'),
+(35, 3, 2, '127.0.0.1', 1, '2024-10-28 13:52:29', '2024-10-28 13:52:29'),
+(36, 3, 2, '127.0.0.1', 1, '2024-10-28 13:52:43', '2024-10-28 13:52:43'),
+(37, 3, 2, '127.0.0.1', 1, '2024-10-28 13:57:01', '2024-10-28 13:57:01'),
+(38, 3, 2, '127.0.0.1', 1, '2024-10-28 13:57:10', '2024-10-28 13:57:10'),
+(39, 3, 2, '127.0.0.1', 1, '2024-10-28 14:01:15', '2024-10-28 14:01:15'),
+(40, 3, 2, '127.0.0.1', 1, '2024-10-28 14:03:34', '2024-10-28 14:03:34'),
+(41, 2, 3, '::1', 1, '2024-10-28 14:03:50', '2024-10-28 14:03:50'),
+(42, 2, 3, '::1', 1, '2024-10-28 14:04:00', '2024-10-28 14:04:00'),
+(43, 3, 2, '127.0.0.1', 1, '2024-10-28 14:04:02', '2024-10-28 14:04:02'),
+(44, 3, 2, '127.0.0.1', 1, '2024-10-28 14:04:06', '2024-10-28 14:04:06'),
+(45, 2, 3, '::1', 1, '2024-10-28 14:04:40', '2024-10-28 14:04:40'),
+(46, 2, 3, '::1', 1, '2024-10-28 14:04:43', '2024-10-28 14:04:43'),
+(47, 2, 3, '::1', 1, '2024-10-28 14:04:45', '2024-10-28 14:04:45'),
+(48, 1, 2, '127.0.0.1', 1, '2024-10-28 14:05:12', '2024-10-28 14:05:12'),
+(49, 1, 2, '127.0.0.1', 1, '2024-10-28 14:05:16', '2024-10-28 14:05:16'),
+(50, 3, 2, '127.0.0.1', 1, '2024-10-28 14:05:29', '2024-10-28 14:05:29'),
+(51, 2, 3, '::1', 1, '2024-11-01 09:46:48', '2024-11-01 09:46:48'),
+(52, 2, 3, '::1', 1, '2024-11-01 09:47:49', '2024-11-01 09:47:49'),
+(53, 2, 3, '::1', 1, '2024-11-01 09:49:15', '2024-11-01 09:49:15'),
+(54, 2, 3, '::1', 1, '2024-11-01 09:55:25', '2024-11-01 09:55:25'),
+(55, 15, 3, '::1', 1, '2024-11-01 09:55:30', '2024-11-01 09:55:30'),
+(56, 2, 3, '::1', 1, '2024-11-01 09:56:13', '2024-11-01 09:56:13'),
+(57, 2, 3, '::1', 1, '2024-11-01 09:56:23', '2024-11-01 09:56:23'),
+(58, 3, 2, '127.0.0.1', 1, '2024-11-01 11:40:38', '2024-11-01 11:40:38'),
+(59, 3, 2, '127.0.0.1', 1, '2024-11-01 11:41:15', '2024-11-01 11:41:15'),
+(60, 3, 2, '127.0.0.1', 1, '2024-11-01 11:41:16', '2024-11-01 11:41:16'),
+(61, 2, 3, '::1', 1, '2024-11-01 12:02:31', '2024-11-01 12:02:31'),
+(62, 2, 3, '::1', 1, '2024-11-01 12:02:55', '2024-11-01 12:02:55'),
+(63, 2, 3, '::1', 1, '2024-11-01 12:02:56', '2024-11-01 12:02:56'),
+(64, 2, 3, '::1', 1, '2024-11-01 12:03:13', '2024-11-01 12:03:13'),
+(65, 2, 3, '::1', 1, '2024-11-01 12:05:31', '2024-11-01 12:05:31'),
+(66, 20, 43, '127.0.0.1', 1, '2024-11-04 06:44:05', '2024-11-04 06:44:05'),
+(67, 3, 2, '127.0.0.1', 1, '2024-11-04 10:04:52', '2024-11-04 10:04:52'),
+(68, 3, 2, '127.0.0.1', 1, '2024-11-04 10:05:22', '2024-11-04 10:05:22'),
+(69, 2, 3, '::1', 1, '2024-11-04 10:45:32', '2024-11-04 10:45:32'),
+(70, 2, 3, '::1', 1, '2024-11-04 10:46:37', '2024-11-04 10:46:37'),
+(71, 2, 3, '::1', 1, '2024-11-04 10:47:45', '2024-11-04 10:47:45'),
+(72, 2, 3, '::1', 1, '2024-11-04 11:09:24', '2024-11-04 11:09:24'),
+(73, 2, 3, '::1', 1, '2024-11-04 11:09:33', '2024-11-04 11:09:33'),
+(74, 2, 3, '::1', 1, '2024-11-04 11:23:09', '2024-11-04 11:23:09');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
